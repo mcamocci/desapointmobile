@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout"
+        android:layout_margin="8dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/button2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="24dp" >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <AutoCompleteTextView
+                    android:layout_margin="4dp"
+                    android:padding="10dp"
+                    android:id="@+id/number"
+                    android:layout_width="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:background="@android:color/transparent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username"
+                    android:fontFamily="sans-serif-light"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/button3"
+            android:layout_marginRight="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_below="@+id/button2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:layout_margin="4dp"
+                    android:padding="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:inputType="textPassword"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:background="@android:color/transparent"
+                    android:imeActionId="@+id/login"
+                    android:singleLine="true" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:id="@+id/button6"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_below="@+id/button3"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/sign_in_button"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_margin="12dp"
+                    android:gravity="center"
+                    android:text="@string/login_button_name"
+                    android:fontFamily="sans-serif-light"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:orientation="vertical"
+            android:id="@+id/button8"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="28dp" >
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:id="@+id/login_progress"
+            android:backgroundTint="@android:color/white"
+            android:layout_below="@+id/button6"
+            android:layout_marginBottom="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="18dp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/linearLayout5">
+
+        <LinearLayout
+            android:layout_marginTop="0.5dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:padding="18dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark">
+        <!--android:background="#81C784"-->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif-light"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/forgot"
+                android:gravity="right"
+                android:textColor="@android:color/white"
+                android:fontFamily="sans-serif-light"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

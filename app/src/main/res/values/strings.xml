@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Desapoint</string>
+    <string name="hint">category</string>
+    <string name="label">search</string>
+    <string name="copyrights">\u00a9 2016 Desapoint.com</string>
+    <string name="about_message">Desapoint , digital material access point for University students.</string>
+    <string name="version_title">technology preview</string>
+    <string name="about_menu">About</string>
+    <string name="LoginTitle">LOGIN (Desapoint)</string>
+    <string name="forgot">forgot password</string>
+    <string name="password">password</string>
+    <string name="username">username</string>
+    <string name="login_button_name">LOGIN</string>
+    <string name="aboutMenu">About</string>
+    <string name="rateMenu">Rate Us</string>
+    <string name="feedBackMenu">Feedback</string>
+    <string name="shareMenu">Invite friends</string>
+    <string name="create">create account</string>
+    <string name="email">info@desapoint.com</string>
+    <string name="dumy_short_text">It is a long established fact that a reader will be distracted by the readable content of a page</string>
+</resources>

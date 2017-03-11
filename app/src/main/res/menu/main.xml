@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/feedBackMenu"
+        android:title="@string/feedBackMenu"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/aboutMenu"
+        android:title="@string/aboutMenu"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/shareMenu"
+        android:title="@string/shareMenu"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/rateUsMenu"
+        android:title="@string/rateMenu"
+        app:showAsAction="never"
+        />
+</menu>
