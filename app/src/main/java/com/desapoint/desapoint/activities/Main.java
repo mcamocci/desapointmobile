@@ -4,19 +4,77 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
+import com.desapoint.desapoint.fragments.Subjects;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnMenuTabClickListener;
+import com.desapoint.desapoint.fragments.Articles;
 
 public class Main extends AppCompatActivity {
+
+    private BottomBar bottomBar;
+    private Subjects subjectFragment=new Subjects();
+    private Articles articlesFragment=new Articles();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.getSupportActionBar().setDisplayShowCustomEnabled(true);
+        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        LayoutInflater inflator = LayoutInflater.from(this);
+        View v = inflator.inflate(R.layout.custom_title, null);
+
+        //assign the view to the actionbar
+        this.getSupportActionBar().setCustomView(v);
+
+        //if you need to customize anything else about the text, do it here.
+        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
+        ((TextView)v.findViewById(R.id.title)).setText(this.getTitle());
+
+
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        bottomBar=BottomBar.attach(this,savedInstanceState);
+        bottomBar.setItemsFromMenu(R.menu.bottom_menu, new OnMenuTabClickListener(){
+            @Override
+            public void onMenuTabSelected(@IdRes int menuItemId) {
+                int id=menuItemId;
+                Toast.makeText(getBaseContext(),"subject",Toast.LENGTH_LONG).show();
+                if(id==R.id.subjects){
+                    Toast.makeText(getBaseContext(),"subject",Toast.LENGTH_LONG).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,subjectFragment).commit();
+
+                }else if(id==R.id.articles){
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,articlesFragment).commit();
+                }
+
+            }
+
+            @Override
+            public void onMenuTabReSelected(@IdRes int menuItemId) {
+
+            }
+        });
+        bottomBar.mapColorForTab(0,"#3f51b5");
+        bottomBar.mapColorForTab(1,"#aa00ff");
+//        bottomBar.mapColorForTab(3,"#2196f3");
+
+        /*BottomBarBadge articles=bottomBar.makeBadgeForTabAt(0,"#ff0000",12);
+        articles.show();*/
+
     }
 
     @Override

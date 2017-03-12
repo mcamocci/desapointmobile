@@ -1,94 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/colorPrimary"
-    android:layout_height="match_parent">
+<LinearLayout android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="24dp"
-        >
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:id="@+id/item_notification"
+            android:gravity="left"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_marginLeft="16dp"
-                android:layout_marginBottom="2dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_marginTop="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:textColor="@android:color/black"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="24sp"
-                        android:layout_marginBottom="4dp"
-                        android:drawablePadding="0dp"
-                        android:text="@string/app_name"
-                        android:id="@+id/channel_name" />
-
-                </LinearLayout>
-
-            </LinearLayout>
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:textSize="32sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="6dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:textSize="14sp"
-                android:gravity="left"
                 android:fontFamily="sans-serif-light"
-                android:autoLink="all"
-                android:textColorLink="@color/colorPrimary"
-                android:text="@string/about_message"
-                />
+                android:layout_width="157dp"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name" />
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:textSize="14sp"
-                android:gravity="left"
                 android:fontFamily="sans-serif-light"
-                android:autoLink="all"
-                android:textColorLink="@color/colorPrimary"
-                android:text="@string/email"
-                />
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version 0.1" />
+
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
+                android:textSize="16sp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:textSize="14sp"
-                android:gravity="left"
                 android:fontFamily="sans-serif-light"
-                android:autoLink="all"
-                android:textColorLink="@color/colorPrimary"
-                android:text="Phone: +255687374009"
-                />
+                android:gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desapoint development Team" />
+
+            <TextView
+                android:textSize="24sp"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif-light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Contact" />
 
             <TextView
                 android:textSize="12sp"
+                android:textColor="@android:color/black"
                 android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif-light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Phone: +255718249063" />
+
+            <TextView
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif-light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/email" />
+
+            <TextView
+                android:textSize="20sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif-light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Copyrights" />
+
+            <TextView
+                android:textSize="12sp"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:fontFamily="sans-serif-light"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/about_message" />
+
+            <TextView
+                android:textSize="12sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
@@ -97,38 +114,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/copyrights" />
 
-            <LinearLayout
-                android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:layout_marginTop="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="sans-serif-light"
-                        android:text="@string/version_title"
-                        android:layout_marginRight="12dp"
-                        android:id="@+id/time"
-                        android:gravity="right" />
-
-                </LinearLayout>
-
-
-            </LinearLayout>
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </ScrollView>
 
 </LinearLayout>
-
-
-
-

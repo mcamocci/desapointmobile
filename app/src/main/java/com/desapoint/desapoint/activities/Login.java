@@ -10,28 +10,34 @@ import android.widget.ProgressBar;
 import com.desapoint.desapoint.R;
 
 
+
 public class Login extends AppCompatActivity {
 
-    private LinearLayout buttonLogin;
-    private ProgressBar progress;
+    private LinearLayout login;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        progressBar=(ProgressBar)findViewById(R.id.login_progress);
+        progressBar.setVisibility(View.INVISIBLE);
 
-        getSupportActionBar().setTitle(getResources().getString(R.string.LoginTitle));
 
-        buttonLogin=(LinearLayout)findViewById(R.id.sign_in_button);
-        progress=(ProgressBar)findViewById(R.id.login_progress);
-        progress.setVisibility(View.INVISIBLE);
-        buttonLogin.setOnClickListener(new View.OnClickListener(){
+        login=(LinearLayout)findViewById(R.id.sign_in_button);
+
+        login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
                 Intent intent=new Intent(getBaseContext(),Main.class);
                 startActivity(intent);
+                finish();
+
             }
         });
+
+
 
     }
 

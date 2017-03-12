@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/profile"
+        android:icon="@drawable/ic_action_user"
+        android:title="@string/profileMenuTitle"
+        app:showAsAction="ifRoom"
+        />
     <item
         android:id="@+id/feedBackMenu"
         android:title="@string/feedBackMenu"
@@ -20,6 +25,16 @@
     <item
         android:id="@+id/rateUsMenu"
         android:title="@string/rateMenu"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/Upload"
+        android:title="Upload"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/logOut"
+        android:title="LogOut"
         app:showAsAction="never"
         />
 </menu>

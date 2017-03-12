@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Subjects and notes"
+        android:id="@+id/subjects"
+        android:icon="@drawable/ic_action_user"
+        />
+    <item
+        android:title="Articles and Books"
+        android:id="@+id/articles"
+        android:icon="@drawable/ic_action_user"
+        />
+
+</menu>

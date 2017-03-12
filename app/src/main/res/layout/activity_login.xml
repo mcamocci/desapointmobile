@@ -23,6 +23,7 @@
             android:layout_marginTop="24dp" >
             <LinearLayout
                 android:layout_width="match_parent"
+                android:background="@android:color/white"
                 android:layout_height="wrap_content">
                 <AutoCompleteTextView
                     android:layout_margin="4dp"
@@ -51,6 +52,7 @@
             android:layout_marginTop="12dp">
             <LinearLayout
                 android:layout_width="match_parent"
+                android:background="@android:color/white"
                 android:layout_height="wrap_content">
                 <EditText
                     android:id="@+id/password"
@@ -81,11 +83,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:id="@+id/sign_in_button"
+                android:background="@android:color/white"
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_margin="12dp"
                     android:gravity="center"
+                    android:background="@android:color/white"
+                    android:textColor="@android:color/black"
                     android:text="@string/login_button_name"
                     android:fontFamily="sans-serif-light"
                     android:layout_height="wrap_content" />
@@ -108,7 +113,6 @@
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:id="@+id/login_progress"
-            android:backgroundTint="@android:color/white"
             android:layout_below="@+id/button6"
             android:layout_marginBottom="16dp"
             android:layout_centerHorizontal="true"
@@ -129,12 +133,7 @@
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout5">
 
-        <LinearLayout
-            android:layout_marginTop="0.5dp"
-            android:layout_width="match_parent"
-            android:gravity="center"
-            android:background="@android:color/transparent"
-            android:layout_height="wrap_content"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -142,8 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:padding="18dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimaryDark">
+        android:layout_alignParentBottom="true">
         <!--android:background="#81C784"-->
 
         <LinearLayout
