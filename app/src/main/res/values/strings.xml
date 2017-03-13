@@ -8,6 +8,8 @@
     <string name="version_title">technology preview</string>
     <string name="about_menu">About</string>
     <string name="LoginTitle">LOGIN</string>
+    <string name="article_message">Enjoy reading articles posted by your fellow colleague or your course instructors</string>
+    <string name="book_message">Download and Books shared by different members of desapoint platform</string>
     <string name="forgot">forgot password</string>
     <string name="password">password</string>
     <string name="username">username</string>

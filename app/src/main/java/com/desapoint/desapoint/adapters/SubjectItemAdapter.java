@@ -1,14 +1,19 @@
 package com.desapoint.desapoint.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
+import com.desapoint.desapoint.activities.SubjectActivity;
 import com.desapoint.desapoint.pojos.Subject;
+import com.google.gson.Gson;
 
 
 import java.util.List;
@@ -29,7 +34,7 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
 
     @Override
     public void onBindViewHolder(SubjectHolder holder, int position) {
-        holder.setData(list.get(position));
+        holder.setData(this.context,list.get(position));
     }
 
     @Override
@@ -44,24 +49,42 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
         return list.size();
     }
 
-    public class SubjectHolder extends RecyclerView.ViewHolder{
+    public class SubjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Subject subject;
         private TextView code;
         private TextView letter;
         private TextView title;
+        private LinearLayout parent;
+        private Context context;
 
         public SubjectHolder(View view){
             super(view);
+            view.setOnClickListener(this);
+            parent=(LinearLayout)view.findViewById(R.id.parent);
+            parent.setOnClickListener(this);
             code=(TextView)view.findViewById(R.id.code);
             title=(TextView)view.findViewById(R.id.subject);
             letter=(TextView)view.findViewById(R.id.title_short);
 
         }
-        public void setData(Subject subject){
+        public void setData(Context context,Subject subject){
+            this.context=context;
             this.subject=subject;
             code.setText(subject.getCode());
             title.setText(subject.getTitle());
             letter.setText(subject.getTitle().substring(0,1));
         }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent=new Intent(context, SubjectActivity.class);
+            String json= new Gson().toJson(subject);
+            intent.putExtra(Subject.NAME,json);
+            context.startActivity(intent);
+        }
+
+
     }
+
+
 }

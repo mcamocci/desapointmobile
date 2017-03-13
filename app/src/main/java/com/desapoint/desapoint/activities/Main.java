@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.fragments.Subjects;
@@ -32,17 +31,7 @@ public class Main extends AppCompatActivity {
 
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
         this.getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        LayoutInflater inflator = LayoutInflater.from(this);
-        View v = inflator.inflate(R.layout.custom_title, null);
-
-        //assign the view to the actionbar
-        this.getSupportActionBar().setCustomView(v);
-
-        //if you need to customize anything else about the text, do it here.
-        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.title)).setText(this.getTitle());
-
+        actionBarTitle("Desapoint");
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,12 +41,12 @@ public class Main extends AppCompatActivity {
             @Override
             public void onMenuTabSelected(@IdRes int menuItemId) {
                 int id=menuItemId;
-                Toast.makeText(getBaseContext(),"subject",Toast.LENGTH_LONG).show();
                 if(id==R.id.subjects){
-                    Toast.makeText(getBaseContext(),"subject",Toast.LENGTH_LONG).show();
+                    actionBarTitle("Subjects and notes");
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,subjectFragment).commit();
 
                 }else if(id==R.id.articles){
+                    actionBarTitle("Articles and books");
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,articlesFragment).commit();
                 }
 
@@ -131,6 +120,24 @@ public class Main extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    public void actionBarTitle(String title){
+
+        LayoutInflater inflator = LayoutInflater.from(this);
+        View v = inflator.inflate(R.layout.custom_title, null);
+
+        //if you need to customize anything else about the text, do it here.
+        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
+        ((TextView)v.findViewById(R.id.title)).setText(this.getTitle());
+        //assign the view to the actionbar
+        this.getSupportActionBar().setCustomView(v);
+
+        //if you need to customize anything else about the text, do it here.
+        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
+        ((TextView)v.findViewById(R.id.title)).setText(title);
+        //assign the view to the actionbar
+        this.getSupportActionBar().setCustomView(v);
     }
 
 

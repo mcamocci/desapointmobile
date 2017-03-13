@@ -40,9 +40,7 @@ public class Subjects extends Fragment {
                              Bundle savedInstanceState) {
         Subject subject=new Subject();
 
-        if(subjects.size()>0){
-            Toast.makeText(getContext(),"we have something already",Toast.LENGTH_LONG).show();
-        }else{
+        if(!(subjects.size()>0)){
             for(int i=1;i<8;i++){
                 if(i%2==0){
                     subject.setCode("ITU");
@@ -51,7 +49,6 @@ public class Subjects extends Fragment {
                     subject.setCode("CSU");
                     subject.setTitle("Communication Skills");
                 }
-
                 subjects.add(subject);
             }
         }

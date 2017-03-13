@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_margin="6dp"
+    android:layout_margin="12dp"
     android:elevation="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -12,11 +12,11 @@
         android:padding="8dp"
         android:orientation="horizontal"
         android:clickable="true"
-        android:id="@+id/beginButton"
+        android:id="@+id/parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginRight="16dp"
             android:layout_width="48dp"
             android:layout_height="48dp"

@@ -6,6 +6,8 @@ package com.desapoint.desapoint.pojos;
 
 public class Subject {
 
+    public static String NAME="SUBJECT";
+
     public int getId() {
         return id;
     }

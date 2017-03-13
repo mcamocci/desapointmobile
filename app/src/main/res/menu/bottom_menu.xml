@@ -4,12 +4,12 @@
     <item
         android:title="Subjects and notes"
         android:id="@+id/subjects"
-        android:icon="@drawable/ic_action_user"
+        android:icon="@drawable/ic_article"
         />
     <item
         android:title="Articles and Books"
         android:id="@+id/articles"
-        android:icon="@drawable/ic_action_user"
+        android:icon="@drawable/ic_book"
         />
 
 </menu>

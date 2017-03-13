@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    >
-
-    <RelativeLayout
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent" android:layout_height="wrap_content"
         android:id="@+id/relativeLayout"
-        android:layout_margin="8dp"
+        android:background="@drawable/bgimage"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -20,7 +14,7 @@
             android:layout_marginRight="16dp"
             android:id="@+id/button2"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="24dp" >
+            android:layout_marginTop="32dp" >
             <LinearLayout
                 android:layout_width="match_parent"
                 android:background="@android:color/white"
@@ -112,13 +106,14 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
+            android:background="@android:color/transparent"
             android:id="@+id/login_progress"
             android:layout_below="@+id/button6"
             android:layout_marginBottom="16dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="18dp" />
 
-    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -132,14 +127,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout5">
-
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:background="@android:color/background_dark"
         android:padding="18dp"
         android:layout_alignParentBottom="true">
         <!--android:background="#81C784"-->
@@ -147,6 +141,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:layout_weight="1">
 
             <TextView
@@ -160,6 +155,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             android:layout_weight="1">
             <TextView
                 android:layout_width="match_parent"
