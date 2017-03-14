@@ -1,10 +1,15 @@
 package com.desapoint.desapoint.activities;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,13 +29,24 @@ public class Main extends AppCompatActivity {
     private Subjects subjectFragment=new Subjects();
     private Articles articlesFragment=new Articles();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        // The request code used in ActivityCompat.requestPermissions()
+        // and returned in the Activity's onRequestPermissionsResult()
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_NETWORK_STATE,Manifest.permission.MEDIA_CONTENT_CONTROL
+                , Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        if(!hasPermissions(this, PERMISSIONS)){
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
+
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
-        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
         actionBarTitle("Desapoint");
 
 
@@ -65,6 +81,8 @@ public class Main extends AppCompatActivity {
         articles.show();*/
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -131,6 +149,7 @@ public class Main extends AppCompatActivity {
         //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
         ((TextView)v.findViewById(R.id.title)).setText(this.getTitle());
         //assign the view to the actionbar
+        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
         this.getSupportActionBar().setCustomView(v);
 
         //if you need to customize anything else about the text, do it here.
@@ -138,6 +157,17 @@ public class Main extends AppCompatActivity {
         ((TextView)v.findViewById(R.id.title)).setText(title);
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
+    }
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 

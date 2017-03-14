@@ -27,8 +27,7 @@ public class ResourceDownloadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource_download);
 
-        actionBarTitle("Notes Download/View");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        actionBarTitle("Notes Download/view");
         list=testDataGenerator();
 
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
@@ -64,14 +63,11 @@ public class ResourceDownloadActivity extends AppCompatActivity {
 
     public void actionBarTitle(String title){
 
+        this.getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         LayoutInflater inflator = LayoutInflater.from(this);
-        View v = inflator.inflate(R.layout.custom_title, null);
-
-        //if you need to customize anything else about the text, do it here.
-        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.title)).setText(title);
-        //assign the view to the actionbar
-        this.getSupportActionBar().setCustomView(v);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        View v = inflator.inflate(R.layout.custom_title_other, null);
 
         //if you need to customize anything else about the text, do it here.
         //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title

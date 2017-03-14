@@ -3,7 +3,7 @@
     <string name="hint">category</string>
     <string name="label">search</string>
     <string name="profileMenuTitle">profile</string>
-    <string name="copyrights">\u00a9 2016 Desapoint.com</string>
+    <string name="copyrights">\u00a9 2017 Desapoint.com</string>
     <string name="about_message">Desapoint , digital material access point for University students.</string>
     <string name="version_title">technology preview</string>
     <string name="about_menu">About</string>
@@ -19,6 +19,7 @@
     <string name="feedBackMenu">Feedback</string>
     <string name="shareMenu">Invite friends</string>
     <string name="create">create account</string>
+    <string name="phone">Phone: +255659814742</string>
     <string name="email">info@desapoint.com</string>
     <string name="dumy_short_text">It is a long established fact that a reader will be distracted by the readable content of a page</string>
 

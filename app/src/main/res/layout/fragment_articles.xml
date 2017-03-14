@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="end"
-                android:background="#7986cb"
+                android:background="#00A1EB"
                 android:orientation="horizontal"
                 android:padding="18dp">
                 <!--android:background="#81C784"-->
@@ -127,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="end"
-                android:background="#7986cb"
+                android:background="#00A1EB"
                 android:orientation="horizontal"
                 android:padding="18dp">
                 <!--android:background="#81C784"-->

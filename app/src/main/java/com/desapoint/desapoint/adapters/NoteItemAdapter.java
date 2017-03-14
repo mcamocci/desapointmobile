@@ -1,6 +1,8 @@
 package com.desapoint.desapoint.adapters;
 
+import android.app.DownloadManager;
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +13,12 @@ import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.Note;
+import com.desapoint.desapoint.toolsUtilities.FileDownloadOperation;
 
+import java.io.File;
 import java.util.List;
+
+import static android.content.Context.DOWNLOAD_SERVICE;
 
 /**
  * Created by root on 3/13/17.
@@ -52,6 +58,8 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.NoteVi
         private ImageView share;
         private TextView title;
         private TextView description;
+        private long enqueue;
+        private DownloadManager dm;
 
         public NoteViewHolder(View view){
             super(view);
@@ -73,7 +81,26 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.NoteVi
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.download_action){
-                Toast.makeText(context,"download clicked",Toast.LENGTH_SHORT).show();
+                File file=new File("http://www.vogella.de/img/lars/LarsVogelArticle7.png");
+                Toast.makeText(context,"Download started",Toast.LENGTH_LONG).show();
+                dm = (DownloadManager)context.getSystemService(DOWNLOAD_SERVICE);
+
+                DownloadManager.Request request = new DownloadManager.Request(
+                        Uri.parse("http://www.vogella.de/img/lars/LarsVogelArticle7.png"));
+
+                String folder=null;
+
+                if((folder=FileDownloadOperation.downloadToFolder(context))!=null){
+
+                    Uri downloadLocation=Uri.fromFile(new File(folder, file.getName()));
+                    request.setDestinationUri(downloadLocation);
+
+                    enqueue = dm.enqueue(request);
+                }else{
+                    Toast.makeText(context,"Something isn't wright",Toast.LENGTH_SHORT).show();
+                }
+
+
             }else if(v.getId()==R.id.share_action){
                 Toast.makeText(context,"share clicked",Toast.LENGTH_SHORT).show();
             }

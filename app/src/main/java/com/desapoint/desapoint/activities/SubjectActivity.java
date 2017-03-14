@@ -21,10 +21,8 @@ public class SubjectActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         viewButton=(TextView)findViewById(R.id.viewButton);
         setContentView(R.layout.activity_subject);
-        actionBarTitle("MTU 07304");
+        actionBarTitle("Subject content");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
 
     }
 
@@ -54,16 +52,13 @@ public class SubjectActivity extends AppCompatActivity implements View.OnClickLi
         return true;
     }
 
+
     public void actionBarTitle(String title){
 
+        this.getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         LayoutInflater inflator = LayoutInflater.from(this);
-        View v = inflator.inflate(R.layout.custom_title, null);
-
-        //if you need to customize anything else about the text, do it here.
-        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.title)).setText(this.getTitle());
-        //assign the view to the actionbar
-        this.getSupportActionBar().setCustomView(v);
+        View v = inflator.inflate(R.layout.custom_title_other, null);
 
         //if you need to customize anything else about the text, do it here.
         //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
@@ -71,5 +66,4 @@ public class SubjectActivity extends AppCompatActivity implements View.OnClickLi
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
     }
-
 }
