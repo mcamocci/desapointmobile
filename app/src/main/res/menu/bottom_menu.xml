@@ -2,13 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:title="Subjects and notes"
+        android:title="Subjects"
         android:id="@+id/subjects"
         android:icon="@drawable/ic_article"
         />
     <item
-        android:title="Articles and Books"
+        android:title="Notes"
+        android:id="@+id/notes"
+        android:icon="@drawable/ic_book"
+        />
+    <item
+        android:title="PastPaper"
+        android:id="@+id/pastpapers"
+        android:icon="@drawable/ic_book"
+        />
+    <item
+        android:title="Articles"
         android:id="@+id/articles"
+        android:icon="@drawable/ic_book"
+        />
+    <item
+        android:title=" Books"
+        android:id="@+id/books"
         android:icon="@drawable/ic_book"
         />
 

@@ -54,7 +54,7 @@
                 android:textSize="18sp"
                 android:fontFamily="sans-serif-light"
                 android:layout_marginLeft="10dp"
-                android:id="@+id/code"
+                android:id="@+id/subject_code"
                 android:layout_marginRight="4dp"
                 android:layout_height="wrap_content"
                 android:text="MUT913"

@@ -1,4 +1,5 @@
 <resources>
+    <string name="dialog_logout">Are your sure you want to Log out ?, You may cancel.</string>
     <string name="app_name">Desapoint</string>
     <string name="hint">category</string>
     <string name="label">search</string>

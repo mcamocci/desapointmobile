@@ -16,23 +16,23 @@ public class Subject {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getSubject_code() {
+        return subject_code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setSubject_code(String subject_code) {
+        this.subject_code = subject_code;
     }
 
-    public String getTitle() {
-        return title;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     private int id;
-    private String code;
-    private String title;
+    private String subject_code;
+    private String subject;
 }

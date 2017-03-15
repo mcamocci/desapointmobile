@@ -4,13 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bghome"
-    tools:context="com.desapoint.desapoint.activities.ResourceDownloadActivity">
+    tools:context="com.desapoint.desapoint.activities.FlexibleActivity">
 
-    <android.support.v7.widget.RecyclerView
+   <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="8dp"
-        android:id="@+id/recyclerView"
-        tools:layout_editor_absoluteX="8dp"/>
+        android:id="@+id/recyclerView"/>
 
 </LinearLayout>

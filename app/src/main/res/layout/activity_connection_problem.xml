@@ -2,7 +2,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bghome"
+    android:padding="12dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
+
+
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -23,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingBottom="12dp"
-                android:background="@drawable/about_top_rectangle"
+                android:background="@drawable/connection_problem"
                 android:orientation="vertical">
 
                 <TextView
@@ -48,62 +51,30 @@
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="technology preview (release)" />
+                    android:text="Connection problem!!" />
 
                 <TextView
                     android:textSize="16sp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
                     android:fontFamily="sans-serif-light"
-                    android:gravity="left"
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Desapoint development Team" />
+                    android:text="Please make sure internet connection are available or try again later" />
 
                 <TextView
                     android:textSize="24sp"
                     android:layout_marginTop="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
+                    android:textColor="@color/white"
                     android:fontFamily="sans-serif-light"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/rounded_blue"
                     android:gravity="center"
-                    android:text="Contact" />
-
-                <TextView
-                    android:textSize="12sp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:fontFamily="sans-serif-light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="@string/phone" />
-
-                <TextView
-                    android:textSize="12sp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:fontFamily="sans-serif-light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/email" />
-
-                <TextView
-                    android:textSize="20sp"
-                    android:textColor="@android:color/black"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:fontFamily="sans-serif-light"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Copyrights" />
+                    android:text="retry" />
 
                 <TextView
                     android:textSize="12sp"

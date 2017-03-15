@@ -1,6 +1,8 @@
 package com.desapoint.desapoint.activities;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -16,18 +18,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
 import com.desapoint.desapoint.R;
-import com.desapoint.desapoint.fragments.Subjects;
+import com.desapoint.desapoint.fragments.*;
+import com.desapoint.desapoint.fragments.Articles;
+import com.desapoint.desapoint.fragments.Books;
+import com.desapoint.desapoint.pojos.User;
+import com.desapoint.desapoint.toolsUtilities.ConnectionChecker;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
+import com.google.gson.Gson;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
-import com.desapoint.desapoint.fragments.Articles;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+import droidninja.filepicker.FilePickerBuilder;
+import droidninja.filepicker.FilePickerConst;
 
 public class Main extends AppCompatActivity {
 
     private BottomBar bottomBar;
     private Subjects subjectFragment=new Subjects();
-    private Articles articlesFragment=new Articles();
+    private Articles articleFragment=new Articles();
+    private Subjects notesFragment=new Subjects();
+    private Articles pastPaperFragment=new Articles();
+    private Books bookFragment=new Books();
+    private List<String> docPaths = new ArrayList<>();
 
 
     @Override
@@ -35,6 +52,14 @@ public class Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (!(ConnectionChecker.isInternetConnected(getBaseContext()))) {
+            Intent intent=new Intent(getBaseContext(),ConnectionProblem.class);
+            startActivity(intent);
+        }
+
+
+        actionBarTitle("Desapoint");
+        User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
 
         // The request code used in ActivityCompat.requestPermissions()
         // and returned in the Activity's onRequestPermissionsResult()
@@ -47,7 +72,7 @@ public class Main extends AppCompatActivity {
         }
 
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
-        actionBarTitle("Desapoint");
+
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,12 +83,20 @@ public class Main extends AppCompatActivity {
             public void onMenuTabSelected(@IdRes int menuItemId) {
                 int id=menuItemId;
                 if(id==R.id.subjects){
-                    actionBarTitle("Subjects and notes");
+                    actionBarTitle("Subjects");
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,subjectFragment).commit();
-
+                }else if(id==R.id.notes){
+                    actionBarTitle("Notes");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,notesFragment).commit();
+                }else if(id==R.id.pastpapers){
+                    actionBarTitle("pastpapers");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,pastPaperFragment).commit();
                 }else if(id==R.id.articles){
-                    actionBarTitle("Articles and books");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container,articlesFragment).commit();
+                    actionBarTitle("Articles");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,articleFragment).commit();
+                }else if(id==R.id.books){
+                    actionBarTitle("Books");
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container,bookFragment).commit();
                 }
 
             }
@@ -73,12 +106,14 @@ public class Main extends AppCompatActivity {
 
             }
         });
-        bottomBar.mapColorForTab(0,"#3f51b5");
-        bottomBar.mapColorForTab(1,"#aa00ff");
-//        bottomBar.mapColorForTab(3,"#2196f3");
+            bottomBar.mapColorForTab(0,"#3f51b5");
+            bottomBar.mapColorForTab(1,"#2196f3");
+            bottomBar.mapColorForTab(2,"#aa00ff");
+            bottomBar.mapColorForTab(3,"#2196f3");
+            bottomBar.mapColorForTab(4,"#aa00ff");
 
-        /*BottomBarBadge articles=bottomBar.makeBadgeForTabAt(0,"#ff0000",12);
-        articles.show();*/
+            /*BottomBarBadge articles=bottomBar.makeBadgeForTabAt(0,"#ff0000",12);
+            articles.show();*/
 
     }
 
@@ -135,6 +170,16 @@ public class Main extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_VIEW,
                         Uri.parse("http://play.google.com/store/apps/details?id=" + getBaseContext().getPackageName())));
             }
+        }else if(id==R.id.logOut){
+            showLogOutDialog("Log out");
+        }else if(id==R.id.profile){
+            intent=new Intent(getBaseContext(),Profile.class);
+            startActivity(intent);
+        }else if(id==R.id.upload){
+            FilePickerBuilder.getInstance().setMaxCount(10)
+                    .setActivityTheme(R.style.filePicker)
+                    .pickDocument(this);
+
         }
 
         return true;
@@ -147,14 +192,14 @@ public class Main extends AppCompatActivity {
 
         //if you need to customize anything else about the text, do it here.
         //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.title)).setText(this.getTitle());
+        ((TextView)v.findViewById(R.id.main_title)).setText(this.getTitle());
         //assign the view to the actionbar
         this.getSupportActionBar().setDisplayShowTitleEnabled(false);
         this.getSupportActionBar().setCustomView(v);
 
         //if you need to customize anything else about the text, do it here.
         //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.title)).setText(title);
+        ((TextView)v.findViewById(R.id.sub_title)).setText(title);
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
     }
@@ -168,6 +213,63 @@ public class Main extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+
+    //the dialog issues//
+    public  void showLogOutDialog(String title){
+
+        final Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialog_logout);
+        dialog.setTitle(title);
+
+        TextView ok=(TextView)dialog.findViewById(R.id.ok);
+        TextView cancel= (TextView)dialog.findViewById(R.id.cancel);
+
+        ok.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                PreferenceStorage.clearInformation(getBaseContext());
+                Intent intent=new Intent(getBaseContext(),Login.class);
+                startActivity(intent);
+                finish();
+
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!(ConnectionChecker.isInternetConnected(getBaseContext()))) {
+            Intent intent=new Intent(getBaseContext(),ConnectionProblem.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode)
+        {
+            case FilePickerConst.REQUEST_CODE_DOC:
+                if(resultCode== Activity.RESULT_OK && data!=null)
+                {
+                    docPaths = new ArrayList<>();
+                    docPaths.addAll(data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_DOCS));
+                }
+                break;
+        }
+
     }
 
 

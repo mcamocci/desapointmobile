@@ -8,8 +8,8 @@
         app:showAsAction="ifRoom"
         />
     <item
-        android:id="@+id/feedBackMenu"
         android:title="@string/feedBackMenu"
+        android:id="@+id/feedBackMenu"
         app:showAsAction="never"
         />
     <item
@@ -28,7 +28,7 @@
         app:showAsAction="never"
         />
     <item
-        android:id="@+id/Upload"
+        android:id="@+id/upload"
         android:title="Upload"
         app:showAsAction="never"
         />

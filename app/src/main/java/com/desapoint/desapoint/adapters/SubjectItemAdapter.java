@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.activities.SubjectActivity;
@@ -62,7 +61,7 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
             view.setOnClickListener(this);
             parent=(LinearLayout)view.findViewById(R.id.parent);
             parent.setOnClickListener(this);
-            code=(TextView)view.findViewById(R.id.code);
+            code=(TextView)view.findViewById(R.id.subject_code);
             title=(TextView)view.findViewById(R.id.subject);
             letter=(TextView)view.findViewById(R.id.title_short);
 
@@ -70,9 +69,9 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
         public void setData(Context context,Subject subject){
             this.context=context;
             this.subject=subject;
-            code.setText(subject.getCode());
-            title.setText(subject.getTitle());
-            letter.setText(subject.getTitle().substring(0,1));
+            code.setText(subject.getSubject_code());
+            title.setText(subject.getSubject());
+            letter.setText(subject.getSubject().substring(0,1));
         }
 
         @Override

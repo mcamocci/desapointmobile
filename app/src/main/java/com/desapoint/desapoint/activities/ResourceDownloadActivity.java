@@ -76,4 +76,8 @@ public class ResourceDownloadActivity extends AppCompatActivity {
         this.getSupportActionBar().setCustomView(v);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

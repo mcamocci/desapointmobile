@@ -23,7 +23,7 @@
             android:layout_height="48dp"
             android:id="@+id/circle_view_background"
             android:gravity="center"
-            android:background="#ff5722"
+            android:background="#00A1EB"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
                 android:layout_gravity="center"
                 android:fontFamily="sans-serif-light"
                 android:layout_marginLeft="10dp"
-                android:id="@+id/title"
+                android:id="@+id/subject"
                 android:layout_marginRight="4dp"
                 android:layout_height="wrap_content"
                 android:text="computer fundamental.pdf"
