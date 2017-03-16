@@ -1,17 +1,19 @@
 package com.desapoint.desapoint.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.desapoint.desapoint.R;
+import com.desapoint.desapoint.activities.ResourceDownloadActivity;
 import com.desapoint.desapoint.pojos.Category;
 
 import java.util.List;
+
+import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.INTENTINFO;
 
 /**
  * Created by root on 3/13/17.
@@ -49,6 +51,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
         private TextView titleLabel;
         private TextView counts;
+        Category category;
 
         public NoteViewHolder(View view){
             super(view);
@@ -58,13 +61,16 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
         }
 
         public void setData(Category cat){
+            this.category=cat;
             this.counts.setText(Integer.toString(cat.getNumber_books()));
             this.titleLabel.setText(cat.getCategory());
         }
 
         @Override
         public void onClick(View v) {
-
+            Intent intent=new Intent(context, ResourceDownloadActivity.class);
+            intent.putExtra(INTENTINFO,category.getCategory());
+            context.startActivity(intent);
         }
     }
 }

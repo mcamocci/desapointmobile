@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.CategoryItemAdapter;
 import com.desapoint.desapoint.pojos.Category;
@@ -28,6 +30,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class Articles extends Fragment {
 
+    private TextView retryLabel;
     private RecyclerView recyclerView;
     private CategoryItemAdapter adapter;
     private List<Category> items =new ArrayList<>();
@@ -49,16 +52,30 @@ public class Articles extends Fragment {
                              Bundle savedInstanceState) {
         Category categ=new Category();
 
-        // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_subjects, container, false);
-        recyclerView=(RecyclerView)view.findViewById(R.id.recyclerView);
-        progressBar=(ProgressBar)view.findViewById(R.id.progressBar);
 
+
+        // Inflate the layout for this fragment
+        View view= inflater.inflate(R.layout.fragment_articles, container, false);
+        recyclerView=(RecyclerView)view.findViewById(R.id.recyclerView);
         adapter=new CategoryItemAdapter(getContext(), items);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+
+        progressBar=(ProgressBar)view.findViewById(R.id.progressBar);
+        retryLabel=(TextView)view.findViewById(R.id.retryLabel);
+        retryLabel.setVisibility(View.INVISIBLE);
+
+        retryLabel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                retryLabel.setVisibility(View.INVISIBLE);
+                loadContents(getContext(), ConstantInformation.CATEGORY_URL);
+            }
+        });
+
+
 
        /* if(!(items.size()>0)){
             for(int i=1;i<8;i++){
@@ -112,6 +129,7 @@ public class Articles extends Fragment {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progressBar.setVisibility(View.INVISIBLE);
+                retryLabel.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -122,10 +140,12 @@ public class Articles extends Fragment {
 
 
                 if(responseString.length()<8){
+                    retryLabel.setVisibility(View.VISIBLE);
                     Log.e("failed","hey there");
                     Log.e("message",responseString);
                     //progressBar.setVisibility(View.INVISIBLE);
                 }else{
+                    retryLabel.setVisibility(View.INVISIBLE);
                     adapter=new CategoryItemAdapter(getContext(), items);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();

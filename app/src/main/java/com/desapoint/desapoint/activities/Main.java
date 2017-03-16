@@ -23,6 +23,7 @@ import com.desapoint.desapoint.fragments.*;
 import com.desapoint.desapoint.fragments.Articles;
 import com.desapoint.desapoint.fragments.Books;
 import com.desapoint.desapoint.pojos.User;
+import com.desapoint.desapoint.pojos.WindowInfo;
 import com.desapoint.desapoint.toolsUtilities.ConnectionChecker;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.google.gson.Gson;
@@ -85,17 +86,22 @@ public class Main extends AppCompatActivity {
                 if(id==R.id.subjects){
                     actionBarTitle("Subjects");
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,subjectFragment).commit();
+                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.SUBJECT);
                 }else if(id==R.id.notes){
                     actionBarTitle("Notes");
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,notesFragment).commit();
+                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.NOTES);
                 }else if(id==R.id.pastpapers){
                     actionBarTitle("pastpapers");
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,pastPaperFragment).commit();
+                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.PASTPAPER);
                 }else if(id==R.id.articles){
                     actionBarTitle("Articles");
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,articleFragment).commit();
+                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.ARTICLE);
                 }else if(id==R.id.books){
                     actionBarTitle("Books");
+                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.BOOK);
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,bookFragment).commit();
                 }
 

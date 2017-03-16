@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
+import com.desapoint.desapoint.pojos.DownloadableItem;
 import com.desapoint.desapoint.pojos.Note;
 import com.desapoint.desapoint.toolsUtilities.FileDownloadOperation;
 
@@ -24,12 +25,12 @@ import static android.content.Context.DOWNLOAD_SERVICE;
  * Created by root on 3/13/17.
  */
 
-public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.NoteViewHolder> {
+public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapter.NoteViewHolder> {
 
-    private List<Note> content;
+    private List<DownloadableItem> content;
     private Context context;
 
-    public NoteItemAdapter(Context context,List<Note> list){
+    public DownloadItemAdapter(Context context, List<DownloadableItem> list){
         this.context=context;
         this.content=list;
     }
@@ -43,8 +44,8 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.NoteVi
 
     @Override
     public void onBindViewHolder(NoteViewHolder holder, int position) {
-        Note note=content.get(position);
-        holder.setData(note);
+        DownloadableItem item=content.get(position);
+        holder.setData(item);
     }
 
     @Override
@@ -73,10 +74,10 @@ public class NoteItemAdapter extends RecyclerView.Adapter<NoteItemAdapter.NoteVi
 
         }
 
-        public void setData(Note note){
+        public void setData(DownloadableItem item){
 
-            description.setText(note.getDescription());
-            title.setText(note.getNotes_name());
+            description.setText(item.getDescription());
+            title.setText(item.getName());
         }
 
         @Override

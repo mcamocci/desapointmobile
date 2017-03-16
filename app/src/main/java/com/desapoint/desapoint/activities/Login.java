@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -58,14 +59,15 @@ public class Login extends AppCompatActivity {
         login=(LinearLayout)findViewById(R.id.sign_in_button);
 
 
-
-
         login.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
                 username=usernameEditText.getText().toString().trim();
                 password=passwordEditText.getText().toString().trim();
+
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(0,0);
 
                 if(username.length()>0){
                     login(getBaseContext(),username,password, ConstantInformation.LOGIN_URL);

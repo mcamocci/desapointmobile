@@ -12,23 +12,23 @@ public class PreferenceStorage {
     Context context;
 
     private static final String USERINFO="USERINFO";
-    private static final String SUBJECTINFO="USERINFO";
+    private static final String WINDOWINFO="WINDOWINFO";
+
 
     public PreferenceStorage(Context context){
         this.context=context;
     }
 
-    public static void addSubjectJson(Context context,String json){
-        SharedPreferences sharedPreferences=context.getSharedPreferences("NOTIFICATIONS",0);
+    public static void addWindowInfo(Context context,String json){
+        SharedPreferences sharedPreferences=context.getSharedPreferences(WINDOWINFO,0);
         SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString(SUBJECTINFO,json);
+        editor.putString(WINDOWINFO,json);
         editor.commit();
     }
 
-    public String getSubjectJson(){
-
-        SharedPreferences sharedPreferences=context.getSharedPreferences("NOTIFICATIONS",0);
-        return sharedPreferences.getString(SUBJECTINFO,"none");
+    public static String getWindowInfo(Context context){
+        SharedPreferences sharedPreferences=context.getSharedPreferences(WINDOWINFO,0);
+        return sharedPreferences.getString(WINDOWINFO,"none");
     }
 
     public static void addUserJson(Context context,String json){

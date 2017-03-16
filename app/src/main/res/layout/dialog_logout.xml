@@ -12,6 +12,7 @@
         android:fontFamily="sans-serif-light"
         android:layout_marginRight="6dp"
         android:layout_marginLeft="6dp"
+        android:layout_gravity="center"
         android:text="@string/dialog_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >

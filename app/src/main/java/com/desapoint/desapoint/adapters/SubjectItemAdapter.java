@@ -10,12 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.desapoint.desapoint.R;
+import com.desapoint.desapoint.activities.ResourceDownloadActivity;
 import com.desapoint.desapoint.activities.SubjectActivity;
 import com.desapoint.desapoint.pojos.Subject;
 import com.google.gson.Gson;
 
 
 import java.util.List;
+
+import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.INTENTINFO;
 
 /**
  * Created by root on 3/12/17.
@@ -76,9 +79,8 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
 
         @Override
         public void onClick(View v) {
-            Intent intent=new Intent(context, SubjectActivity.class);
-            String json= new Gson().toJson(subject);
-            intent.putExtra(Subject.NAME,json);
+            Intent intent=new Intent(context,ResourceDownloadActivity.class);
+            intent.putExtra(INTENTINFO,subject.getSubject());
             context.startActivity(intent);
         }
 
