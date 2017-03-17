@@ -1,16 +1,21 @@
 package com.desapoint.desapoint.adapters;
 
 import android.app.DownloadManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.DownloadableItem;
 import com.desapoint.desapoint.pojos.Note;
@@ -61,6 +66,7 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
         private TextView description;
         private long enqueue;
         private DownloadManager dm;
+        private DownloadableItem downloadableItem;
 
         public NoteViewHolder(View view){
             super(view);
@@ -75,37 +81,79 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
         }
 
         public void setData(DownloadableItem item){
-
+            this.downloadableItem=item;
+            item.setFile_url("https://www.csee.umbc.edu/courses/331/spring03/0101/lectures/java01.ppt");
+            File file=new File(item.getFile_url());
             description.setText(item.getDescription());
             title.setText(item.getName());
+            Log.e("url",FileDownloadOperation.downloadToFolder(context)+file.getName());
+            if(FileDownloadOperation.isFileAvaillable(context,file)){
+                download.setImageResource(R.drawable.ic_remove_red_eye);
+            }else{
+                download.setImageResource(R.drawable.ic_action_download);
+            }
         }
 
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.download_action){
-                File file=new File("http://www.vogella.de/img/lars/LarsVogelArticle7.png");
-                Toast.makeText(context,"Download started",Toast.LENGTH_LONG).show();
-                dm = (DownloadManager)context.getSystemService(DOWNLOAD_SERVICE);
-
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse("http://www.vogella.de/img/lars/LarsVogelArticle7.png"));
-
-                String folder=null;
-
-                if((folder=FileDownloadOperation.downloadToFolder(context))!=null){
-
-                    Uri downloadLocation=Uri.fromFile(new File(folder, file.getName()));
-                    request.setDestinationUri(downloadLocation);
-
-                    enqueue = dm.enqueue(request);
+                File file=new File(downloadableItem.getFile_url());
+                if(FileDownloadOperation.isFileAvaillable(context,file)){
+                    MimeTypeMap myMime = MimeTypeMap.getSingleton();
+                    Intent newIntent = new Intent(Intent.ACTION_VIEW);
+                    String mimeType = myMime.getMimeTypeFromExtension(fileExt(file.getAbsolutePath()).substring(1));
+                    newIntent.setDataAndType(Uri.fromFile(
+                            new File(FileDownloadOperation.downloadToFolder(context)
+                    +File.separator+file.getName())),mimeType);
+                    newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    try {
+                        context.startActivity(newIntent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(context, "No handler for this type of file.", Toast.LENGTH_LONG).show();
+                    }
                 }else{
-                    Toast.makeText(context,"Something isn't wright",Toast.LENGTH_SHORT).show();
-                }
+                    Toast.makeText(context,"Download started",Toast.LENGTH_LONG).show();
+                    dm = (DownloadManager)context.getSystemService(DOWNLOAD_SERVICE);
 
+                    DownloadManager.Request request = new DownloadManager.Request(
+                            Uri.parse(downloadableItem.getFile_url()));
+
+                    String folder=null;
+
+                    if((folder=FileDownloadOperation.downloadToFolder(context))!=null){
+
+                        Uri downloadLocation=Uri.fromFile(new File(folder, file.getName()));
+                        request.setDestinationUri(downloadLocation);
+                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                        enqueue = dm.enqueue(request);
+
+                    }else{
+                        Toast.makeText(context,"Something isn't wright",Toast.LENGTH_SHORT).show();
+                    }
+                }
 
             }else if(v.getId()==R.id.share_action){
                 Toast.makeText(context,"share clicked",Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private String fileExt(String url) {
+        if (url.indexOf("?") > -1) {
+            url = url.substring(0, url.indexOf("?"));
+        }
+        if (url.lastIndexOf(".") == -1) {
+            return null;
+        } else {
+            String ext = url.substring(url.lastIndexOf(".") + 1);
+            if (ext.indexOf("%") > -1) {
+                ext = ext.substring(0, ext.indexOf("%"));
+            }
+            if (ext.indexOf("/") > -1) {
+                ext = ext.substring(0, ext.indexOf("/"));
+            }
+            return ext.toLowerCase();
+
         }
     }
 }

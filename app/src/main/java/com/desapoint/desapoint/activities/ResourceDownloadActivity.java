@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,9 +13,7 @@ import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.DownloadItemAdapter;
-import com.desapoint.desapoint.adapters.NoteItemAdapter;
 import com.desapoint.desapoint.pojos.DownloadableItem;
-import com.desapoint.desapoint.pojos.Note;
 import com.desapoint.desapoint.pojos.RetryObject;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
@@ -37,7 +34,7 @@ import static com.desapoint.desapoint.pojos.WindowInfo.NOTES;
 import static com.desapoint.desapoint.pojos.WindowInfo.PASTPAPER;
 import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.INTENTINFO;
 
-public class ResourceDownloadActivity extends AppCompatActivity {
+public class ResourceDownloadActivity extends AppCompatActivity implements RetryObject.ReloadListener {
 
     private List<DownloadableItem> list=new ArrayList<>();
     private RecyclerView recyclerView;
@@ -51,11 +48,11 @@ public class ResourceDownloadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource_download);
         parameter=getIntent().getStringExtra(INTENTINFO);
-        Toast.makeText(getBaseContext(),parameter+"haha",Toast.LENGTH_SHORT).show();
         title=PreferenceStorage.getWindowInfo(getBaseContext());
-        actionBarTitle(title);
-
+        actionBarTitle(title,"hafksfjks");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         retryObject=RetryObject.getInstance(this);
+        retryObject.setListener(this);
 
         if(title.equals(ARTICLE)){
 
@@ -81,6 +78,14 @@ public class ResourceDownloadActivity extends AppCompatActivity {
 
     }
 
+
+    @Override
+    public void onReloaded(String message) {
+        Toast.makeText(getBaseContext(),message,Toast.LENGTH_LONG).show();
+        //get the contents
+        loadContents(getBaseContext());
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
@@ -103,17 +108,18 @@ public class ResourceDownloadActivity extends AppCompatActivity {
     }
 
 
-    public void actionBarTitle(String title){
+    public void actionBarTitle(String title,String category){
 
-        this.getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
         LayoutInflater inflator = LayoutInflater.from(this);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        View v = inflator.inflate(R.layout.custom_title_other, null);
+        View v = inflator.inflate(R.layout.custom_title, null);
+
+        //assign the view to the actionbar
+        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         //if you need to customize anything else about the text, do it here.
         //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.title)).setText(title);
+        ((TextView)v.findViewById(R.id.sub_title)).setText(category);
+        ((TextView)v.findViewById(R.id.main_title)).setText(title);
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
     }
@@ -192,6 +198,8 @@ public class ResourceDownloadActivity extends AppCompatActivity {
                     retryObject.showMessage();
                     retryObject.showName();
                 }else{
+                    retryObject.hideMessage();
+                    retryObject.hideName();
                     Type listType = new TypeToken<List<DownloadableItem>>() {}.getType();
                     list=new Gson().fromJson(responseString,listType);
                     adapter=new DownloadItemAdapter(getBaseContext(),list);

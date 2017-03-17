@@ -11,9 +11,8 @@ import android.widget.TextView;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.activities.ResourceDownloadActivity;
-import com.desapoint.desapoint.activities.SubjectActivity;
 import com.desapoint.desapoint.pojos.Subject;
-import com.google.gson.Gson;
+import com.desapoint.desapoint.pojos.WindowInfo;
 
 
 import java.util.List;
@@ -28,10 +27,12 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
 
     private Context context;
     List<Subject> list;
+    private String FLAG;
 
-    public SubjectItemAdapter(Context context, List<Subject> subjects){
+    public SubjectItemAdapter(Context context, List<Subject> subjects,String flag){
         this.context=context;
         this.list=subjects;
+        this.FLAG=flag;
     }
 
     @Override
@@ -79,9 +80,19 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
 
         @Override
         public void onClick(View v) {
-            Intent intent=new Intent(context,ResourceDownloadActivity.class);
-            intent.putExtra(INTENTINFO,subject.getSubject());
-            context.startActivity(intent);
+
+            if(FLAG.equals(WindowInfo.SUBJECT)){
+
+            }else if(FLAG.equals(WindowInfo.NOTES)){
+                Intent intent=new Intent(context,ResourceDownloadActivity.class);
+                intent.putExtra(INTENTINFO,subject.getSubject());
+                context.startActivity(intent);
+            }else if(FLAG.equals(WindowInfo.PASTPAPER)){
+                Intent intent=new Intent(context,ResourceDownloadActivity.class);
+                intent.putExtra(INTENTINFO,subject.getSubject());
+                context.startActivity(intent);
+            }
+
         }
 
 

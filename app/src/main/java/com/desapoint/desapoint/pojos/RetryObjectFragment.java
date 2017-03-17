@@ -3,7 +3,6 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 
@@ -11,7 +10,7 @@ import com.desapoint.desapoint.R;
  * Created by root on 3/16/17.
  */
 
-public class RetryObject {
+public class RetryObjectFragment {
 
     public TextView getName() {
         return name;
@@ -79,13 +78,13 @@ public class RetryObject {
         return this.listener;
     }
 
-    public static RetryObject getInstance(final Activity activity){
+    public static RetryObjectFragment getInstance(View view){
 
-        TextView name=(TextView)activity.findViewById(R.id.retryLabel);
-        TextView message=(TextView)activity.findViewById(R.id.message);
-        ProgressBar progressBar=(ProgressBar)activity.findViewById(R.id.progressBar);
+        TextView name=(TextView)view.findViewById(R.id.retryLabel);
+        TextView message=(TextView)view.findViewById(R.id.message);
+        ProgressBar progressBar=(ProgressBar)view.findViewById(R.id.progressBar);
 
-        final RetryObject object=new RetryObject();
+        final RetryObjectFragment object=new RetryObjectFragment();
         object.setMessage(message);
         object.setName(name);
         object.setProgressBar(progressBar);

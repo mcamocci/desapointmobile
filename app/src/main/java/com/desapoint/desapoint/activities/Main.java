@@ -22,6 +22,7 @@ import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.fragments.*;
 import com.desapoint.desapoint.fragments.Articles;
 import com.desapoint.desapoint.fragments.Books;
+import com.desapoint.desapoint.fragments.Notes;
 import com.desapoint.desapoint.pojos.User;
 import com.desapoint.desapoint.pojos.WindowInfo;
 import com.desapoint.desapoint.toolsUtilities.ConnectionChecker;
@@ -41,9 +42,9 @@ public class Main extends AppCompatActivity {
 
     private BottomBar bottomBar;
     private Subjects subjectFragment=new Subjects();
+    private Notes notesFragment=new Notes();
+    private PastPaperFragment pastPaperFragment=new PastPaperFragment();
     private Articles articleFragment=new Articles();
-    private Subjects notesFragment=new Subjects();
-    private Articles pastPaperFragment=new Articles();
     private Books bookFragment=new Books();
     private List<String> docPaths = new ArrayList<>();
 

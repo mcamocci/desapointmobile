@@ -16,6 +16,7 @@ import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.SubjectItemAdapter;
 import com.desapoint.desapoint.pojos.Subject;
 import com.desapoint.desapoint.pojos.User;
+import com.desapoint.desapoint.pojos.WindowInfo;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.google.gson.Gson;
@@ -58,7 +59,7 @@ public class Subjects extends Fragment {
         recyclerView=(RecyclerView)view.findViewById(R.id.recyclerView);
         progressBar=(ProgressBar)view.findViewById(R.id.progressBar);
 
-        adapter=new SubjectItemAdapter(getContext(),subjects);
+        adapter=new SubjectItemAdapter(getContext(),subjects,WindowInfo.SUBJECT);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
@@ -141,7 +142,7 @@ public class Subjects extends Fragment {
                     Log.e("message",responseString);
                     //progressBar.setVisibility(View.INVISIBLE);
                 }else{
-                    adapter=new SubjectItemAdapter(getContext(),subjects);
+                    adapter=new SubjectItemAdapter(getContext(),subjects, WindowInfo.SUBJECT);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.INVISIBLE);
