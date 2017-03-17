@@ -133,7 +133,16 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
                 }
 
             }else if(v.getId()==R.id.share_action){
-                Toast.makeText(context,"share clicked",Toast.LENGTH_SHORT).show();
+                String shared_content=downloadableItem.getDescription()+" documents are now availlable on desapoint" +
+                        " Get it on google play today." +
+                        " https://play.google.com/store/apps/details?id=com.desapoint.desapoint to access this file";
+                Intent intent=new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT,shared_content);
+                Intent cooler_one=intent.createChooser(intent,"Share file using:-");
+                cooler_one.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(cooler_one);
             }
         }
     }

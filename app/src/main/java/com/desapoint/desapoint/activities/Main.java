@@ -114,10 +114,10 @@ public class Main extends AppCompatActivity {
             }
         });
             bottomBar.mapColorForTab(0,"#0275D8");
-            bottomBar.mapColorForTab(1,"#5CB85C");
+            bottomBar.mapColorForTab(1,"#292B2C");
             bottomBar.mapColorForTab(2,"#F0AD4E");
             bottomBar.mapColorForTab(3,"#2196f3");
-            bottomBar.mapColorForTab(4,"#292B2C");
+            bottomBar.mapColorForTab(4,"#5CB85C");
 
             /*BottomBarBadge articles=bottomBar.makeBadgeForTabAt(0,"#ff0000",12);
             articles.show();*/

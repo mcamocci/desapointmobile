@@ -10,6 +10,8 @@ import android.widget.TextView;
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.activities.ResourceDownloadActivity;
 import com.desapoint.desapoint.pojos.Category;
+import com.desapoint.desapoint.pojos.WindowInfo;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 
 import java.util.List;
 
@@ -31,7 +33,14 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.book_cat_item,parent,false);
+        View view;
+        if(PreferenceStorage.getWindowInfo(context).equalsIgnoreCase(WindowInfo.BOOK)){
+            view= LayoutInflater.from(parent.getContext()).inflate(R.layout.book_cat_green,parent,false);
+        }else{
+            view= LayoutInflater.from(parent.getContext()).inflate(R.layout.book_cat_item,parent,false);
+        }
+        
+
         NoteViewHolder holder=new NoteViewHolder(view);
         return holder;
     }

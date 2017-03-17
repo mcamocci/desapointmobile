@@ -4,22 +4,22 @@
     <item
         android:title="Subjects"
         android:id="@+id/subjects"
-        android:icon="@drawable/ic_article"
+        android:icon="@drawable/ic_action_subject"
         />
     <item
         android:title="Notes"
         android:id="@+id/notes"
-        android:icon="@drawable/ic_book"
+        android:icon="@drawable/ic_subjects"
         />
     <item
         android:title="PastPaper"
         android:id="@+id/pastpapers"
-        android:icon="@drawable/ic_book"
+        android:icon="@drawable/ic_past_paper"
         />
     <item
         android:title="Articles"
         android:id="@+id/articles"
-        android:icon="@drawable/ic_book"
+        android:icon="@drawable/ic_article"
         />
     <item
         android:title=" Books"

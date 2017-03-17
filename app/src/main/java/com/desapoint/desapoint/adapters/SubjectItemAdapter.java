@@ -2,6 +2,7 @@ package com.desapoint.desapoint.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.activities.ResourceDownloadActivity;
 import com.desapoint.desapoint.pojos.Subject;
 import com.desapoint.desapoint.pojos.WindowInfo;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 
 
 import java.util.List;
@@ -43,6 +45,15 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
     @Override
     public SubjectItemAdapter.SubjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_model,parent,false);
+
+        if(PreferenceStorage.getWindowInfo(context).equalsIgnoreCase(WindowInfo.NOTES)){
+           view.findViewById(R.id.text_short_bg).setBackgroundColor(Color.parseColor("#292B2C"));
+        }else if(PreferenceStorage.getWindowInfo(context).equalsIgnoreCase(WindowInfo.PASTPAPER)){
+            view.findViewById(R.id.text_short_bg).setBackgroundColor(Color.parseColor("#F0AD4E"));
+        }else{
+            view.findViewById(R.id.text_short_bg).setBackgroundColor(Color.parseColor("#0275D8"));
+        }
+
         SubjectHolder holder=new SubjectHolder(view);
         return holder;
     }
