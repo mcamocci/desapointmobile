@@ -10,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
+
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.CategoryItemAdapter;
 import com.desapoint.desapoint.pojos.Category;
+import com.desapoint.desapoint.pojos.RetryObjectFragment;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,12 +29,12 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class Books extends Fragment {
+public class Books extends Fragment implements RetryObjectFragment.ReloadListener {
 
     private RecyclerView recyclerView;
     private CategoryItemAdapter adapter;
     private List<Category> items =new ArrayList<>();
-    private ProgressBar progressBar;
+    private RetryObjectFragment retryObject;
 
     public Books() {
         // Required empty public constructor
@@ -45,6 +48,12 @@ public class Books extends Fragment {
     }
 
     @Override
+    public void onReloaded(String message) {
+        Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
+        loadContents(getContext(), ConstantInformation.CATEGORY_URL);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Category categ=new Category();
@@ -52,7 +61,8 @@ public class Books extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_subjects, container, false);
         recyclerView=(RecyclerView)view.findViewById(R.id.recyclerView);
-        progressBar=(ProgressBar)view.findViewById(R.id.progressBar);
+        retryObject= RetryObjectFragment.getInstance(view);
+        retryObject.setListener(this);
 
         adapter=new CategoryItemAdapter(getContext(), items);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
@@ -76,7 +86,9 @@ public class Books extends Fragment {
         if(items.size()<1){
             loadContents(getContext(), ConstantInformation.CATEGORY_URL);
         }else{
-            progressBar.setVisibility(View.INVISIBLE);
+            retryObject.hideProgress();
+            retryObject.hideMessage();
+            retryObject.hideName();
         }
 
 
@@ -106,30 +118,35 @@ public class Books extends Fragment {
             @Override
             public void onStart() {
                 super.onStart();
-                progressBar.setVisibility(View.VISIBLE);
+                retryObject.hideMessage();
+                retryObject.hideName();
+                retryObject.showProgress();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                progressBar.setVisibility(View.INVISIBLE);
+                retryObject.hideProgress();
+                retryObject.showName();
+                retryObject.getMessage().setText("Could not connect!!");
+                retryObject.showMessage();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
-                Type listType = new TypeToken<List<Category>>() {}.getType();
-                items=new Gson().fromJson(responseString,listType);
+                retryObject.hideProgress();
 
 
                 if(responseString.length()<8){
-                    Log.e("failed","hey there");
-                    Log.e("message",responseString);
-                    //progressBar.setVisibility(View.INVISIBLE);
+                    retryObject.getMessage().setText("No content");
+                    retryObject.showMessage();
+                    retryObject.showName();;
                 }else{
+                    Type listType = new TypeToken<List<Category>>() {}.getType();
+                    items=new Gson().fromJson(responseString,listType);
+
                     adapter=new CategoryItemAdapter(getContext(), items);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    progressBar.setVisibility(View.INVISIBLE);
                 }
 
 

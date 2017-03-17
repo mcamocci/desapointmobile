@@ -7,11 +7,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
-
-import org.w3c.dom.Text;
 
 public class SubjectActivity extends AppCompatActivity implements View.OnClickListener{
 

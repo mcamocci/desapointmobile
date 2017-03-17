@@ -23,10 +23,7 @@
         </activity>
         <activity android:name=".activities.Main" />
         <activity android:name=".activities.About" />
-        <activity android:name=".activities.Articles" />
-        <activity android:name=".activities.Books" />
         <activity android:name=".activities.Profile" />
-        <activity android:name=".activities.Notes" />
         <activity android:name=".activities.SubjectActivity" />
         <activity android:name=".activities.ResourceDownloadActivity" />
         <activity android:name=".activities.FlexibleActivity" />

@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.User;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;

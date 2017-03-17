@@ -9,11 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.SubjectItemAdapter;
+import com.desapoint.desapoint.pojos.RetryObjectFragment;
 import com.desapoint.desapoint.pojos.Subject;
 import com.desapoint.desapoint.pojos.User;
 import com.desapoint.desapoint.pojos.WindowInfo;
@@ -32,17 +32,23 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 
-public class Subjects extends Fragment {
+public class Subjects extends Fragment implements RetryObjectFragment.ReloadListener{
 
     private RecyclerView recyclerView;
     private SubjectItemAdapter adapter;
     private List<Subject> subjects=new ArrayList<>();
-    private ProgressBar progressBar;
-
+    private RetryObjectFragment retryObject;
+    private User user;
     public Subjects() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onReloaded(String message) {
+        Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
+        loadContents(getContext(),user.getUser_id(), ConstantInformation.SUBJECT_LIST_URL);
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +63,11 @@ public class Subjects extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_subjects, container, false);
         recyclerView=(RecyclerView)view.findViewById(R.id.recyclerView);
-        progressBar=(ProgressBar)view.findViewById(R.id.progressBar);
+
+
+        retryObject= RetryObjectFragment.getInstance(view);
+        retryObject.setListener(this);
+
 
         adapter=new SubjectItemAdapter(getContext(),subjects,WindowInfo.SUBJECT);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getContext());
@@ -66,15 +76,16 @@ public class Subjects extends Fragment {
         recyclerView.setAdapter(adapter);
         Subject subject=new Subject();
 
-        User user=new Gson().fromJson(
+        user=new Gson().fromJson(
                 PreferenceStorage.getUserJson(getContext()),User.class);
-
 
         if(subjects.size()<1){
             loadContents(getContext(),user.getUser_id(), ConstantInformation.SUBJECT_LIST_URL);
             recyclerView.setAdapter(adapter);
         }else{
-            progressBar.setVisibility(View.INVISIBLE);
+            retryObject.hideProgress();
+            retryObject.hideMessage();
+            retryObject.hideName();
         }
 
    /*     if(!(subjects.size()>0)){
@@ -118,34 +129,43 @@ public class Subjects extends Fragment {
             @Override
             public void onStart() {
                 super.onStart();
-                progressBar.setVisibility(View.VISIBLE);
+                retryObject.hideMessage();
+                retryObject.hideName();
+                retryObject.showProgress();
             }
+
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                //progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(context,responseString,Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.INVISIBLE);
+                retryObject.hideProgress();
+                retryObject.showName();
+                retryObject.getMessage().setText("Could not connect!!");
+                retryObject.showMessage();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                retryObject.hideProgress();
 
-                //Toast.makeText(context,responseString,Toast.LENGTH_SHORT).show();
-                progressBar.setVisibility(View.INVISIBLE);
-
-                Type listType = new TypeToken<List<Subject>>() {}.getType();
-                subjects=new Gson().fromJson(responseString,listType);
 
                 if(responseString.length()<8){
-                    Log.e("failed","hey there");
-                    Log.e("message",responseString);
-                    //progressBar.setVisibility(View.INVISIBLE);
+
+                    if(responseString.equalsIgnoreCase("none")){
+                        retryObject.getMessage().setText(
+                                user.getFirstName()
+                                        +" Please make sure you have completed registration through your computer" +
+                                        " or try again later");
+                    }else{
+                        retryObject.getMessage().setText("No content");
+                    }
+                    retryObject.showMessage();
+                    retryObject.showName();
                 }else{
+                    Type listType = new TypeToken<List<Subject>>() {}.getType();
+                    subjects=new Gson().fromJson(responseString,listType);
                     adapter=new SubjectItemAdapter(getContext(),subjects, WindowInfo.SUBJECT);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    progressBar.setVisibility(View.INVISIBLE);
                 }
 
 

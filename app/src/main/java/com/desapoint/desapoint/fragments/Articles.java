@@ -51,7 +51,7 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
 
     @Override
     public void onReloaded(String message) {
-        Toast.makeText(getContext(),"am reloaded",Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
         loadContents(getContext(), ConstantInformation.CATEGORY_URL);
     }
 

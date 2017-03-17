@@ -113,11 +113,11 @@ public class Main extends AppCompatActivity {
 
             }
         });
-            bottomBar.mapColorForTab(0,"#3f51b5");
-            bottomBar.mapColorForTab(1,"#2196f3");
-            bottomBar.mapColorForTab(2,"#aa00ff");
+            bottomBar.mapColorForTab(0,"#0275D8");
+            bottomBar.mapColorForTab(1,"#5CB85C");
+            bottomBar.mapColorForTab(2,"#F0AD4E");
             bottomBar.mapColorForTab(3,"#2196f3");
-            bottomBar.mapColorForTab(4,"#aa00ff");
+            bottomBar.mapColorForTab(4,"#292B2C");
 
             /*BottomBarBadge articles=bottomBar.makeBadgeForTabAt(0,"#ff0000",12);
             articles.show();*/
@@ -251,7 +251,12 @@ public class Main extends AppCompatActivity {
             }
         });
 
-        dialog.show();
+        try{
+            dialog.show();
+        }catch (Exception ex){
+
+        }
+
 
     }
 

@@ -49,6 +49,7 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
         setContentView(R.layout.activity_resource_download);
         parameter=getIntent().getStringExtra(INTENTINFO);
         title=PreferenceStorage.getWindowInfo(getBaseContext());
+
         actionBarTitle(title,"hafksfjks");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         retryObject=RetryObject.getInstance(this);

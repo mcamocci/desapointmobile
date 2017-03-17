@@ -95,16 +95,22 @@ public class Login extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(context,Integer.toString(statusCode),Toast.LENGTH_SHORT).show();
-                Toast.makeText(context,throwable.toString(),Toast.LENGTH_SHORT).show();
-                Toast.makeText(context,responseString,Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Code:"+Integer.toString(statusCode),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Failed, try again later",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
 
+                Log.e("response",responseString);
                if(responseString.length()<8){
                     progressBar.setVisibility(View.INVISIBLE);
+                    if(responseString.equalsIgnoreCase("none")){
+                        Toast.makeText(getBaseContext(),"Invalid information",Toast.LENGTH_SHORT).show();
+                        usernameEditText.setText("");
+                        passwordEditText.setText("");
+                    }
+
                 }else{
                    progressBar.setVisibility(View.INVISIBLE);
                    Intent intent=new Intent(getBaseContext(),Main.class);
