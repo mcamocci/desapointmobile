@@ -75,8 +75,6 @@ public class Main extends AppCompatActivity {
 
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
 
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         bottomBar=BottomBar.attach(this,savedInstanceState);
@@ -113,11 +111,11 @@ public class Main extends AppCompatActivity {
 
             }
         });
-            bottomBar.mapColorForTab(0,"#0275D8");
+            bottomBar.mapColorForTab(0,"#292B2C");
             bottomBar.mapColorForTab(1,"#292B2C");
-            bottomBar.mapColorForTab(2,"#F0AD4E");
-            bottomBar.mapColorForTab(3,"#2196f3");
-            bottomBar.mapColorForTab(4,"#5CB85C");
+            bottomBar.mapColorForTab(2,"#292B2C");
+            bottomBar.mapColorForTab(3,"#292B2C");
+            bottomBar.mapColorForTab(4,"#292B2C");
 
             /*BottomBarBadge articles=bottomBar.makeBadgeForTabAt(0,"#ff0000",12);
             articles.show();*/
@@ -139,7 +137,7 @@ public class Main extends AppCompatActivity {
 
         int id=item.getItemId();
         if(id==android.R.id.home){
-            finish();
+            //finish();
         }else if(id==R.id.feedBackMenu){
             intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:")); // only email apps should handle this

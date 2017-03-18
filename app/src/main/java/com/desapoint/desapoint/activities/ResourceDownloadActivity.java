@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.DownloadItemAdapter;
 import com.desapoint.desapoint.pojos.DownloadableItem;
@@ -22,7 +21,6 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,15 +41,18 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
     private String title;
     private String parameter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_resource_download);
         parameter=getIntent().getStringExtra(INTENTINFO);
         title=PreferenceStorage.getWindowInfo(getBaseContext());
 
-        actionBarTitle(title,"hafksfjks");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        this.getSupportActionBar().setDisplayShowCustomEnabled(true);
+        actionBarTitle(title.toLowerCase()+" - "+parameter);
         retryObject=RetryObject.getInstance(this);
         retryObject.setListener(this);
 
@@ -109,21 +110,25 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
     }
 
 
-    public void actionBarTitle(String title,String category){
+    public void actionBarTitle(String title){
 
         LayoutInflater inflator = LayoutInflater.from(this);
         View v = inflator.inflate(R.layout.custom_title, null);
 
+        //if you need to customize anything else about the text, do it here.
+        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
+        ((TextView)v.findViewById(R.id.main_title)).setText(this.getTitle());
         //assign the view to the actionbar
         this.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        this.getSupportActionBar().setCustomView(v);
 
         //if you need to customize anything else about the text, do it here.
         //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.sub_title)).setText(category);
-        ((TextView)v.findViewById(R.id.main_title)).setText(title);
+        ((TextView)v.findViewById(R.id.sub_title)).setText(title);
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
     }
+
 
     @Override
     protected void onResume() {

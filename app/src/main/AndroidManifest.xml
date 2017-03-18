@@ -21,13 +21,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Main" />
-        <activity android:name=".activities.About" />
-        <activity android:name=".activities.Profile" />
-        <activity android:name=".activities.SubjectActivity" />
-        <activity android:name=".activities.ResourceDownloadActivity" />
-        <activity android:name=".activities.FlexibleActivity" />
-        <activity android:name=".activities.ConnectionProblem"></activity>
+        <activity android:name=".activities.Main"
+            android:theme="@style/AppThemeBack"/>
+        <activity android:name=".activities.About"
+            android:theme="@style/AppThemeBack"/>
+        <activity android:name=".activities.Profile"
+            android:theme="@style/AppThemeBack"/>
+        <activity android:name=".activities.SubjectActivity"
+            android:theme="@style/AppThemeBack"/>
+        <activity android:name=".activities.ResourceDownloadActivity"
+            android:theme="@style/AppThemeBack"/>
+        <activity android:name=".activities.FlexibleActivity"
+            android:theme="@style/AppThemeBack"/>
+        <activity android:name=".activities.ConnectionProblem"
+            android:theme="@style/AppThemeBack"/>
     </application>
 
 </manifest>

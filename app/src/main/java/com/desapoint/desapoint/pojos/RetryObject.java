@@ -68,9 +68,6 @@ public class RetryObject {
     private ProgressBar progressBar;
     private ReloadListener listener;
 
-
-
-
     public void setListener(ReloadListener listener){
         this.listener=listener;
     }

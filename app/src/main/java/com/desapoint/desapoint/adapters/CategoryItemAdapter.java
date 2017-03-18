@@ -34,13 +34,7 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
-        if(PreferenceStorage.getWindowInfo(context).equalsIgnoreCase(WindowInfo.BOOK)){
-            view= LayoutInflater.from(parent.getContext()).inflate(R.layout.book_cat_green,parent,false);
-        }else{
-            view= LayoutInflater.from(parent.getContext()).inflate(R.layout.book_cat_item,parent,false);
-        }
-        
-
+        view= LayoutInflater.from(parent.getContext()).inflate(R.layout.book_cat_green,parent,false);
         NoteViewHolder holder=new NoteViewHolder(view);
         return holder;
     }
