@@ -13,6 +13,11 @@
         app:showAsAction="never"
         />
     <item
+        android:title="@string/settings"
+        android:id="@+id/settings"
+        app:showAsAction="never"
+        />
+    <item
         android:id="@+id/aboutMenu"
         android:title="@string/aboutMenu"
         app:showAsAction="never"

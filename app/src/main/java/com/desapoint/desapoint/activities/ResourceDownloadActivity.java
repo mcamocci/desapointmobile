@@ -1,10 +1,15 @@
 package com.desapoint.desapoint.activities;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +26,10 @@ import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +59,27 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
         parameter=getIntent().getStringExtra(INTENTINFO);
         title=PreferenceStorage.getWindowInfo(getBaseContext());
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
         actionBarTitle(title.toLowerCase()+" - "+parameter);
         retryObject=RetryObject.getInstance(this);
         retryObject.setListener(this);
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(getBaseContext(),FileUploadActivity.class);
+                startActivity(intent);
+
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+            }
+        });
 
         if(title.equals(ARTICLE)){
 
@@ -217,5 +242,30 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
             }
         });
 
+    }
+
+    public void uploadMultipart(final Context context,String url,String path,String[] params) {
+
+        UploadNotificationConfig notificationConfig = new UploadNotificationConfig()
+                .setTitle("File upload")
+                .setInProgressMessage("Uploading at [[UPLOAD_RATE]] ([[PROGRESS]])")
+                .setErrorMessage("Failed to upload the File")
+                .setCompletedMessage("Upload completed successfully in [[ELAPSED_TIME]]");
+
+        //new UploadNotificationConfig()
+
+        try {
+            String uploadId =
+                    new MultipartUploadRequest(context, "http://upload.server.com/path")
+                            // starting from 3.1+, you can also use content:// URI string instead of absolute file
+                            .addFileToUpload("/absolute/path/to/your/file", "your-param-name")
+                            .addParameter("sfjsf","")
+                            .addParameter("","")
+                            .setNotificationConfig(notificationConfig)
+                            .setMaxRetries(2)
+                            .startUpload();
+        } catch (Exception exc) {
+            Log.e("AndroidUploadService", exc.getMessage(), exc);
+        }
     }
 }

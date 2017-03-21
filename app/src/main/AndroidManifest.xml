@@ -21,20 +21,39 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Main"
-            android:theme="@style/AppThemeBack"/>
-        <activity android:name=".activities.About"
-            android:theme="@style/AppThemeBack"/>
-        <activity android:name=".activities.Profile"
-            android:theme="@style/AppThemeBack"/>
-        <activity android:name=".activities.SubjectActivity"
-            android:theme="@style/AppThemeBack"/>
-        <activity android:name=".activities.ResourceDownloadActivity"
-            android:theme="@style/AppThemeBack"/>
-        <activity android:name=".activities.FlexibleActivity"
-            android:theme="@style/AppThemeBack"/>
-        <activity android:name=".activities.ConnectionProblem"
-            android:theme="@style/AppThemeBack"/>
+        <activity
+            android:name=".activities.Main"
+            android:theme="@style/AppThemeBack" />
+        <activity
+            android:name=".activities.About"
+            android:theme="@style/AppThemeBack" />
+        <activity
+            android:name=".activities.Profile"
+            android:theme="@style/AppThemeBack" />
+        <activity
+            android:name=".activities.SubjectActivity"
+            android:theme="@style/AppThemeBack" />
+        <activity
+            android:name=".activities.ResourceDownloadActivity"
+            android:theme="@style/NoActionBarTheme" />
+        <activity
+            android:name=".activities.FlexibleActivity"
+            android:theme="@style/AppThemeBack" />
+        <activity
+            android:name=".activities.ConnectionProblem"
+            android:theme="@style/AppThemeBack" />
+        <activity
+            android:name=".activities.trial"
+            android:label="@string/title_activity_trial"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activities.FileUploadActivity"
+            android:theme="@style/AppThemeBackBlack" />
+        <activity
+            android:name=".activities.RegistrationActivityScreenOne"
+            android:theme="@style/AppThemeBack" />
+        <activity android:name=".activities.RegistrationActivityscreenTwo" />
+        <activity android:name=".activities.RegistrationFinalActivity"></activity>
     </application>
 
 </manifest>

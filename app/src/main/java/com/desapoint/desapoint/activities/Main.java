@@ -185,6 +185,9 @@ public class Main extends AppCompatActivity {
                     .setActivityTheme(R.style.filePicker)
                     .pickDocument(this);
 
+        }else if(id==R.id.settings){
+            intent=new Intent(getBaseContext(),RegistrationActivityScreenOne.class);
+            startActivity(intent);
         }
 
         return true;
