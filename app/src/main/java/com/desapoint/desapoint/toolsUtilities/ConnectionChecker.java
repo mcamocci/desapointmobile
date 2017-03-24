@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
  */
 
 public class ConnectionChecker {
+
     public static boolean isInternetConnected(Context context){
 
         ConnectivityManager connectivityManager=

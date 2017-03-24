@@ -24,7 +24,6 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_screen_one);
 
-
         spinner = (Spinner) findViewById(R.id.university);
 
         // Spinner click listener

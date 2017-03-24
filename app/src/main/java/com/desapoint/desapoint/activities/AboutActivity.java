@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.desapoint.desapoint.R;
 
 
-public class About extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

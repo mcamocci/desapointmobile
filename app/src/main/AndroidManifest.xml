@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.Login">
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,38 +24,53 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.Main"
+            android:name=".activities.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBack" />
         <activity
-            android:name=".activities.About"
+            android:name=".activities.AboutActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBack" />
         <activity
-            android:name=".activities.Profile"
+            android:name=".activities.ProfileActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBack" />
         <activity
             android:name=".activities.SubjectActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBack" />
         <activity
             android:name=".activities.ResourceDownloadActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBarTheme" />
         <activity
             android:name=".activities.FlexibleActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBack" />
         <activity
             android:name=".activities.ConnectionProblem"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBack" />
         <activity
             android:name=".activities.trial"
             android:label="@string/title_activity_trial"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.FileUploadActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppThemeBackBlack" />
         <activity
             android:name=".activities.RegistrationActivityScreenOne"
-            android:theme="@style/AppThemeBack" />
-        <activity android:name=".activities.RegistrationActivityscreenTwo" />
-        <activity android:name=".activities.RegistrationFinalActivity"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeBackBlack" />
+        <activity
+            android:name=".activities.RegistrationActivityscreenTwo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.RegistrationFinalActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".activities.EditorActivity"></activity>
     </application>
 
 </manifest>

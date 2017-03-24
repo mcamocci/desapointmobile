@@ -1,5 +1,4 @@
 package com.desapoint.desapoint.adapters;
-
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -14,11 +13,8 @@ import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.DownloadableItem;
-import com.desapoint.desapoint.pojos.Note;
 import com.desapoint.desapoint.toolsUtilities.FileDownloadOperation;
 
 import java.io.File;

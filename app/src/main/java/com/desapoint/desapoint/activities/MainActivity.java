@@ -38,7 +38,7 @@ import java.util.List;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 
-public class Main extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
 
     private BottomBar bottomBar;
     private Subjects subjectFragment=new Subjects();
@@ -53,6 +53,8 @@ public class Main extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.SUBJECT);
 
         if (!(ConnectionChecker.isInternetConnected(getBaseContext()))) {
             Intent intent=new Intent(getBaseContext(),ConnectionProblem.class);
@@ -148,7 +150,7 @@ public class Main extends AppCompatActivity {
             }
 
         }else if(id==R.id.aboutMenu){
-            intent=new Intent(getBaseContext(),About.class);
+            intent=new Intent(getBaseContext(),AboutActivity.class);
             startActivity(intent);
         }else if(id==R.id.shareMenu){
             String shared_content="Hello am using "+getResources().getString(R.string.app_name)+" to access all course materials " +
@@ -178,7 +180,7 @@ public class Main extends AppCompatActivity {
         }else if(id==R.id.logOut){
             showLogOutDialog("Log out");
         }else if(id==R.id.profile){
-            intent=new Intent(getBaseContext(),Profile.class);
+            intent=new Intent(getBaseContext(),ProfileActivity.class);
             startActivity(intent);
         }else if(id==R.id.upload){
             FilePickerBuilder.getInstance().setMaxCount(10)
@@ -239,7 +241,7 @@ public class Main extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 PreferenceStorage.clearInformation(getBaseContext());
-                Intent intent=new Intent(getBaseContext(),Login.class);
+                Intent intent=new Intent(getBaseContext(),LoginActivity.class);
                 startActivity(intent);
                 finish();
 

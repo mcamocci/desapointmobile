@@ -22,7 +22,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import cz.msebera.android.httpclient.Header;
 
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     private LinearLayout login;
     private ProgressBar progressBar;
@@ -39,7 +39,7 @@ public class Login extends AppCompatActivity {
 
         //is  user loged before?
         if(PreferenceStorage.getUserJson(getBaseContext()).length()>10){
-            Intent intent=new Intent(getBaseContext(),Main.class);
+            Intent intent=new Intent(getBaseContext(),MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -113,7 +113,7 @@ public class Login extends AppCompatActivity {
 
                 }else{
                    progressBar.setVisibility(View.INVISIBLE);
-                   Intent intent=new Intent(getBaseContext(),Main.class);
+                   Intent intent=new Intent(getBaseContext(),MainActivity.class);
                    PreferenceStorage.addUserJson(getBaseContext(),responseString);
                    startActivity(intent);
                    finish();
