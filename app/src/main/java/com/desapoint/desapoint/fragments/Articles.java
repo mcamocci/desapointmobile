@@ -144,8 +144,15 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
                     retryObject.showMessage();
                     retryObject.showName();
                 }else{
-                    Type listType = new TypeToken<List<Category>>() {}.getType();
-                    items=new Gson().fromJson(responseString,listType);
+
+                    try{
+                        Type listType = new TypeToken<List<Category>>() {}.getType();
+                        items=new Gson().fromJson(responseString,listType);
+
+                    }catch (Exception ex){
+
+                    }
+
                     adapter=new CategoryItemAdapter(getContext(), items);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();

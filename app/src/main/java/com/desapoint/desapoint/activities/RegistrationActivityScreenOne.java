@@ -1,5 +1,6 @@
 package com.desapoint.desapoint.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,11 +8,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.desapoint.desapoint.R;
+import com.desapoint.desapoint.pojos.University;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,24 +25,37 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
 
     // Spinner element
     private Spinner spinner;
+    private LinearLayout nextButton;
+    private List<University> universityList=new ArrayList<>();
+    private String UNIVERSITY_SELECTOR="SELECT UNIVERSITY";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_screen_one);
+
+        String listContent=getIntent().getStringExtra(University.JSON_VARIABLE);
+        try{
+            Type listType = new TypeToken<List<University>>() {}.getType();
+            universityList=new Gson().fromJson(listContent,listType);
+        }catch (Exception ex){
+
+        }
+
+        // Spinner Drop down elements
+        List<String> categories = new ArrayList<String>();
 
         spinner = (Spinner) findViewById(R.id.university);
 
         // Spinner click listener
         spinner.setOnItemSelectedListener(this);
 
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("Choose university");
-        categories.add("Business Services");
-        categories.add("Computers");
-        categories.add("Education");
-        categories.add("Personal");
-        categories.add("Travel");
+
+        categories.add(UNIVERSITY_SELECTOR);
+        for(int i=0;i<universityList.size();i++){
+            categories.add(universityList.get(i).getName());
+        }
+
+        nextButton=(LinearLayout)findViewById(R.id.nextButton);
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -50,6 +69,14 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
         actionBarTitle("Registration");
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        nextButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getBaseContext(),RegistrationActivityscreenTwo.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void actionBarTitle(String title){

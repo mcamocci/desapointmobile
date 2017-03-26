@@ -66,11 +66,14 @@
             android:theme="@style/AppThemeBackBlack" />
         <activity
             android:name=".activities.RegistrationActivityscreenTwo"
+            android:theme="@style/AppThemeBackBlack"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.RegistrationFinalActivity"
+            android:theme="@style/AppThemeBackBlack"
             android:screenOrientation="portrait" />
-        <activity android:name=".activities.EditorActivity"></activity>
+        <activity android:name=".activities.EditorActivity"
+            android:theme="@style/AppThemeBackBlack"/>
     </application>
 
 </manifest>

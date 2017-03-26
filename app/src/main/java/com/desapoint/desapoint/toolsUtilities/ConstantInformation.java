@@ -16,6 +16,10 @@ public class ConstantInformation {
     public static final String NOTES_URL=COMMON+"notesList.php";
     public static final String ARTICLE_URL=COMMON+"articlesList.php";
     public static final String SUBJECT_LIST_URL= COMMON +"subjectList.php";
+    public static final String SUBJECT_TOPICS= COMMON +"topicsList.php";
+    public static final String SUBJECT_ANNOUNCEMENTS= COMMON +"subjectAnnouncements.php";
+    public static final String SUBJECT_ASSIGNMENTS= COMMON +"subjectAssignment.php";
+    public static final String UNIVERSITY_URL=COMMON +"universityList.php";
 
 
     //these urls are for file downloads and location of profile picture//
@@ -28,8 +32,6 @@ public class ConstantInformation {
     public static final String PROFILE_IMAGE_URL= COMMON +"subjectList.php";
 
     ////////////////////////////////////////////////////////////////////////
-
-
 
     public static final String COURSE_URL= COMMON +"mob/courseList/";
     public static final String REGISTRATION_URL= COMMON +"mob/register/";

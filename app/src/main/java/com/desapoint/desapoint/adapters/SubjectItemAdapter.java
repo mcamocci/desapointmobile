@@ -6,8 +6,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v4.app.ActivityCompat;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,21 @@ import android.widget.Toast;
 import com.desapoint.desapoint.FragmentDialog.AssignmentDialog;
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.activities.ResourceDownloadActivity;
+import com.desapoint.desapoint.pojos.Announcement;
+import com.desapoint.desapoint.pojos.Assignment;
 import com.desapoint.desapoint.pojos.Subject;
+import com.desapoint.desapoint.pojos.Topic;
 import com.desapoint.desapoint.pojos.WindowInfo;
+import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.INTENTINFO;
 
@@ -34,7 +44,13 @@ import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.INTENTI
 public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.SubjectHolder> {
 
     private Context context;
-    List<Subject> list;
+    private List<Subject> list;
+    private List<Topic> topics;
+    private List<Announcement> announcements;
+    private List<Assignment> assignments;
+    private  ProgressDialog progress;
+    private int dialogTracker=-1; //0 announcement, //1 assignment , 2 topics
+
     private String FLAG;
 
     public SubjectItemAdapter(Context context, List<Subject> subjects,String flag){
@@ -130,25 +146,21 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
         public void onClick(View v) {
 
             if(FLAG.equals(WindowInfo.SUBJECT)){
-                ProgressDialog progress;
 
                 if(v.getId()==R.id.announce){
-
-                    Toast.makeText(context,"hey anou",Toast.LENGTH_SHORT).show();
-                    progress = ProgressDialog.show(context, "please wait",
-                            "checking announcements", false);
-                    progress.show();
-                    //progress.setCancelable(false);
-                    progress.setCanceledOnTouchOutside(false);
-                    //progress.dismiss();
+                    dialogTracker=0;
+                    getListOfContent(context,subject.getSubject(),
+                            "subject Announcements", ConstantInformation.SUBJECT_ANNOUNCEMENTS);
 
                 }else if(v.getId()==R.id.assignment){
-                    AssignmentDialog dialog=new AssignmentDialog();
-                    FragmentManager manager=((Activity) context).getFragmentManager();
-                    dialog.show(manager,"tag");
-                    Toast.makeText(context,"hey assign",Toast.LENGTH_SHORT).show();
+                    dialogTracker=1;
+                    getListOfContent(context,subject.getSubject(),
+                            "subject Assignments", ConstantInformation.SUBJECT_ASSIGNMENTS);
+
                 }else if(v.getId()==R.id.thirdoption){
-                    Toast.makeText(context,"hey third",Toast.LENGTH_SHORT).show();
+                    dialogTracker=2;
+                    getListOfContent(context,subject.getSubject(),
+                            "subject Topics", ConstantInformation.SUBJECT_TOPICS);
                 }
 
             }else if(FLAG.equals(WindowInfo.NOTES)){
@@ -163,6 +175,92 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
             }
         }
 
+
+    }
+
+
+    //get list of contents for the dialogs
+
+    public void getListOfContent(final Context context, String subject, final String message, String url){
+
+        AsyncHttpClient httpClient=new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("subject",subject);
+
+        progress = ProgressDialog.show(context, "Please wait",
+                message, false);
+        progress.show();
+
+
+        httpClient.post(context,url, params,new TextHttpResponseHandler() {
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                progress.dismiss();
+                Toast.makeText(context,"Code:"+Integer.toString(statusCode),Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Failed, try again later",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                progress.dismiss();
+
+                Log.e("response",responseString);
+                if(responseString.length()<8){
+
+                    if(responseString.equalsIgnoreCase("none")){
+                        Toast.makeText(context,
+                                "There are no items of your selection , check again later",Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(context,
+                                "Please try again later , un expected error ",Toast.LENGTH_LONG).show();
+                    }
+
+                }else{
+
+                    if(dialogTracker==0){
+                        Toast.makeText(context,
+                                responseString,Toast.LENGTH_LONG).show();
+                        AssignmentDialog dialog=new AssignmentDialog();
+                        Bundle bundle=new Bundle();
+                        bundle.putString(AssignmentDialog.HEAD,AssignmentDialog.TITLE_ANNOUNCEMENT);
+                        dialog.setArguments(bundle);
+                        bundle.putString(AssignmentDialog.JSONLIST,responseString);
+                        FragmentManager manager=((Activity) context).getFragmentManager();
+                        dialog.show(manager,"tag");
+
+
+                    }else if(dialogTracker==1){
+                        Toast.makeText(context,
+                                responseString,Toast.LENGTH_LONG).show();
+                        AssignmentDialog dialog=new AssignmentDialog();
+                        Bundle bundle=new Bundle();
+                        bundle.putString(AssignmentDialog.HEAD,AssignmentDialog.TITLE_ASSIGNMENT);
+                        dialog.setArguments(bundle);
+                        bundle.putString(AssignmentDialog.JSONLIST,responseString);
+                        FragmentManager manager=((Activity) context).getFragmentManager();
+                        dialog.show(manager,"tag");
+
+
+                    }else{
+                        Toast.makeText(context,
+                                responseString,Toast.LENGTH_LONG).show();
+                        AssignmentDialog dialog=new AssignmentDialog();
+                        Bundle bundle=new Bundle();
+                        bundle.putString(AssignmentDialog.HEAD,AssignmentDialog.TITLE_TOPIC);
+                        bundle.putString(AssignmentDialog.JSONLIST,responseString);
+                        dialog.setArguments(bundle);
+                        FragmentManager manager=((Activity) context).getFragmentManager();
+                        dialog.show(manager,"tag");
+
+                    }
+
+                }
+
+
+            }
+        });
 
     }
 

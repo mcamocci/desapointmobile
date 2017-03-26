@@ -1,5 +1,6 @@
 package com.desapoint.desapoint.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +11,10 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import com.desapoint.desapoint.R;
+import com.desapoint.desapoint.pojos.University;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.loopj.android.http.AsyncHttpClient;
@@ -28,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText usernameEditText;
     private EditText passwordEditText;
+    private TextView createAccount;
+    private ProgressDialog progress;
 
     private String username=null;
     private String password=null;
@@ -44,17 +48,23 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
 
+
         usernameEditText=(EditText)findViewById(R.id.username);
         passwordEditText=(EditText)findViewById(R.id.password);
 
         progressBar=(ProgressBar)findViewById(R.id.login_progress);
         progressBar.setVisibility(View.INVISIBLE);
 
+        createAccount=(TextView)findViewById(R.id.create_account);
+        createAccount.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                getUniversity(getBaseContext(),ConstantInformation.UNIVERSITY_URL);
 
-        getSupportActionBar().setIcon(R.drawable.ic_action_home);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setLogo(R.drawable.ic_action_home);
+            }
+        });
 
+       getSupportActionBar().hide();
 
         login=(LinearLayout)findViewById(R.id.sign_in_button);
 
@@ -118,6 +128,45 @@ public class LoginActivity extends AppCompatActivity {
                    startActivity(intent);
                    finish();
                }
+
+
+            }
+        });
+
+    }
+
+
+    public void getUniversity(final Context context, String url){
+
+        AsyncHttpClient httpClient=new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        progress=ProgressDialog.show(LoginActivity.this,"Please wait",
+                "loading universities", false);
+
+        progress.show();
+
+
+        httpClient.post(context,url, params,new TextHttpResponseHandler() {
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                progress.dismiss();
+                Toast.makeText(context,"Please try again later",Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                progress.dismiss();
+                Log.e("response",responseString);
+                if(responseString.length()<8){
+                    Toast.makeText(context,"Could not load universities",Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent intent=new Intent(getBaseContext(),RegistrationActivityScreenOne.class);
+                    intent.putExtra(University.JSON_VARIABLE,responseString);
+                    startActivity(intent);
+                    finish();
+                }
 
 
             }

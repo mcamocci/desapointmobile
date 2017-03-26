@@ -75,7 +75,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginBottom="1dp"
-                            android:gravity="center"
                             android:id="@+id/announce"
                             android:background="#2196F3">
 
@@ -88,7 +87,7 @@
                                 android:paddingBottom="2dp"
                                 android:paddingLeft="6dp"
                                 android:paddingRight="6dp"
-                                android:text="announcements"
+                                android:text="view announcements"
                                 android:textColor="@android:color/white" />
                         </LinearLayout>
 
@@ -104,13 +103,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-light"
-                                android:gravity="center"
                                 android:paddingTop="2dp"
                                 android:paddingBottom="2dp"
                                 android:paddingLeft="6dp"
                                 android:paddingRight="6dp"
                                 android:layout_margin="4dp"
-                                android:text="assignment"
+                                android:text="view assignment"
                                 android:textColor="@android:color/white" />
                         </LinearLayout>
 
@@ -118,8 +116,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="#2196F3"
-                            android:id="@+id/thirdoption"
-                            android:gravity="center">
+                            android:id="@+id/thirdoption">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -130,7 +127,7 @@
                                 android:paddingBottom="2dp"
                                 android:paddingLeft="6dp"
                                 android:paddingRight="6dp"
-                                android:text="announcements"
+                                android:text="view topics"
                                 android:textColor="@android:color/white" />
                         </LinearLayout>
 
