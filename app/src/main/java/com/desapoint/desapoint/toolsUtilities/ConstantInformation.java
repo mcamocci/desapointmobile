@@ -20,6 +20,9 @@ public class ConstantInformation {
     public static final String SUBJECT_ANNOUNCEMENTS= COMMON +"subjectAnnouncements.php";
     public static final String SUBJECT_ASSIGNMENTS= COMMON +"subjectAssignment.php";
     public static final String UNIVERSITY_URL=COMMON +"universityList.php";
+    public static final String UNIVERSITY_COLLEGE_URL=COMMON +"collegeList.php";
+    public static final String COLLEGE_COURSE_LIST=COMMON +"courseList.php";
+    public static final String RESET_URL=COMMON +"send_password.php";
 
 
     //these urls are for file downloads and location of profile picture//

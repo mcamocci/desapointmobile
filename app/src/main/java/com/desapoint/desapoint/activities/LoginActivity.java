@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private TextView createAccount;
+    private TextView forgotPassword;
     private ProgressDialog progress;
 
     private String username=null;
@@ -54,6 +55,15 @@ public class LoginActivity extends AppCompatActivity {
 
         progressBar=(ProgressBar)findViewById(R.id.login_progress);
         progressBar.setVisibility(View.INVISIBLE);
+
+        forgotPassword=(TextView)findViewById(R.id.forgot);
+        forgotPassword.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(LoginActivity.this,ForgotPasswordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         createAccount=(TextView)findViewById(R.id.create_account);
         createAccount.setOnClickListener(new View.OnClickListener(){
@@ -165,7 +175,6 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent=new Intent(getBaseContext(),RegistrationActivityScreenOne.class);
                     intent.putExtra(University.JSON_VARIABLE,responseString);
                     startActivity(intent);
-                    finish();
                 }
 
 

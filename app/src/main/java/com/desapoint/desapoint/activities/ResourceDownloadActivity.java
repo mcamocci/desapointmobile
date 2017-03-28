@@ -21,6 +21,10 @@ import com.desapoint.desapoint.pojos.DownloadableItem;
 import com.desapoint.desapoint.pojos.RetryObject;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
+import com.github.angads25.filepicker.controller.DialogSelectionListener;
+import com.github.angads25.filepicker.model.DialogConfigs;
+import com.github.angads25.filepicker.model.DialogProperties;
+import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
@@ -30,6 +34,7 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import net.gotev.uploadservice.MultipartUploadRequest;
 import net.gotev.uploadservice.UploadNotificationConfig;
 
+import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,17 +74,37 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
 
-                Intent intent=new Intent(getBaseContext(),FileUploadActivity.class);
-                startActivity(intent);
+                DialogProperties properties = new DialogProperties();
+                properties.selection_mode = DialogConfigs.SINGLE_MODE;
+                properties.selection_type = DialogConfigs.FILE_SELECT;
+                properties.root = new File(DialogConfigs.DEFAULT_DIR);
+                properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
+                properties.offset = new File(DialogConfigs.DEFAULT_DIR);
+                properties.extensions = null;
 
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                FilePickerDialog dialog = new FilePickerDialog(ResourceDownloadActivity.this,properties);
+                dialog.setTitle("Select a File");
+
+                dialog.setDialogSelectionListener(new DialogSelectionListener() {
+                    @Override
+                    public void onSelectedFilePaths(String[] files) {
+                        //files is the array of the paths of files selected by the Application User.
+                        String filePath=files[0];
+                        Intent intent=new Intent(getBaseContext(),FileUploadActivity.class);
+                        intent.putExtra("FILE",filePath);
+                        startActivity(intent);
+                    }
+                });
+
+                dialog.show();
+
             }
         });
+
 
         if(title.equals(ARTICLE)){
 

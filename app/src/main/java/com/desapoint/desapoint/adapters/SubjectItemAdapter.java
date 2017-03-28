@@ -99,9 +99,9 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
         private TextView title;
         private LinearLayout parent;
         private Context context;
-        private LinearLayout announcement;
-        private LinearLayout assignment;
-        private LinearLayout option3;
+        private TextView announcement;
+        private TextView  assignment;
+        private TextView  option3;
 
         public SubjectHolder(View view){
             super(view);
@@ -109,11 +109,11 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
 
             if(FLAG.equals(WindowInfo.SUBJECT)){
 
-                announcement=(LinearLayout)view.findViewById(R.id.announce);
+                announcement=(TextView)view.findViewById(R.id.announce);
                 announcement.setOnClickListener(this);
-                assignment=(LinearLayout)view.findViewById(R.id.assignment);
+                assignment=(TextView)view.findViewById(R.id.assignment);
                 assignment.setOnClickListener(this);
-                option3=(LinearLayout)view.findViewById(R.id.thirdoption);
+                option3=(TextView)view.findViewById(R.id.topics);
                 option3.setOnClickListener(this);
 
             }else{
@@ -157,7 +157,7 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
                     getListOfContent(context,subject.getSubject(),
                             "subject Assignments", ConstantInformation.SUBJECT_ASSIGNMENTS);
 
-                }else if(v.getId()==R.id.thirdoption){
+                }else if(v.getId()==R.id.topics){
                     dialogTracker=2;
                     getListOfContent(context,subject.getSubject(),
                             "subject Topics", ConstantInformation.SUBJECT_TOPICS);

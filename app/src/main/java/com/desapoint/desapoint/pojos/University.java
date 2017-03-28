@@ -7,6 +7,7 @@ package com.desapoint.desapoint.pojos;
 public class University {
 
     public static String JSON_VARIABLE="JSON_CONTENT";
+    public static String NAME="NAME_UNIVERSITY";
     private int id;
     private String name;
 

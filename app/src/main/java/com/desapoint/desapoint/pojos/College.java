@@ -10,6 +10,8 @@ public class College {
     private String name;
     private String university;
 
+    public  static String JSON_VARIABLE="COLLEGE_JSON";
+
     public College(){
 
     }
