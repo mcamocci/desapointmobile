@@ -3,6 +3,7 @@ package com.desapoint.desapoint.activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,15 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.College;
+import com.desapoint.desapoint.pojos.RegistrationObject;
 import com.desapoint.desapoint.pojos.University;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
@@ -40,6 +42,16 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
     private List<University> universityList=new ArrayList<>();
     private String UNIVERSITY_SELECTOR="SELECT UNIVERSITY";
     private ProgressDialog progress;
+
+    private EditText firstNameEditText;
+    private EditText lastNameEditText;
+    private EditText emailEditText;
+    private EditText phoneEditText;
+
+    private String firstName=null;
+    private String lastName=null;
+    private String email=null;
+    private String phone=null;
     private String universityName;
     // Spinner Drop down elements
     List<String> categories = new ArrayList<String>();
@@ -49,6 +61,12 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_screen_one);
+
+
+        firstNameEditText=(EditText)findViewById(R.id.firstName);
+        lastNameEditText=(EditText)findViewById(R.id.lastName);
+        emailEditText=(EditText)findViewById(R.id.email);
+        phoneEditText=(EditText)findViewById(R.id.phone);
 
         String listContent=getIntent().getStringExtra(University.JSON_VARIABLE);
         final String university=getIntent().getStringExtra(University.NAME);
@@ -88,11 +106,23 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
         nextButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(universityPosition==0){
-                    Toast.makeText(getBaseContext(),"Please select university",Toast.LENGTH_LONG).show();
+
+                firstName=firstNameEditText.getText().toString().trim();
+                lastName=lastNameEditText.getText().toString().trim();
+                email=emailEditText.getText().toString().trim();
+                phone=phoneEditText.getText().toString().trim();
+
+                if(firstName.length()<3 || lastName.length()<3 ||
+                        email.length()<5 || phone.length()<10){
+                    Snackbar.make(spinner,"Please enter valid information",Snackbar.LENGTH_LONG).show();
                 }else{
-                    getColleges(getBaseContext(), ConstantInformation.UNIVERSITY_COLLEGE_URL,universityName);
+                    if(universityPosition==0){
+                        Snackbar.make(spinner,"Please select university",Snackbar.LENGTH_LONG).show();
+                    }else{
+                        getColleges(getBaseContext(), ConstantInformation.UNIVERSITY_COLLEGE_URL,universityName);
+                    }
                 }
+
 
             }
         });
@@ -153,7 +183,7 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progress.dismiss();
-                Toast.makeText(context,"Please try again later",Toast.LENGTH_SHORT).show();
+                Snackbar.make(spinner,"Please try again later",Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -162,8 +192,15 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
                 progress.dismiss();
                 Log.e("response",responseString);
                 if(responseString.length()<8){
-                    Toast.makeText(context,"Could not load colleges",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(spinner,"Could not load colleges",Snackbar.LENGTH_LONG).show();
                 }else{
+                    RegistrationObject registrationObject=new RegistrationObject();
+                    registrationObject.setFirstName(firstName);
+                    registrationObject.setLastName(lastName);
+                    registrationObject.setEmail(email);
+                    registrationObject.setPhone(phone);
+                    String content=new Gson().toJson(registrationObject);
+                    PreferenceStorage.addRegInfo(context,content);
                     Intent intent=new Intent(getBaseContext(),RegistrationActivityscreenTwo.class);
                     intent.putExtra(College.JSON_VARIABLE,responseString);
                     startActivity(intent);

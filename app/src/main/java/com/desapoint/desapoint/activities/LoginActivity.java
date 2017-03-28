@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -93,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     login(getBaseContext(),username,password, ConstantInformation.LOGIN_URL);
                     progressBar.setVisibility(View.VISIBLE);
                 }else{
-                    Toast.makeText(getBaseContext(),"Invalid information",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(usernameEditText,"Invalid information",Snackbar.LENGTH_LONG).show();
                 }
 
 
@@ -115,8 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progressBar.setVisibility(View.INVISIBLE);
-                Toast.makeText(context,"Code:"+Integer.toString(statusCode),Toast.LENGTH_SHORT).show();
-                Toast.makeText(context,"Failed, try again later",Toast.LENGTH_SHORT).show();
+                Snackbar.make(usernameEditText,"Error code:"+Integer.toString(statusCode)+" Failed, try again later",Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                if(responseString.length()<8){
                     progressBar.setVisibility(View.INVISIBLE);
                     if(responseString.equalsIgnoreCase("none")){
-                        Toast.makeText(getBaseContext(),"Invalid information",Toast.LENGTH_SHORT).show();
+                        Snackbar.make(usernameEditText,"Invalid information",Snackbar.LENGTH_LONG).show();
                         usernameEditText.setText("");
                         passwordEditText.setText("");
                     }
@@ -161,7 +161,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progress.dismiss();
-                Toast.makeText(context,"Please try again later",Toast.LENGTH_SHORT).show();
+                Snackbar.make(usernameEditText,"Please try again later",Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -170,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                 progress.dismiss();
                 Log.e("response",responseString);
                 if(responseString.length()<8){
-                    Toast.makeText(context,"Could not load universities",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(usernameEditText,"Could not prepare registration",Snackbar.LENGTH_LONG).show();
                 }else{
                     Intent intent=new Intent(getBaseContext(),RegistrationActivityScreenOne.class);
                     intent.putExtra(University.JSON_VARIABLE,responseString);

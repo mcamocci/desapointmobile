@@ -13,10 +13,23 @@ public class PreferenceStorage {
 
     private static final String USERINFO="USERINFO";
     private static final String WINDOWINFO="WINDOWINFO";
+    private static final String REGINFO="REGINFO=";
 
 
     public PreferenceStorage(Context context){
         this.context=context;
+    }
+
+    public static void addRegInfo(Context context,String json){
+        SharedPreferences sharedPreferences=context.getSharedPreferences(REGINFO,0);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(REGINFO,json);
+        editor.commit();
+    }
+
+    public static String getRegInfo(Context context){
+        SharedPreferences sharedPreferences=context.getSharedPreferences(REGINFO,0);
+        return sharedPreferences.getString(REGINFO,"none");
     }
 
     public static void addWindowInfo(Context context,String json){

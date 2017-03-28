@@ -58,7 +58,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             ConstantInformation.RESET_URL,cleaned_fullName,
                             cleaned_phone);
                 }else{
-                    Toast.makeText(getBaseContext(),"Invalid phone or name",Toast.LENGTH_LONG).show();
+                    Snackbar.make(whyPhone,"Invalid phone or name",Snackbar.LENGTH_LONG).show();
                 }
 
             }

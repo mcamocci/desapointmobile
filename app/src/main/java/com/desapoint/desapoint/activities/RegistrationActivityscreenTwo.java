@@ -3,6 +3,8 @@ package com.desapoint.desapoint.activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.preference.PreferenceGroup;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,19 +16,18 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.College;
 import com.desapoint.desapoint.pojos.Course;
+import com.desapoint.desapoint.pojos.RegistrationObject;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
-import java.io.LineNumberReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,6 @@ public class RegistrationActivityscreenTwo extends AppCompatActivity implements 
             }else{
                 college=colleges.get(position);
                 university=collegeList.get(position-1).getUniversity();
-                Toast.makeText(getBaseContext(),university,Toast.LENGTH_LONG).show();
             }
 
         }else if(parent.getId()==R.id.semester){
@@ -146,11 +146,16 @@ public class RegistrationActivityscreenTwo extends AppCompatActivity implements 
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getBaseContext(),university+" "+college,Toast.LENGTH_LONG).show();
-                getCourses(getBaseContext(),
-                        ConstantInformation.COLLEGE_COURSE_LIST,
-                        university,college);
-
+                if(semester.equalsIgnoreCase("0") || year.equalsIgnoreCase("0")
+                        || college.equalsIgnoreCase("0")){
+                        Snackbar.make(collegeSpinner,
+                                "Please make sure all information are well filled",
+                                Snackbar.LENGTH_LONG).show();
+                }else{
+                    getCourses(getBaseContext(),
+                            ConstantInformation.COLLEGE_COURSE_LIST,
+                            university,college);
+                }
             }
         });
     }
@@ -200,7 +205,7 @@ public class RegistrationActivityscreenTwo extends AppCompatActivity implements 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progress.dismiss();
-                Toast.makeText(context,"Please try again later",Toast.LENGTH_SHORT).show();
+                Snackbar.make(collegeSpinner,"Please try again later",Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -209,8 +214,17 @@ public class RegistrationActivityscreenTwo extends AppCompatActivity implements 
                 progress.dismiss();
                 Log.e("response",responseString);
                 if(responseString.length()<8){
-                    Toast.makeText(context,"Could not load courses",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(collegeSpinner,"Could not load courses, try again later :)",Snackbar.LENGTH_LONG).show();
                 }else{
+
+                    RegistrationObject object=new Gson().fromJson(PreferenceStorage.getRegInfo(context)
+                    ,RegistrationObject.class);
+
+                    object.setYear(year);
+                    object.setSemester(semester);
+                    object.setCollege(college);
+                    String content=new Gson().toJson(object);
+                    PreferenceStorage.addRegInfo(context,content);
                     Intent intent=new Intent(getBaseContext(),RegistrationFinalActivity.class);
                     intent.putExtra(Course.JSON_VARIABLE,responseString);
                     startActivity(intent);

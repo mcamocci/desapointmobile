@@ -38,7 +38,7 @@
                 android:padding="4dp">
 
                 <EditText
-                    android:id="@+id/firstName"
+                    android:id="@+id/registrationNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -73,7 +73,7 @@
                 android:padding="4dp">
 
                 <EditText
-                    android:id="@+id/lastName"
+                    android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -96,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint="Password"
+                    android:hint="PasswordOne"
                     android:fontFamily="sans-serif-light"
                     android:inputType="textPassword"
                     android:padding="4dp" />
@@ -116,7 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint="Repeat password"
+                    android:hint="Repeat passwordTwo"
                     android:fontFamily="sans-serif-light"
                     android:inputType="textPassword"
                     android:padding="4dp" />
@@ -124,7 +124,7 @@
 
 
             <LinearLayout
-                android:id="@+id/nextButton"
+                android:id="@+id/registerButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
