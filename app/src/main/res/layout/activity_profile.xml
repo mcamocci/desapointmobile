@@ -22,6 +22,25 @@
             app:av_text_size_percentage="35" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/updateButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="12dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:padding="2dp"
+            android:gravity="center"
+            android:text="UPDATE COURSE INFROMATION"
+            android:textColor="@color/white" />
+    </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

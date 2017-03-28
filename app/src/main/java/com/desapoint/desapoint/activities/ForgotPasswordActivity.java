@@ -120,10 +120,17 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 progress.dismiss();
                 Log.e("response",responseString);
                 if(responseString.length()<8){
-                    Toast.makeText(context,"Please make sure your entered email is the same as one used during registration" +
-                            "or contact desapoint to help you fixing problem, contacts are on about section",Toast.LENGTH_SHORT).show();
+                    Snackbar.make(fullName,
+                            "Please contact desapoint team, we were unable to serve you!!"
+                            ,Snackbar.LENGTH_LONG).show();
                 }else{
-                    Toast.makeText(context,"Please check the received email to login to your account",Toast.LENGTH_LONG).show();
+                    Snackbar.make(fullName,responseString,Snackbar.LENGTH_LONG).show();
+                    try{
+                        Thread.sleep(3000);
+                        finish();
+                    }catch (Exception ex){
+
+                    }
                 }
 
 

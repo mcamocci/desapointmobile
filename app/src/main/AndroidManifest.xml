@@ -75,8 +75,11 @@
         <activity
             android:name=".activities.EditorActivity"
             android:theme="@style/AppThemeBackBlack" />
-        <activity android:name=".activities.ForgotPasswordActivity"
+        <activity
+            android:name=".activities.ForgotPasswordActivity"
             android:theme="@style/AppThemeBackBlack" />
+        <activity android:name=".activities.CollegeUPdate" />
+        <activity android:name=".activities.CourseUpdateActivity"></activity>
     </application>
 
 </manifest>
