@@ -106,16 +106,6 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
         });
 
 
-        if(title.equals(ARTICLE)){
-
-        }else if(title.equals(BOOK)){
-
-        }else if(title.equals(NOTES)){
-
-        }else if(title.equals(PASTPAPER)){
-
-        }
-
         //get the contents
         loadContents(getBaseContext());
 

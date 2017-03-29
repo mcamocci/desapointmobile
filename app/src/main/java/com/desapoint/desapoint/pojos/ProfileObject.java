@@ -6,13 +6,8 @@ package com.desapoint.desapoint.pojos;
 
 public class ProfileObject {
 
-    public String getIntType() {
-        return intType;
-    }
-
-    public void setIntType(String intType) {
-        this.intType = intType;
-    }
+    private String stringType;
+    private String content;
 
     public String getStringType() {
         return stringType;
@@ -22,8 +17,6 @@ public class ProfileObject {
         this.stringType = stringType;
     }
 
-    private String intType;
-    private String stringType;
 
     public String getContent() {
         return content;
@@ -33,5 +26,5 @@ public class ProfileObject {
         this.content = content;
     }
 
-    private String content;
+
 }

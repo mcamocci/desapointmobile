@@ -15,12 +15,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.DownloadableItem;
+import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.FileDownloadOperation;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 
 import java.io.File;
 import java.util.List;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
+import static com.desapoint.desapoint.pojos.WindowInfo.ARTICLE;
+import static com.desapoint.desapoint.pojos.WindowInfo.BOOK;
+import static com.desapoint.desapoint.pojos.WindowInfo.NOTES;
+import static com.desapoint.desapoint.pojos.WindowInfo.PASTPAPER;
 
 /**
  * Created by root on 3/13/17.
@@ -63,6 +69,7 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
         private long enqueue;
         private DownloadManager dm;
         private DownloadableItem downloadableItem;
+        private String type;
 
         public NoteViewHolder(View view){
             super(view);
@@ -73,12 +80,21 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
             description=(TextView) view.findViewById(R.id.description);
             title=(TextView) view.findViewById(R.id.subject);
             view.setOnClickListener(this);
-
+            type= PreferenceStorage.getWindowInfo(context);
         }
 
         public void setData(DownloadableItem item){
             this.downloadableItem=item;
-            item.setFile_url("https://www.csee.umbc.edu/courses/331/spring03/0101/lectures/java01.ppt");
+
+            if(type.equals(ARTICLE)){
+                item.setFile_url(ConstantInformation.ARTICLE_DOWNLOAD_URL+item.getFile_url());
+            }else if(type.equals(BOOK)){
+                item.setFile_url(ConstantInformation.BOOK_DOWNLOAD_URL+item.getFile_url());
+            }else if(type.equals(NOTES)){
+                item.setFile_url(ConstantInformation.NOTES_DOWNLOAD_URL+item.getFile_url());
+            }else if(type.equals(PASTPAPER)){
+                item.setFile_url(ConstantInformation.PASTPAPER_DOWNLOAD_URL+item.getFile_url());
+            }
             File file=new File(item.getFile_url());
             description.setText(item.getDescription());
             title.setText(item.getName());

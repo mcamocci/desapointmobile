@@ -47,6 +47,7 @@ public class ProfileActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private ProfileItemAdapter itemAdapter;
     private ProgressDialog progress;
+    private List<ProfileObject> profileObjectList=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +61,41 @@ public class ProfileActivity extends AppCompatActivity {
                 updateProcess(getBaseContext(), ConstantInformation.USER_UNIVERSITY);
             }
         });
-        List<ProfileObject> objectList=new ArrayList<>();
 
         User user=new Gson().fromJson(
                 PreferenceStorage.getUserJson(getBaseContext()),User.class);
+
+        ProfileObject object=new ProfileObject();
+        object.setContent(user.getFirstName());
+        object.setStringType("First name");
+        profileObjectList.add(object);
+
+        ProfileObject object1=new ProfileObject();
+        object1.setContent(user.getGender());
+        object1.setStringType("Gender");
+        profileObjectList.add(object1);
+
+        ProfileObject object2=new ProfileObject();
+        object2.setContent(user.getUsername());
+        object2.setStringType("Username");
+        profileObjectList.add(object2);
+
+        ProfileObject object3=new ProfileObject();
+        object3.setContent(user.getEmail());
+        object3.setStringType("Email");
+        profileObjectList.add(object3);
+
+        ProfileObject object4=new ProfileObject();
+        object4.setContent(user.getPhone());
+        object4.setStringType("Phone");
+        profileObjectList.add(object4);
 
         layoutManager=new LinearLayoutManager(getBaseContext());
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
 
 
 
-        itemAdapter=new ProfileItemAdapter(getBaseContext(),objectList);
+        itemAdapter=new ProfileItemAdapter(getBaseContext(),profileObjectList);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(itemAdapter);
 
@@ -78,12 +103,10 @@ public class ProfileActivity extends AppCompatActivity {
 
         avatarView = (AvatarView) findViewById(R.id.avatar_view);
         imageLoader = new GlideLoader();
-        imageLoader.loadImage(avatarView,"http://www.vogella.de/img/lars/LarsVogelArticle7.png",user.getFirstName());
+        imageLoader.loadImage(avatarView,ConstantInformation.PROFILE_IMAGE_URL+user.getImage(),user.getFirstName());
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        actionBarTitle(user.getFullname());
-
-
+        actionBarTitle(user.getFirstName().toUpperCase());
 
     }
 

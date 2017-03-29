@@ -12,8 +12,6 @@ public class User {
 
   }
 
-
-
     public String getUsername() {
         return username;
     }
@@ -71,14 +69,14 @@ public class User {
     }
 
     public String getFirstName() {
-        return firstName;
+        return FirstName;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.FirstName = FirstName;
     }
 
-    private String firstName;
+    private String FirstName;
    private String username;
    private String fullname;
    private String phone;

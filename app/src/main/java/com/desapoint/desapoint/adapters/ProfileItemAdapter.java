@@ -7,10 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.activities.ResourceDownloadActivity;
 import com.desapoint.desapoint.pojos.ProfileObject;
+
+
 
 import java.util.List;
 
@@ -51,16 +52,20 @@ public class ProfileItemAdapter extends RecyclerView.Adapter<ProfileItemAdapter.
     public class ProfileItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView content;
+        private TextView type;
         ProfileObject profileObject;
 
         public ProfileItemViewHolder(View view){
             super(view);
             view.setOnClickListener(this);
             content=(TextView) view.findViewById(R.id.content_holder);
+            type=(TextView)view.findViewById(R.id.type_holder);
         }
 
         public void setData(ProfileObject object){
             this.profileObject=object;
+            content.setText(profileObject.getContent());
+            type.setText(profileObject.getStringType());
         }
 
         @Override
