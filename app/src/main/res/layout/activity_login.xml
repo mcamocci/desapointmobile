@@ -53,7 +53,6 @@
                 android:textColor="@color/white"
                 android:padding="10dp"
                 android:fontFamily="sans-serif-light"
-                android:inputType="textPassword"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:background="@android:color/transparent"
                 android:imeActionId="@+id/login"
@@ -62,7 +61,7 @@
 
         <LinearLayout
             android:layout_marginTop="2dp"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="12dp"
             android:layout_width="match_parent"
             android:background="@android:color/black"
             android:layout_height="wrap_content">
@@ -83,46 +82,7 @@
                 android:singleLine="true" />
         </LinearLayout>
 
-        <!-- forgot password or register -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:layout_marginBottom="6dp"
-            android:layout_marginTop="6dp"
-            android:layout_alignParentBottom="true">
-            <!--android:background="#81C784"-->
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_weight="1">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/create"
-                    android:id="@+id/create_account"
-                    android:textColor="@android:color/black"
-                    android:fontFamily="sans-serif-light"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/forgot"
-                    android:id="@+id/forgot"
-                    android:gravity="right"
-                    android:textColor="@android:color/black"
-                    android:fontFamily="sans-serif-light"/>
-            </LinearLayout>
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -139,6 +99,50 @@
                 android:imeOptions="actionDone"
                 android:fontFamily="sans-serif-light"
                 android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/create_account"
+            android:layout_marginTop="4dp"
+            android:background="#900000"
+            android:imeOptions="actionDone"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_margin="12dp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:text="REGISTER"
+                android:imeOptions="actionDone"
+                android:fontFamily="sans-serif-light"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!-- forgot password or register -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_alignParentBottom="true">
+            <!--android:background="#81C784"-->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/forgot"
+                    android:id="@+id/forgot"
+                    android:gravity="center"
+                    android:textColor="@android:color/black"
+                    android:fontFamily="sans-serif-light"/>
+            </LinearLayout>
         </LinearLayout>
 
         <ProgressBar

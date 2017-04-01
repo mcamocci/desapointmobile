@@ -182,15 +182,11 @@ public class MainActivity extends AppCompatActivity {
         }else if(id==R.id.profile){
             intent=new Intent(getBaseContext(),ProfileActivity.class);
             startActivity(intent);
-        }else if(id==R.id.upload){
+        }/*else if(id==R.id.upload){
             FilePickerBuilder.getInstance().setMaxCount(10)
                     .setActivityTheme(R.style.filePicker)
                     .pickDocument(this);
-
-        }else if(id==R.id.settings){
-            intent=new Intent(getBaseContext(),RegistrationActivityScreenOne.class);
-            startActivity(intent);
-        }
+        }*/
 
         return true;
     }

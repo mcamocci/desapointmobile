@@ -80,13 +80,18 @@ public class Notes extends Fragment implements RetryObjectFragment.ReloadListene
                 PreferenceStorage.getUserJson(getContext()),User.class);
 //        Log.e("the user",user.getFirstName());
 
-        if(subjects.size()<1){
+        if(PreferenceStorage.getSubjectJson(getContext()).equalsIgnoreCase("none")){
             loadContents(getContext(),user.getUser_id(), ConstantInformation.SUBJECT_LIST_URL);
             recyclerView.setAdapter(adapter);
         }else{
             retryObject.hideProgress();
             retryObject.hideMessage();
             retryObject.hideName();
+            Type listType = new TypeToken<List<Subject>>() {}.getType();
+            subjects=new Gson().fromJson(PreferenceStorage.getSubjectJson(getContext()),listType);
+            adapter=new SubjectItemAdapter(getContext(),subjects, WindowInfo.NOTES);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
 
    /*     if(!(subjects.size()>0)){

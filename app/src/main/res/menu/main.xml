@@ -13,11 +13,6 @@
         app:showAsAction="never"
         />
     <item
-        android:title="@string/settings"
-        android:id="@+id/settings"
-        app:showAsAction="never"
-        />
-    <item
         android:id="@+id/aboutMenu"
         android:title="@string/aboutMenu"
         app:showAsAction="never"
@@ -32,11 +27,7 @@
         android:title="@string/rateMenu"
         app:showAsAction="never"
         />
-    <item
-        android:id="@+id/upload"
-        android:title="Upload"
-        app:showAsAction="never"
-        />
+
     <item
         android:id="@+id/logOut"
         android:title="LogOut"

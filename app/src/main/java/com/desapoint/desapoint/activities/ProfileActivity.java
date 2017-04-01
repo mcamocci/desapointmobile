@@ -6,108 +6,70 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.ProfileItemAdapter;
-import com.desapoint.desapoint.pojos.College;
-import com.desapoint.desapoint.pojos.ProfileObject;
-import com.desapoint.desapoint.pojos.RegistrationObject;
+import com.desapoint.desapoint.adapters.SubjectItemAdapter;
+import com.desapoint.desapoint.pojos.Subject;
 import com.desapoint.desapoint.pojos.User;
+import com.desapoint.desapoint.pojos.WindowInfo;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
+import com.desapoint.desapoint.toolsUtilities.StringUpperHelper;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import agency.tango.android.avatarview.IImageLoader;
 import agency.tango.android.avatarview.views.AvatarView;
 import agency.tango.android.avatarviewglide.GlideLoader;
 import cz.msebera.android.httpclient.Header;
 
-
 public class ProfileActivity extends AppCompatActivity {
 
     AvatarView avatarView;
     IImageLoader imageLoader;
-    private LinearLayout updateCourse;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager layoutManager;
     private ProfileItemAdapter itemAdapter;
+    private TextView label;
     private ProgressDialog progress;
-    private List<ProfileObject> profileObjectList=new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        updateCourse=(LinearLayout)findViewById(R.id.updateButton);
+        User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
+
+        avatarView = (AvatarView) findViewById(R.id.avatar_view);
+        imageLoader = new GlideLoader();
+        imageLoader.loadImage(avatarView,ConstantInformation.PROFILE_IMAGE_URL+user.getImage(),user.getFirstName());
+        label=(TextView)findViewById(R.id.label);
+        label.setText(StringUpperHelper.doUpperlization(user.getFullname()));
+
+       /* updateCourse=(LinearLayout)findViewById(R.id.updateButton);
         updateCourse.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 updateProcess(getBaseContext(), ConstantInformation.USER_UNIVERSITY);
             }
         });
-
-        User user=new Gson().fromJson(
-                PreferenceStorage.getUserJson(getBaseContext()),User.class);
-
-        ProfileObject object=new ProfileObject();
-        object.setContent(user.getFirstName());
-        object.setStringType("First name");
-        profileObjectList.add(object);
-
-        ProfileObject object1=new ProfileObject();
-        object1.setContent(user.getGender());
-        object1.setStringType("Gender");
-        profileObjectList.add(object1);
-
-        ProfileObject object2=new ProfileObject();
-        object2.setContent(user.getUsername());
-        object2.setStringType("Username");
-        profileObjectList.add(object2);
-
-        ProfileObject object3=new ProfileObject();
-        object3.setContent(user.getEmail());
-        object3.setStringType("Email");
-        profileObjectList.add(object3);
-
-        ProfileObject object4=new ProfileObject();
-        object4.setContent(user.getPhone());
-        object4.setStringType("Phone");
-        profileObjectList.add(object4);
-
-        layoutManager=new LinearLayoutManager(getBaseContext());
-        recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
-
-
-
-        itemAdapter=new ProfileItemAdapter(getBaseContext(),profileObjectList);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(itemAdapter);
-
-
-
-        avatarView = (AvatarView) findViewById(R.id.avatar_view);
-        imageLoader = new GlideLoader();
-        imageLoader.loadImage(avatarView,ConstantInformation.PROFILE_IMAGE_URL+user.getImage(),user.getFirstName());
-
+        */
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        actionBarTitle(user.getFirstName().toUpperCase());
+        actionBarTitle("Profile settings");
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.profile_menu,menu);
+        return true;
     }
 
     @Override
@@ -115,6 +77,17 @@ public class ProfileActivity extends AppCompatActivity {
         int id=item.getItemId();
         if(id==android.R.id.home){
             finish();
+        }else if(id==R.id.settings){
+            User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
+
+            if(PreferenceStorage.getSubjectJson(getBaseContext()).equalsIgnoreCase("none")){
+                loadSubjects(getBaseContext(),user.getUser_id(),ConstantInformation.SUBJECT_LIST_URL);
+            }else{
+                Intent intent=new Intent(ProfileActivity.this,SettingActivity.class);
+                intent.putExtra(Subject.NAME,PreferenceStorage.getSubjectJson(getBaseContext()));
+                startActivity(intent);
+            }
+
         }
         return true;
     }
@@ -133,44 +106,45 @@ public class ProfileActivity extends AppCompatActivity {
         this.getSupportActionBar().setCustomView(v);
     }
 
-    public void updateProcess(final Context context, String url){
+    public void loadSubjects(final Context context, int user_id, String url){
 
         AsyncHttpClient httpClient=new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
-        params.put("user_id",user.getUser_id());
+        params.put("user_id",user_id);
+
         progress= ProgressDialog.show(ProfileActivity.this,"Please wait",
-                "performing reset action", false);
+                "loading colleges", false);
 
         progress.show();
-
 
         httpClient.post(context,url, params,new TextHttpResponseHandler() {
 
             @Override
+            public void onStart() {
+                super.onStart();
+
+            }
+
+
+            @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progress.dismiss();
-                Toast.makeText(context,"Please try again later",Toast.LENGTH_SHORT).show();
+                Snackbar.make(avatarView,"Please try again later",Snackbar.LENGTH_LONG).show();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
                 progress.dismiss();
-                Log.e("response",responseString);
-                if(responseString.length()<8){
-                    Snackbar.make(updateCourse,
-                            "Could not prepare course update please try again later!!"
-                            ,Snackbar.LENGTH_LONG).show();
+               if(responseString.length()<8){
+                    if(responseString.equalsIgnoreCase("none")){
+                        Snackbar.make(avatarView,"Your first registration through our website was not complete please login using website to complete",Snackbar.LENGTH_LONG).show();
+                    }else{
+                        Snackbar.make(avatarView,"Something is wrong , please use about information to inform us quickly",Snackbar.LENGTH_LONG).show();
+                    }
                 }else{
-
-                    RegistrationObject registrationObject=new RegistrationObject();
-                    String content=new Gson().toJson(registrationObject);
-                    PreferenceStorage.addRegInfo(context,content);
-                    Intent intent=new Intent(getBaseContext(),CollegeUPdate.class);
-                    intent.putExtra(College.JSON_VARIABLE,responseString);
-                    startActivity(intent);
-
+                   Intent intent=new Intent(ProfileActivity.this,SettingActivity.class);
+                   intent.putExtra(Subject.NAME,responseString);
+                   startActivity(intent);
                 }
 
 
@@ -178,5 +152,6 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
     }
+
 
 }

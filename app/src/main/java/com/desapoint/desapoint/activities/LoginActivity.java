@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText usernameEditText;
     private EditText passwordEditText;
-    private TextView createAccount;
+    private LinearLayout createAccount;
     private TextView forgotPassword;
     private ProgressDialog progress;
 
@@ -66,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        createAccount=(TextView)findViewById(R.id.create_account);
+        createAccount=(LinearLayout)findViewById(R.id.create_account);
         createAccount.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -87,8 +87,12 @@ public class LoginActivity extends AppCompatActivity {
                 username=usernameEditText.getText().toString().trim();
                 password=passwordEditText.getText().toString().trim();
 
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0,0);
+
+                View view=LoginActivity.this.getCurrentFocus();
+                if(view!=null){
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+                }
 
                 if(username.length()>0){
                     login(getBaseContext(),username,password, ConstantInformation.LOGIN_URL);

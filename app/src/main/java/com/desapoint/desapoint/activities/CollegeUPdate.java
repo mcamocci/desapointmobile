@@ -137,7 +137,7 @@ public class CollegeUPdate extends AppCompatActivity implements AdapterView.OnIt
         collegeSpinner.setAdapter(collegeAdapter);
 
 
-        actionBarTitle("Registration");
+        actionBarTitle("university settings");
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

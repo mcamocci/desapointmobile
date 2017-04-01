@@ -25,7 +25,7 @@
     <string name="phone">Phone: +255659814742</string>
     <string name="email">info@desapoint.com</string>
     <string name="dumy_short_text">It is a long established fact that a reader will be distracted by the readable content of a page</string>
-
+    <string name="profile_description">This pannel is provided with user private information. You can change your personal information by accessing each attribute of your detail. this consist profile picture where your can upload profile picture by clicking on the button , Remember to click save after you have made all changes on your detail.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_trial">trial</string>

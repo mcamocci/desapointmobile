@@ -14,6 +14,8 @@ public class PreferenceStorage {
     private static final String USERINFO="USERINFO";
     private static final String WINDOWINFO="WINDOWINFO";
     private static final String REGINFO="REGINFO=";
+    private  static final String SUBJECT_STORE="SUBJECT_STORE";
+    private  static final String CATEGORY_STORE="CATEGORY_STORE";
 
 
     public PreferenceStorage(Context context){
@@ -42,6 +44,18 @@ public class PreferenceStorage {
     public static String getWindowInfo(Context context){
         SharedPreferences sharedPreferences=context.getSharedPreferences(WINDOWINFO,0);
         return sharedPreferences.getString(WINDOWINFO,"none");
+    }
+
+    public static void addSubjectJson(Context context,String json){
+        SharedPreferences sharedPreferences=context.getSharedPreferences(PreferenceStorage.SUBJECT_STORE,0);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(PreferenceStorage.SUBJECT_STORE,json);
+        editor.commit();
+    }
+
+    public static String getSubjectJson(Context context){
+        SharedPreferences sharedPreferences=context.getSharedPreferences(PreferenceStorage.SUBJECT_STORE,0);
+        return sharedPreferences.getString(SUBJECT_STORE,"none");
     }
 
     public static void addUserJson(Context context,String json){

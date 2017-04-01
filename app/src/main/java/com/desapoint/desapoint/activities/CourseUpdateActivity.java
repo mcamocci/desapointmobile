@@ -45,7 +45,7 @@ public class CourseUpdateActivity extends AppCompatActivity implements Spinner.O
 
         }
 
-        actionBarTitle("Registration");
+        actionBarTitle("university settings");
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         courseSpinner=(Spinner)findViewById(R.id.course_spinner);

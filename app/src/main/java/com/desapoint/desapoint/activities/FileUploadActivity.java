@@ -24,8 +24,8 @@ public class FileUploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_file_upload);
 
         filePath=getIntent().getStringExtra("FILE");
-        name=(EditText)findViewById(R.id.upload_name);
-        description=(EditText)findViewById(R.id.upload_description);
+        name=(EditText)findViewById(R.id.name);
+        description=(EditText)findViewById(R.id.description);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
