@@ -19,6 +19,7 @@ import com.desapoint.desapoint.pojos.Category;
 import com.desapoint.desapoint.pojos.RetryObject;
 import com.desapoint.desapoint.pojos.RetryObjectFragment;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
@@ -87,8 +88,29 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
             }
         }*/
 
+
+
         if(items.size()<1){
-            loadContents(getContext(), ConstantInformation.CATEGORY_URL);
+
+            if(PreferenceStorage.getCategoriesJson(getContext()).equalsIgnoreCase("none")){
+                loadContents(getContext(), ConstantInformation.CATEGORY_URL);
+            }else{
+                retryObject.hideProgress();
+                retryObject.hideMessage();
+                retryObject.hideName();
+                try{
+                    Type listType = new TypeToken<List<Category>>() {}.getType();
+                    items=new Gson().fromJson(PreferenceStorage.getCategoriesJson(getContext()),listType);
+
+                }catch (Exception ex){
+
+                }
+
+                adapter=new CategoryItemAdapter(getContext(), items);
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+            }
+
         }else{
             retryObject.hideProgress();
             retryObject.hideMessage();
@@ -148,6 +170,7 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
                     try{
                         Type listType = new TypeToken<List<Category>>() {}.getType();
                         items=new Gson().fromJson(responseString,listType);
+                        PreferenceStorage.addCategoriesJson(getContext(),responseString);
 
                     }catch (Exception ex){
 

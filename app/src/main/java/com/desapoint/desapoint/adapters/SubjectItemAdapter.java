@@ -166,11 +166,11 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
             }else if(FLAG.equals(WindowInfo.NOTES)){
                 Intent intent=new Intent(context,ResourceDownloadActivity.class);
                 //intent.putExtra(INTENTINFO,subject.getSubject());
-                intent.putExtra(INTENTINFO,subject.getSubject_code());
+                intent.putExtra(INTENTINFO,subject.getSubject());
                 context.startActivity(intent);
             }else if(FLAG.equals(WindowInfo.PASTPAPER)){
                 Intent intent=new Intent(context,ResourceDownloadActivity.class);
-                intent.putExtra(INTENTINFO,subject.getSubject_code());
+                intent.putExtra(INTENTINFO,subject.getSubject());
                 context.startActivity(intent);
             }
         }

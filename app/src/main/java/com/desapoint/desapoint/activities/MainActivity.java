@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         actionBarTitle("Desapoint");
-        User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
 
         // The request code used in ActivityCompat.requestPermissions()
         // and returned in the Activity's onRequestPermissionsResult()

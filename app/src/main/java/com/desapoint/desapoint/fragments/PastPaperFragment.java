@@ -168,6 +168,7 @@ public class PastPaperFragment extends Fragment implements RetryObjectFragment.R
                 }else{
                     Type listType = new TypeToken<List<Subject>>() {}.getType();
                     subjects=new Gson().fromJson(responseString,listType);
+                    PreferenceStorage.addSubjectJson(getContext(),responseString);
                     adapter=new SubjectItemAdapter(getContext(),subjects, WindowInfo.PASTPAPER);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();

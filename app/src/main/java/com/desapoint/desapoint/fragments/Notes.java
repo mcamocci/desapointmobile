@@ -170,6 +170,7 @@ public class Notes extends Fragment implements RetryObjectFragment.ReloadListene
                 }else{
                     Type listType = new TypeToken<List<Subject>>() {}.getType();
                     subjects=new Gson().fromJson(responseString,listType);
+                    PreferenceStorage.addSubjectJson(getContext(),responseString);
                     adapter=new SubjectItemAdapter(getContext(),subjects, WindowInfo.NOTES);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();

@@ -78,14 +78,23 @@ public class Subjects extends Fragment implements RetryObjectFragment.ReloadList
         user=new Gson().fromJson(
                 PreferenceStorage.getUserJson(getContext()),User.class);
 
-        if(subjects.size()<1){
-            loadContents(getContext(),user.getUser_id(), ConstantInformation.SUBJECT_LIST_URL);
-            recyclerView.setAdapter(adapter);
+        if(PreferenceStorage.getSubjectJson(getContext()).equalsIgnoreCase("none")){
+           loadContents(getContext(),user.getUser_id(), ConstantInformation.SUBJECT_LIST_URL);
+           recyclerView.setAdapter(adapter);
+
         }else{
             retryObject.hideProgress();
             retryObject.hideMessage();
             retryObject.hideName();
+            Type listType = new TypeToken<List<Subject>>() {}.getType();
+            subjects=new Gson().fromJson(PreferenceStorage.getSubjectJson(getContext()),listType);
+            adapter=new SubjectItemAdapter(getContext(),subjects, WindowInfo.SUBJECT);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
+
+
+
 
    /*     if(!(subjects.size()>0)){
             for(int i=1;i<8;i++){
@@ -162,6 +171,7 @@ public class Subjects extends Fragment implements RetryObjectFragment.ReloadList
                 }else{
                     Type listType = new TypeToken<List<Subject>>() {}.getType();
                     subjects=new Gson().fromJson(responseString,listType);
+                    PreferenceStorage.addSubjectJson(getContext(),responseString);
                     adapter=new SubjectItemAdapter(getContext(),subjects, WindowInfo.SUBJECT);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();

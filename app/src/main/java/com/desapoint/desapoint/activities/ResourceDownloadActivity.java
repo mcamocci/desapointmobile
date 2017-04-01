@@ -213,8 +213,8 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
 
             params.put("subject",parameter);
             url= ConstantInformation.PASTPAPER_URL;
-
         }
+
 
         httpClient.post(context,url, params,new TextHttpResponseHandler() {
 

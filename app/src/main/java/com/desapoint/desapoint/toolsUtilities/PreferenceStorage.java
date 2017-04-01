@@ -53,13 +53,25 @@ public class PreferenceStorage {
         editor.commit();
     }
 
+    public static void addCategoriesJson(Context context,String json){
+        SharedPreferences sharedPreferences=context.getSharedPreferences(PreferenceStorage.CATEGORY_STORE,0);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(PreferenceStorage.CATEGORY_STORE,json);
+        editor.commit();
+    }
+
+    public static String getCategoriesJson(Context context){
+        SharedPreferences sharedPreferences=context.getSharedPreferences(PreferenceStorage.CATEGORY_STORE,0);
+        return sharedPreferences.getString(CATEGORY_STORE,"none");
+    }
+
     public static String getSubjectJson(Context context){
         SharedPreferences sharedPreferences=context.getSharedPreferences(PreferenceStorage.SUBJECT_STORE,0);
         return sharedPreferences.getString(SUBJECT_STORE,"none");
     }
 
     public static void addUserJson(Context context,String json){
-        SharedPreferences sharedPreferences=context.getSharedPreferences("NOTIFICATIONS",0);
+        SharedPreferences sharedPreferences=context.getSharedPreferences(USERINFO,0);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString(USERINFO,json);
         editor.commit();
@@ -67,16 +79,31 @@ public class PreferenceStorage {
 
     public static String getUserJson(Context context){
 
-        SharedPreferences sharedPreferences=context.getSharedPreferences("NOTIFICATIONS",0);
+        SharedPreferences sharedPreferences=context.getSharedPreferences(USERINFO,0);
         return sharedPreferences.getString(USERINFO,"none");
     }
 
     public static void clearInformation(Context context){
 
-        SharedPreferences sharedPreferences=context.getSharedPreferences("NOTIFICATIONS",0);
+        SharedPreferences sharedPreferences=context.getSharedPreferences(USERINFO,0);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.clear();
         editor.commit();
+
+        //clear subject list//
+
+        SharedPreferences sharedPreferencesSubjects=context.getSharedPreferences(SUBJECT_STORE,0);
+        SharedPreferences.Editor editorSubject=sharedPreferencesSubjects.edit();
+        editorSubject.clear();
+        editorSubject.commit();
+
+
+        //clear categories list//
+
+        SharedPreferences sharedPreferencesCat=context.getSharedPreferences(CATEGORY_STORE,0);
+        SharedPreferences.Editor editorCat=sharedPreferencesCat.edit();
+        editorCat.clear();
+        editorCat.commit();
 
     }
 }

@@ -2,86 +2,86 @@ package com.desapoint.desapoint.activities;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
-import com.desapoint.desapoint.adapters.SubjectSettingAdapter;
-import com.desapoint.desapoint.pojos.College;
-import com.desapoint.desapoint.pojos.RegistrationObject;
+import com.desapoint.desapoint.adapters.AddSubjectAdapter;
 import com.desapoint.desapoint.pojos.Subject;
-import com.desapoint.desapoint.pojos.User;
-import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
-import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
-import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class SettingActivity extends AppCompatActivity {
+public class AddSubjectActivity extends AppCompatActivity {
 
-    private LinearLayout universitySettingsButton;
-    private LinearLayout addSubjectButton;
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
-    private SubjectSettingAdapter adapter;
+    private AddSubjectAdapter adapter;
     private List<Subject> subjectList;
     private ProgressDialog progress;
-    private Intent intent;
+    private LinearLayout searchButton;
+    private EditText searchedWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        universitySettingsButton=(LinearLayout)findViewById(R.id.university_setting);
-        addSubjectButton=(LinearLayout)findViewById(R.id.subject_setting);
+        setContentView(R.layout.activity_add_subject);
 
-        Type listType = new TypeToken<List<Subject>>() {}.getType();
-        subjectList=new Gson().fromJson(getIntent().getStringExtra(Subject.NAME),listType);
-        PreferenceStorage.addSubjectJson(getBaseContext(),getIntent().getStringExtra(Subject.NAME));
+        searchedWord=(EditText)findViewById(R.id.search_word);
+        searchButton=(LinearLayout)findViewById(R.id.search_button);
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         layoutManager=new LinearLayoutManager(getBaseContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter=new SubjectSettingAdapter(getBaseContext(),subjectList);
+        subjectList=new ArrayList<>();
+        adapter=new AddSubjectAdapter(getBaseContext(),subjectList);
         recyclerView.setAdapter(adapter);
 
-        universitySettingsButton.setOnClickListener(new View.OnClickListener(){
+
+        searchButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                updateProcess(getBaseContext(), ConstantInformation.USER_UNIVERSITY);
+
+                View view=AddSubjectActivity.this.getCurrentFocus();
+                subjectList=new ArrayList<Subject>();
+                if(view!=null){
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+                }
+
+                String word=searchedWord.getText().toString().trim();
+                if(word.length()<2){
+                    Snackbar.make(searchButton,"Too short keyword",Snackbar.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getBaseContext(),"searched",Toast.LENGTH_LONG).show();
+                    //searchContent(getBaseContext(), ConstantInformation.SUBJECT_SEARCH_LIST_URL,word);
+                }
+
             }
         });
 
-        addSubjectButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                intent=new Intent(getBaseContext(),AddSubjectActivity.class);
-                startActivity(intent);
-            }
-        });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
-        actionBarTitle("Settings");
-
+        actionBarTitle("Adding Subject");
     }
 
     @Override
@@ -105,47 +105,44 @@ public class SettingActivity extends AppCompatActivity {
         ((TextView)v.findViewById(R.id.title)).setText(title);
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
-
     }
 
-    public void updateProcess(final Context context, String url){
+    public void searchContent(final Context context,String url,String search){
 
         AsyncHttpClient httpClient=new AsyncHttpClient();
         RequestParams params = new RequestParams();
-        User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
-        params.put("user_id",user.getUser_id());
-        progress= ProgressDialog.show(SettingActivity.this,"Please wait",
-                "performing reset action", false);
-
-        progress.show();
+        params.put("keyword",search);
 
 
         httpClient.post(context,url, params,new TextHttpResponseHandler() {
 
             @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+
+            @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                progress.dismiss();
-                Toast.makeText(context,"Please try again later",Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
 
-                progress.dismiss();
-                Log.e("response",responseString);
                 if(responseString.length()<8){
-                    Snackbar.make(universitySettingsButton,
-                            "Could not prepare course update please try again later!!"
-                            , Snackbar.LENGTH_LONG).show();
+
+                    if(responseString.equalsIgnoreCase("none")){
+
+                    }else{
+
+                    }
                 }else{
-
-                    RegistrationObject registrationObject=new RegistrationObject();
-                    String content=new Gson().toJson(registrationObject);
-                    PreferenceStorage.addRegInfo(context,content);
-                    Intent intent=new Intent(getBaseContext(),CollegeUPdate.class);
-                    intent.putExtra(College.JSON_VARIABLE,responseString);
-                    startActivity(intent);
-
+                    Type listType = new TypeToken<List<Subject>>() {}.getType();
+                    /*subjects=new Gson().fromJson(responseString,listType);
+                    adapter=new SubjectItemAdapter(getContext(),subjects, WindowInfo.NOTES);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();*/
                 }
 
 
@@ -153,5 +150,4 @@ public class SettingActivity extends AppCompatActivity {
         });
 
     }
-
 }

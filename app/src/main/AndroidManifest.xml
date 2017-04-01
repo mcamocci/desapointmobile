@@ -78,11 +78,16 @@
         <activity
             android:name=".activities.ForgotPasswordActivity"
             android:theme="@style/AppThemeBackBlack" />
-        <activity android:name=".activities.CollegeUPdate"
+        <activity
+            android:name=".activities.CollegeUPdate"
             android:theme="@style/AppThemeBackBlack" />
-        <activity android:name=".activities.CourseUpdateActivity"
+        <activity
+            android:name=".activities.CourseUpdateActivity"
             android:theme="@style/AppThemeBackBlack" />
-        <activity android:name=".activities.SettingActivity"
+        <activity
+            android:name=".activities.SettingActivity"
+            android:theme="@style/AppThemeBackBlack" />
+        <activity android:name=".activities.AddSubjectActivity"
             android:theme="@style/AppThemeBackBlack" />
     </application>
 
