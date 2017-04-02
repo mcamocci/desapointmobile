@@ -54,6 +54,7 @@
 
             <android.support.v7.widget.CardView
                 android:layout_margin="8dp"
+                android:padding="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -71,7 +72,7 @@
                         android:layout_marginLeft="12dp"
                         android:padding="1dp"
                         android:layout_marginRight="12dp"
-                        android:background="@color/transparent_black">
+                        android:background="@drawable/special_rounded_rectangle">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -101,7 +102,7 @@
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="12dp"
                         android:padding="1dp"
-                        android:background="@color/transparent_black">
+                        android:background="@drawable/special_rounded_rectangle">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -130,7 +131,7 @@
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="12dp"
                         android:padding="1dp"
-                        android:background="@color/transparent_black">
+                        android:background="@drawable/special_rounded_rectangle">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -144,7 +145,7 @@
                             android:text="Username" />
 
                         <EditText
-                            android:id="@+id/email"
+                            android:id="@+id/userName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/white"
@@ -161,7 +162,7 @@
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="8dp"
                         android:padding="1dp"
-                        android:background="@color/transparent_black">
+                        android:background="@drawable/special_rounded_rectangle">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -175,7 +176,7 @@
                             android:text="@string/password" />
 
                         <EditText
-                            android:id="@+id/phone"
+                            android:id="@+id/password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@android:color/white"
@@ -190,6 +191,7 @@
 
             <android.support.v7.widget.CardView
                 android:layout_margin="8dp"
+                android:padding="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -205,7 +207,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:padding="1dp"
-                        android:background="@color/transparent_black">
+                        android:background="@drawable/special_rounded_rectangle">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -217,7 +219,7 @@
                             android:textColor="@color/white"
                             android:text="Gender" />
                         <Spinner
-                            android:id="@+id/university"
+                            android:id="@+id/gender"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:fontFamily="sans-serif-light"
@@ -233,7 +235,7 @@
                         android:layout_marginLeft="12dp"
                         android:padding="1dp"
                         android:layout_marginRight="12dp"
-                        android:background="@color/transparent_black">
+                        android:background="@drawable/special_rounded_rectangle">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -247,6 +249,7 @@
                             android:text="Email" />
 
                         <EditText
+                            android:id="@+id/email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"
@@ -261,7 +264,7 @@
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="12dp"
                         android:padding="1dp"
-                        android:background="@color/transparent_black">
+                        android:background="@drawable/special_rounded_rectangle">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -275,6 +278,7 @@
                             android:text="Phone" />
 
                         <EditText
+                            android:id="@+id/phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-light"

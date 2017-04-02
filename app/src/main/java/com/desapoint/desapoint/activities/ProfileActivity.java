@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.ProfileItemAdapter;
@@ -39,6 +41,15 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView label;
     private ProgressDialog progress;
 
+    private EditText firstName;
+    private EditText lastName;
+    private EditText username;
+    private EditText password;
+
+    private Spinner gender;
+    private EditText email;
+    private EditText phone;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +57,26 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
+
+
+        firstName=(EditText)findViewById(R.id.firstName);
+        firstName.setText(user.getFirstName());
+
+        lastName=(EditText)findViewById(R.id.lastName);
+        lastName.setText(user.getFullname());
+
+        password=(EditText)findViewById(R.id.password);
+        ///
+
+        gender=(Spinner)findViewById(R.id.gender);
+       // gender.setSelected();
+
+        email=(EditText)findViewById(R.id.email);
+        email.setText(user.getEmail());
+
+        phone=(EditText)findViewById(R.id.phone);
+        phone.setText(user.getPhone());
+
 
         avatarView = (AvatarView) findViewById(R.id.avatar_view);
         imageLoader = new GlideLoader();

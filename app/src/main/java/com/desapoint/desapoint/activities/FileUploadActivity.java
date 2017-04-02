@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,9 @@ public class FileUploadActivity extends AppCompatActivity {
     private EditText name;
     private EditText description;
     private String filePath=null;
+
+    private LinearLayout fileUpload;
+    private LinearLayout cancel;
 
 
     @Override
@@ -27,6 +31,40 @@ public class FileUploadActivity extends AppCompatActivity {
         name=(EditText)findViewById(R.id.name);
         description=(EditText)findViewById(R.id.description);
 
+        fileUpload=(LinearLayout)findViewById(R.id.upload);
+        cancel=(LinearLayout)findViewById(R.id.cancel);
+
+        fileUpload.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                if(name.getText().toString().trim().length()>5
+                        && description.getText().toString().trim().length()>10){
+
+                    if(filePath==null){
+                        Toast.makeText(getBaseContext(),"Please select the file to upload",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getBaseContext(),"We are good emmanuel",Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+
+                    if(name.getText().toString().trim().length()<5){
+                        Toast.makeText(getBaseContext(),"name too short",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getBaseContext(),"description too short",Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
         actionBarTitle("Upload content");
@@ -34,7 +72,7 @@ public class FileUploadActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.upload,menu);
+        //getMenuInflater().inflate(R.menu.upload,menu);
         return true;
     }
 
@@ -43,26 +81,6 @@ public class FileUploadActivity extends AppCompatActivity {
         int id=item.getItemId();
         if(id==android.R.id.home){
             finish();
-        }else if(id==R.id.upload_button){
-            if(name.getText().toString().trim().length()>5
-                    && description.getText().toString().trim().length()>10){
-
-                if(filePath==null){
-                    Toast.makeText(getBaseContext(),"Please select the file to upload",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getBaseContext(),"We are good emmanuel",Toast.LENGTH_SHORT).show();
-                }
-
-            }else{
-
-                if(name.getText().toString().trim().length()<5){
-                    Toast.makeText(getBaseContext(),"name too short",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getBaseContext(),"description too short",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
         }
         return true;
     }
