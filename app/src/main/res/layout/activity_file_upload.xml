@@ -9,6 +9,22 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_insert_drive_file"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/file_label"
+            android:text="File name will be displayed here"
+            android:src="@drawable/ic_insert_drive_file"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -36,11 +52,43 @@
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:minWidth="80dp"
-                    android:text="Upload name"
+                    android:text="Name"
                     android:textColor="@color/white" />
 
                 <EditText
                     android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    android:fontFamily="sans-serif-light"
+                    android:padding="6dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/writterHolder"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/special_rounded_rectangle"
+                android:padding="1dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:fontFamily="sans-serif-light"
+                    android:gravity="center"
+                    android:minWidth="80dp"
+                    android:text="Writer"
+                    android:textColor="@color/white" />
+
+                <EditText
+                    android:id="@+id/writter"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/white"
@@ -65,7 +113,7 @@
                     android:fontFamily="sans-serif-light"
                     android:gravity="center"
                     android:minWidth="80dp"
-                    android:text="Upload Description"
+                    android:text="Description"
                     android:textColor="@color/white" />
 
                 <EditText
@@ -87,19 +135,14 @@
                 android:gravity="center"
                 android:background="@drawable/round_cyan_button"
                 >
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_cloud_upload"
-                    android:fontFamily="sans-serif-light"
-                    android:padding="8dp"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:text="UPLOAD"
+                    android:text="Upload"
                     android:padding="8dp"/>
             </LinearLayout>
 
@@ -113,19 +156,14 @@
                 android:gravity="center"
                 android:background="@drawable/round_red_button"
                 >
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/ic_cancel"
-                    android:fontFamily="sans-serif-light"
-                    android:padding="8dp"/>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:text="CANCEL"
+                    android:text="Cancel"
                     android:padding="8dp"/>
             </LinearLayout>
 

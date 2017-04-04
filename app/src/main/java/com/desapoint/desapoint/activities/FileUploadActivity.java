@@ -12,11 +12,26 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
+import com.desapoint.desapoint.pojos.UploadItem;
+import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
+import com.google.gson.Gson;
+
+import net.gotev.uploadservice.MultipartUploadRequest;
+import net.gotev.uploadservice.UploadNotificationConfig;
+
+import java.io.File;
+import java.util.UUID;
+
 public class FileUploadActivity extends AppCompatActivity {
 
     private EditText name;
     private EditText description;
     private String filePath=null;
+    private UploadItem uploadItem;
+
+    private EditText writter;
+    private LinearLayout writterHolder;
+    private TextView fileLabel;
 
     private LinearLayout fileUpload;
     private LinearLayout cancel;
@@ -27,7 +42,21 @@ public class FileUploadActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_upload);
 
+        writterHolder=(LinearLayout)findViewById(R.id.writterHolder);
+        writter=(EditText)findViewById(R.id.writter);
+
+        fileLabel=(TextView)findViewById(R.id.file_label);
+
         filePath=getIntent().getStringExtra("FILE");
+        uploadItem=new Gson().fromJson(getIntent().getStringExtra(UploadItem.HOLDING_NAME),UploadItem.class);
+
+        if(uploadItem.getType().equals(UploadItem.ARTICLE_TYPE)){
+            writterHolder.setVisibility(View.VISIBLE);
+        }
+
+        File file=new File(filePath);
+        fileLabel.setText(file.getName());
+
         name=(EditText)findViewById(R.id.name);
         description=(EditText)findViewById(R.id.description);
 
@@ -103,4 +132,79 @@ public class FileUploadActivity extends AppCompatActivity {
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
     }
+
+    public void uploadBooks(){
+
+            //Uploading code
+            try {
+                String uploadId = UUID.randomUUID().toString();
+
+                UploadNotificationConfig uploadNotificationConfig=new UploadNotificationConfig();
+                uploadNotificationConfig.setTitle("Uploading Book");
+                uploadNotificationConfig.setCompletedIconColor(android.R.color.holo_red_dark);
+                uploadNotificationConfig.setCompletedMessage("The selected book was uploaded successfully");
+                //Creating a multi part request
+                new MultipartUploadRequest(this, uploadId,ConstantInformation.UPLOAD_BOOK_URL)
+
+                        .addParameter("USER_ID","1") //Adding text parameter to the request
+                      /*  .addFileToUpload(photoPaths.get(0),"RESOURCES[]")
+                        .addParameter("CONTENT",writtenMessage.getText().toString().trim()) //Adding text parameter to the request
+                        .setNotificationConfig(uploadNotificationConfig)*/
+                        .setMaxRetries(2)
+                        .startUpload(); //Starting the upload
+
+            } catch (Exception exc) {
+                Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+    }
+
+    public void uploadNotes(){
+
+        try {
+            String uploadId = UUID.randomUUID().toString();
+            UploadNotificationConfig uploadNotificationConfig=new UploadNotificationConfig();
+            uploadNotificationConfig.setTitle("Uploading Note");
+            uploadNotificationConfig.setCompletedIconColor(android.R.color.holo_red_dark);
+            uploadNotificationConfig.setCompletedMessage("The selected File has been uploaded");
+
+            new MultipartUploadRequest(this, uploadId, ConstantInformation.UPLOAD_NOTES_URL)
+
+                    .addParameter("USER_ID","1") //Adding text parameter to the request
+                 /*   .addFileToUpload(photoPaths.get(0),"RESOURCES[]")
+                    .addParameter("CONTENT",writtenMessage.getText().toString().trim())
+                     //Adding text parameter to the request
+                    .setNotificationConfig(uploadNotificationConfig)
+                    .setMaxRetries(5)*/
+                    .startUpload(); //Starting the upload
+
+        } catch (Exception exc) {
+            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void uploadArticle(){
+
+        //Uploading code
+        try {
+            String uploadId = UUID.randomUUID().toString();
+
+            UploadNotificationConfig uploadNotificationConfig=new UploadNotificationConfig();
+            uploadNotificationConfig.setTitle("Uploading Article");
+            uploadNotificationConfig.setCompletedIconColor(android.R.color.holo_red_dark);
+            uploadNotificationConfig.setCompletedMessage("The selected Article file was uploaded successfully");
+            //Creating a multi part request
+            new MultipartUploadRequest(this, uploadId,ConstantInformation.UPLOAD_ARTICLE_URL)
+
+                    .addParameter("USER_ID","1") //Adding text parameter to the request
+                   /* .addFileToUpload(photoPaths.get(0),"RESOURCES[]")
+                    .addParameter("CONTENT",writtenMessage.getText().toString().trim()) //Adding text parameter to the request
+                    .setNotificationConfig(uploadNotificationConfig)*/
+                    .setMaxRetries(5)
+                    .startUpload(); //Starting the upload
+
+        } catch (Exception exc) {
+            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

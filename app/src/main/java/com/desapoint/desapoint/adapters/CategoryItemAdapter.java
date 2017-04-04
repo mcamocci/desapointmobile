@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.activities.ResourceDownloadActivity;
 import com.desapoint.desapoint.pojos.Category;
+import com.desapoint.desapoint.pojos.UploadItem;
 import com.desapoint.desapoint.pojos.WindowInfo;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 

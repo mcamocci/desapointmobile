@@ -29,8 +29,15 @@ public class ConstantInformation {
     public static final String USER_UNIVERSITY=COMMON +"user_university.php";
     public static final String UNIVERSITY_SETTINGS_URL=COMMON +"university_settings.php";
 
-    //these urls are for file downloads and location of profile picture//
 
+    ///-- FILES UPLOAD URLS --//
+
+    public static final String UPLOAD_NOTES_URL=COMMON +"uploadNotes.php";
+    public static final String UPLOAD_ARTICLE_URL=COMMON +"uploadArticles.php";
+    public static final String UPLOAD_BOOK_URL=COMMON +"uploadBooks.php";
+
+
+    //these urls are for file downloads and location of profile picture//
     public static final String PASTPAPER_DOWNLOAD_URL=FILE_COMMON +"Past_Papers/";
     public static final String NOTES_DOWNLOAD_URL=FILE_COMMON +"notes/";
     public static final String ARTICLE_DOWNLOAD_URL=FILE_COMMON +"articles/";

@@ -19,6 +19,7 @@ import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.DownloadItemAdapter;
 import com.desapoint.desapoint.pojos.DownloadableItem;
 import com.desapoint.desapoint.pojos.RetryObject;
+import com.desapoint.desapoint.pojos.UploadItem;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.github.angads25.filepicker.controller.DialogSelectionListener;
@@ -40,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.impl.cookie.IgnoreSpec;
+
 import static com.desapoint.desapoint.pojos.WindowInfo.ARTICLE;
 import static com.desapoint.desapoint.pojos.WindowInfo.BOOK;
 import static com.desapoint.desapoint.pojos.WindowInfo.NOTES;
@@ -54,6 +57,9 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
     private RetryObject retryObject;
     private String title;
     private String parameter;
+    private UploadItem uploadItem;
+    private FloatingActionButton fab;
+    private String uploadItemJson;
 
 
     @Override
@@ -61,8 +67,31 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_resource_download);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         parameter=getIntent().getStringExtra(INTENTINFO);
         title=PreferenceStorage.getWindowInfo(getBaseContext());
+
+        if(title.equalsIgnoreCase(UploadItem.ARTICLE_TYPE)){
+
+            uploadItem=new UploadItem();
+            uploadItem.setType(UploadItem.ARTICLE_TYPE);
+            uploadItem.setCategory(parameter);
+
+        }else if(title.equalsIgnoreCase(UploadItem.BOOK_TYPE)){
+
+            uploadItem=new UploadItem();
+            uploadItem.setType(UploadItem.BOOK_TYPE);
+            uploadItem.setCategory(parameter);
+
+        }else if(title.equalsIgnoreCase(UploadItem.NOTES_TYPE)){
+
+            uploadItem=new UploadItem();
+            uploadItem.setType(UploadItem.NOTES_TYPE);
+            uploadItem.setSubject(parameter);
+
+        }else{
+            fab.setVisibility(View.GONE);
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -72,8 +101,6 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
         retryObject=RetryObject.getInstance(this);
         retryObject.setListener(this);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -96,6 +123,7 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
                         String filePath=files[0];
                         Intent intent=new Intent(getBaseContext(),FileUploadActivity.class);
                         intent.putExtra("FILE",filePath);
+                        intent.putExtra(UploadItem.HOLDING_NAME,new Gson().toJson(uploadItem,UploadItem.class));
                         startActivity(intent);
                     }
                 });
