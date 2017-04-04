@@ -27,6 +27,7 @@ public class ConstantInformation {
     public static final String COLLEGE_COURSE_LIST=COMMON +"courseList.php";
     public static final String RESET_URL=COMMON +"send_password.php";
     public static final String USER_UNIVERSITY=COMMON +"user_university.php";
+    public static final String UNIVERSITY_SETTINGS_URL=COMMON +"university_settings.php";
 
     //these urls are for file downloads and location of profile picture//
 

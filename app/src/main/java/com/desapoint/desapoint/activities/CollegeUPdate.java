@@ -49,7 +49,7 @@ public class CollegeUPdate extends AppCompatActivity implements AdapterView.OnIt
     private String semester="0";
     private List<String> colleges=new ArrayList<>();
     private List<String> years=new ArrayList<>();
-    private List<String> semisters = new ArrayList<String>();;
+    private List<String> semisters = new ArrayList<String>();
 
 
     @Override
@@ -95,9 +95,12 @@ public class CollegeUPdate extends AppCompatActivity implements AdapterView.OnIt
         try{
             Type listType = new TypeToken<List<College>>() {}.getType();
             collegeList=new Gson().fromJson(listContent,listType);
+
         }catch (Exception ex){
 
         }
+
+
 
         collegeSpinner=(Spinner) findViewById(R.id.college);
         collegeSpinner.setOnItemSelectedListener(this);
@@ -117,7 +120,7 @@ public class CollegeUPdate extends AppCompatActivity implements AdapterView.OnIt
         years.add("1");years.add("2");
         years.add("3");years.add("4");years.add("5");
         semisters.add("SELECT SEMESTER");
-        semisters.add("1");semisters.add("2");
+        semisters.add("Semester I");semisters.add("Semester II");
 
 
         // Creating adapter for spinner

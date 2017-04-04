@@ -118,7 +118,7 @@ public class RegistrationActivityscreenTwo extends AppCompatActivity implements 
         years.add("1");years.add("2");
         years.add("3");years.add("4");years.add("5");
         semisters.add("SELECT SEMESTER");
-        semisters.add("1");semisters.add("2");
+        semisters.add("Semester I");semisters.add("Semester II");
 
 
         // Creating adapter for spinner
