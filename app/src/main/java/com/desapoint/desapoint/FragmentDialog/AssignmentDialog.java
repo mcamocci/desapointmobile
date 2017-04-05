@@ -29,6 +29,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.JSONLIST;
+
 /**
  * Created by root on 3/22/17.
  */
@@ -49,7 +51,7 @@ public class AssignmentDialog extends DialogFragment {
     public  static String TITLE_TOPIC="TOPIC";
     public  static String TITLE_ANNOUNCEMENT="ANNOUNCEMENT";
     public  static String TITLE_ASSIGNMENT="ASSIGNMENT";
-    public static  String JSONLIST="LIST_STRING";
+
     public static String HEAD="HEAD";
 
 

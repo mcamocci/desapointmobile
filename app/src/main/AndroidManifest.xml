@@ -34,8 +34,8 @@
         <activity
             android:name=".activities.ProfileActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:theme="@style/AppThemeBack" />
+            android:theme="@style/AppThemeBack"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".activities.SubjectActivity"
             android:screenOrientation="portrait"
@@ -93,9 +93,13 @@
             android:name=".activities.SettingActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBackBlack" />
-        <activity android:name=".activities.AddSubjectActivity"
+        <activity
+            android:name=".activities.AddSubjectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBackBlack" />
+        <activity android:name=".activities.TopicsActivity" />
+        <activity android:name=".activities.SubjectAnnouncementActivity" />
+        <activity android:name=".activities.SubjectAssignmentActivity"></activity>
     </application>
 
 </manifest>

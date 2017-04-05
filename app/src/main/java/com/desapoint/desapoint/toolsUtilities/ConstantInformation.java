@@ -29,6 +29,8 @@ public class ConstantInformation {
     public static final String USER_UNIVERSITY=COMMON +"user_university.php";
     public static final String UNIVERSITY_SETTINGS_URL=COMMON +"university_settings.php";
 
+    public static  String JSONLIST="LIST_STRING";
+
 
     ///-- FILES UPLOAD URLS --//
 

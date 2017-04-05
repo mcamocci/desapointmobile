@@ -19,6 +19,9 @@ import android.widget.Toast;
 import com.desapoint.desapoint.FragmentDialog.AssignmentDialog;
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.activities.ResourceDownloadActivity;
+import com.desapoint.desapoint.activities.SubjectAnnouncementActivity;
+import com.desapoint.desapoint.activities.SubjectAssignmentActivity;
+import com.desapoint.desapoint.activities.TopicsActivity;
 import com.desapoint.desapoint.pojos.Announcement;
 import com.desapoint.desapoint.pojos.Assignment;
 import com.desapoint.desapoint.pojos.Subject;
@@ -36,6 +39,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.INTENTINFO;
+import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.JSONLIST;
 
 /**
  * Created by root on 3/12/17.
@@ -220,39 +224,22 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
                 }else{
 
                     if(dialogTracker==0){
-                        Toast.makeText(context,
-                                responseString,Toast.LENGTH_LONG).show();
-                        AssignmentDialog dialog=new AssignmentDialog();
-                        Bundle bundle=new Bundle();
-                        bundle.putString(AssignmentDialog.HEAD,AssignmentDialog.TITLE_ANNOUNCEMENT);
-                        dialog.setArguments(bundle);
-                        bundle.putString(AssignmentDialog.JSONLIST,responseString);
-                        FragmentManager manager=((Activity) context).getFragmentManager();
-                        dialog.show(manager,"tag");
 
+                        Intent intent=new Intent(context,SubjectAnnouncementActivity.class);
+                        intent.putExtra(JSONLIST,responseString);
+                        context.startActivity(intent);
 
                     }else if(dialogTracker==1){
-                        Toast.makeText(context,
-                                responseString,Toast.LENGTH_LONG).show();
-                        AssignmentDialog dialog=new AssignmentDialog();
-                        Bundle bundle=new Bundle();
-                        bundle.putString(AssignmentDialog.HEAD,AssignmentDialog.TITLE_ASSIGNMENT);
-                        dialog.setArguments(bundle);
-                        bundle.putString(AssignmentDialog.JSONLIST,responseString);
-                        FragmentManager manager=((Activity) context).getFragmentManager();
-                        dialog.show(manager,"tag");
 
+                        Intent intent=new Intent(context,SubjectAssignmentActivity.class);
+                        intent.putExtra(JSONLIST,responseString);
+                        context.startActivity(intent);
 
                     }else{
-                        Toast.makeText(context,
-                                responseString,Toast.LENGTH_LONG).show();
-                        AssignmentDialog dialog=new AssignmentDialog();
-                        Bundle bundle=new Bundle();
-                        bundle.putString(AssignmentDialog.HEAD,AssignmentDialog.TITLE_TOPIC);
-                        bundle.putString(AssignmentDialog.JSONLIST,responseString);
-                        dialog.setArguments(bundle);
-                        FragmentManager manager=((Activity) context).getFragmentManager();
-                        dialog.show(manager,"tag");
+
+                        Intent intent=new Intent(context,TopicsActivity.class);
+                        intent.putExtra(JSONLIST,responseString);
+                        context.startActivity(intent);
 
                     }
 

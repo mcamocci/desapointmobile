@@ -6,6 +6,8 @@ package com.desapoint.desapoint.pojos;
 
 public class RegistrationObject {
 
+    public static String GENDER_MALE="Male";
+    public static String GENDER_FEMALE="Female";
     private String firstName;
     private String lastName;
     private String username;
@@ -18,6 +20,8 @@ public class RegistrationObject {
     private String course;
     private String college;
     private String university;
+    private String gender="NOT SPECIFIED YET";
+
 
     public String getFirstName() {
         return firstName;
@@ -113,5 +117,13 @@ public class RegistrationObject {
 
     public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

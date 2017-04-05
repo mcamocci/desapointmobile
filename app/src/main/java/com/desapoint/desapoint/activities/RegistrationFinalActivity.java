@@ -1,8 +1,12 @@
 package com.desapoint.desapoint.activities;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,13 +19,20 @@ import android.widget.TextView;
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.Course;
 import com.desapoint.desapoint.pojos.RegistrationObject;
+import com.desapoint.desapoint.pojos.University;
+import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 public class RegistrationFinalActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
 
@@ -38,6 +49,7 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
     private String passwordOne=null;
     private String passwordTwo=null;
     private String course=null;
+    private ProgressDialog progress;
 
 
     private Spinner courseSpinner;
@@ -158,6 +170,12 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
                     object.setUsername(username);
                     object.setRegistrationNumber(registrationNumber);
 
+
+                    /////////////the registration thing/////////////////
+                    goOnlineRegister(getBaseContext(),
+                            ConstantInformation.REGISTRATION_URL,object);
+                    ///------------------------------------------------//
+
                     Snackbar.make(passwordOneEdit,
                             object.getFirstName()+
                                     " "+object.getLastName()+" "+object.getEmail()+" "+object.getPassword()+" "+object.getPhone()
@@ -176,7 +194,52 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
 
     }
 
-    public void goOnlineRegister(RegistrationObject regObject){
+    public void goOnlineRegister(Context context,String url,RegistrationObject regObject){
 
+        AsyncHttpClient httpClient=new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("firstName",regObject.getFirstName());
+        params.put("LastName",regObject.getLastName());
+        params.put("university",regObject.getUniversity());
+        params.put("college",regObject.getCollege());
+        params.put("course",regObject.getCourse());
+        params.put("year",regObject.getYear());
+        params.put("semester",regObject.getSemester());
+        params.put("username",regObject.getUsername());
+        params.put("password",regObject.getPassword());
+        params.put("email",regObject.getEmail());
+        params.put("gender",regObject.getGender());
+        params.put("phone",regObject.getPassword());
+
+        progress= ProgressDialog.show(RegistrationFinalActivity.this,"Please wait",
+                "Performing registration", false);
+
+        progress.show();
+
+
+        httpClient.post(context,url, params,new TextHttpResponseHandler() {
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                progress.dismiss();
+                Snackbar.make(userNameEdit,"Please try again later",Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                progress.dismiss();
+                Log.e("response",responseString);
+                if(responseString.length()<8){
+                    Snackbar.make(userNameEdit,"We were not able to register you , please try different username and password",Snackbar.LENGTH_LONG).show();
+                }else{
+                    Intent intent=new Intent(getBaseContext(),RegistrationActivityScreenOne.class);
+                    intent.putExtra(University.JSON_VARIABLE,responseString);
+                    startActivity(intent);
+                }
+
+
+            }
+        });
     }
 }

@@ -62,6 +62,9 @@ public class ProfileActivity extends AppCompatActivity {
         firstName=(EditText)findViewById(R.id.firstName);
         firstName.setText(user.getFirstName());
 
+        username=(EditText)findViewById(R.id.userName);
+        username.setText(user.getUsername());
+
         lastName=(EditText)findViewById(R.id.lastName);
         lastName.setText(user.getFullname());
 

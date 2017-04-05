@@ -1,5 +1,6 @@
 package com.desapoint.desapoint.activities;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.UploadItem;
+import com.desapoint.desapoint.pojos.User;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.google.gson.Gson;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
@@ -36,14 +39,20 @@ public class FileUploadActivity extends AppCompatActivity {
     private LinearLayout fileUpload;
     private LinearLayout cancel;
 
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_upload);
 
+
+        user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
+
         writterHolder=(LinearLayout)findViewById(R.id.writterHolder);
         writter=(EditText)findViewById(R.id.writter);
+
+
 
         fileLabel=(TextView)findViewById(R.id.file_label);
 
@@ -72,7 +81,17 @@ public class FileUploadActivity extends AppCompatActivity {
                     if(filePath==null){
                         Toast.makeText(getBaseContext(),"Please select the file to upload",Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getBaseContext(),"We are good emmanuel",Toast.LENGTH_SHORT).show();
+                        if(uploadItem.getType().equalsIgnoreCase(UploadItem.ARTICLE_TYPE)){
+                            if(writter.getText().toString().trim().length()<3){
+                                Snackbar.make(writter,"Writer name is too short",Snackbar.LENGTH_LONG).show();
+                            }else{
+                                uploadArticle();
+                            }
+                        }else if(uploadItem.getType().equalsIgnoreCase(UploadItem.BOOK_TYPE)){
+                            uploadBooks();
+                        }else{
+                            uploadNotes();
+                        }
                     }
 
                 }else{
@@ -82,6 +101,8 @@ public class FileUploadActivity extends AppCompatActivity {
                     }else{
                         Toast.makeText(getBaseContext(),"description too short",Toast.LENGTH_SHORT).show();
                     }
+
+
 
                 }
             }
@@ -146,10 +167,12 @@ public class FileUploadActivity extends AppCompatActivity {
                 //Creating a multi part request
                 new MultipartUploadRequest(this, uploadId,ConstantInformation.UPLOAD_BOOK_URL)
 
-                        .addParameter("USER_ID","1") //Adding text parameter to the request
-                      /*  .addFileToUpload(photoPaths.get(0),"RESOURCES[]")
-                        .addParameter("CONTENT",writtenMessage.getText().toString().trim()) //Adding text parameter to the request
-                        .setNotificationConfig(uploadNotificationConfig)*/
+                        .addParameter("USER_ID",Integer.toString(user.getUser_id())) //Adding text parameter to the request
+                        .addParameter("category",uploadItem.getCategory())
+                        .addParameter("name",name.getText().toString().trim())
+                        .addParameter("description",description.getText().toString().trim())
+                        .addFileToUpload("file",filePath)
+                        .setNotificationConfig(uploadNotificationConfig)
                         .setMaxRetries(2)
                         .startUpload(); //Starting the upload
 
@@ -169,12 +192,13 @@ public class FileUploadActivity extends AppCompatActivity {
 
             new MultipartUploadRequest(this, uploadId, ConstantInformation.UPLOAD_NOTES_URL)
 
-                    .addParameter("USER_ID","1") //Adding text parameter to the request
-                 /*   .addFileToUpload(photoPaths.get(0),"RESOURCES[]")
-                    .addParameter("CONTENT",writtenMessage.getText().toString().trim())
-                     //Adding text parameter to the request
+                    .addParameter("USER_ID",Integer.toString(user.getUser_id()))
+                    .addParameter("subject",uploadItem.getSubject())
+                    .addParameter("name",name.getText().toString().trim())
+                    .addParameter("description",description.getText().toString().trim())
+                    .addFileToUpload("file",filePath)
                     .setNotificationConfig(uploadNotificationConfig)
-                    .setMaxRetries(5)*/
+                    .setMaxRetries(5)
                     .startUpload(); //Starting the upload
 
         } catch (Exception exc) {
@@ -195,10 +219,13 @@ public class FileUploadActivity extends AppCompatActivity {
             //Creating a multi part request
             new MultipartUploadRequest(this, uploadId,ConstantInformation.UPLOAD_ARTICLE_URL)
 
-                    .addParameter("USER_ID","1") //Adding text parameter to the request
-                   /* .addFileToUpload(photoPaths.get(0),"RESOURCES[]")
-                    .addParameter("CONTENT",writtenMessage.getText().toString().trim()) //Adding text parameter to the request
-                    .setNotificationConfig(uploadNotificationConfig)*/
+                    .addParameter("USER_ID",Integer.toString(user.getUser_id()))
+                    .addParameter("subject",uploadItem.getCategory())
+                    .addParameter("writer",writter.getText().toString().trim())
+                    .addParameter("name",name.getText().toString().trim())
+                    .addParameter("description",description.getText().toString().trim())
+                    .addFileToUpload("file",filePath)
+                    .setNotificationConfig(uploadNotificationConfig)
                     .setMaxRetries(5)
                     .startUpload(); //Starting the upload
 
