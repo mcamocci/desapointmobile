@@ -97,9 +97,12 @@
             android:name=".activities.AddSubjectActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeBackBlack" />
-        <activity android:name=".activities.TopicsActivity" />
-        <activity android:name=".activities.SubjectAnnouncementActivity" />
-        <activity android:name=".activities.SubjectAssignmentActivity"></activity>
+        <activity android:name=".activities.TopicsActivity"
+            android:theme="@style/AppThemeBackBlack" />
+        <activity android:name=".activities.SubjectAnnouncementActivity"
+            android:theme="@style/AppThemeBackBlack" />
+        <activity android:name=".activities.SubjectAssignmentActivity"
+            android:theme="@style/AppThemeBackBlack" />
     </application>
 
 </manifest>

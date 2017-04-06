@@ -4,7 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,34 +40,58 @@ public class TopicsActivity extends AppCompatActivity {
         recyclerView=(RecyclerView)findViewById(R.id.recyclerView);
         layoutManager=new LinearLayoutManager(getBaseContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(layoutManager);
 
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        actionBarTitle("Subject topics");
+
 
         String listContent=getIntent().getStringExtra(JSONLIST);
 
         try{
             Type listType = new TypeToken<List<Topic>>() {}.getType();
             topicContents=new Gson().fromJson(listContent,listType);
+            Log.e("expected json",listContent);
+
+            String course=topicContents.get(0).getSubject();
+            if(course.length()>20){
+                course=course.substring(0,18).concat("...");
+            }
+            actionBarTitle("Subject topics",course);
             topicItemAdapter=new TopicItemAdapter(getBaseContext(),topicContents);
             recyclerView.setAdapter(topicItemAdapter);
         }catch (Exception ex){
-            Toast.makeText(getBaseContext(),"Unknown error ",Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(),"unknown error",Toast.LENGTH_LONG).show();
         }
 
     }
 
-    public void actionBarTitle(String title){
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        this.getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        int id=item.getItemId();
+        if(id==android.R.id.home){
+            finish();
+        }
+
+        return true;
+    }
+
+    public void actionBarTitle(String title,String activity){
+
         LayoutInflater inflator = LayoutInflater.from(this);
-        View v = inflator.inflate(R.layout.custom_title_other, null);
+        View v = inflator.inflate(R.layout.custom_title, null);
 
         //if you need to customize anything else about the text, do it here.
         //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.title)).setText(title);
+        ((TextView)v.findViewById(R.id.main_title)).setText(activity);
+        //assign the view to the actionbar
+        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
+        this.getSupportActionBar().setCustomView(v);
+
+        //if you need to customize anything else about the text, do it here.
+        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
+        ((TextView)v.findViewById(R.id.sub_title)).setText(title);
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
     }

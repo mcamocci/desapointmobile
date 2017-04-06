@@ -20,6 +20,7 @@
             android:layout_marginRight="16dp"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="center"
             android:id="@+id/text_short_bg"
             android:gravity="center"
             android:background="#909090"

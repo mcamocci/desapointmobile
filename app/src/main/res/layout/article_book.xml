@@ -22,6 +22,7 @@
             android:layout_height="48dp"
             android:id="@+id/circle_view_background"
             android:gravity="center"
+            android:layout_gravity="center"
             android:background="#707070"
             >
             <RelativeLayout

@@ -18,12 +18,27 @@
                 android:background="@color/white"
                 android:padding="12dp"
                 android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="@android:color/black"
+                    android:text="Date offered:4/4/2017"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_marginBottom="4dp"
+                    android:text="Date to submit:4/4/2012"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/category_name"
+                        android:layout_marginTop="4dp"
                         android:gravity="center"
-                        android:text="ECONOMICS"/>
+                        android:text="Assignment Description"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,7 +55,7 @@
                     android:id="@+id/items_count"
                     android:paddingLeft="4dp"
                     android:paddingRight="4dp"
-                    android:text="200"/>
+                    android:text="Download Assignment"/>
             </LinearLayout>
 
     </LinearLayout>

@@ -1,46 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#00A1EB"
+    android:layout_margin="4dp"
+    android:padding="2dp"
     android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:padding="8dp"
-        android:background="@drawable/rounded_rectangle"
+        android:background="#00A1EB"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:text="poster of assign"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@android:color/black"
-            android:text="The description of assignemnt"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@drawable/ic_action_download"/>
+            android:background="@color/white"
+            android:padding="12dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textStyle="bold"
+                android:layout_marginBottom="4dp"
+                android:textColor="@android:color/black"
+                android:text="Date offered:4/4/2017"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_marginBottom="4dp"
+                android:text="Date to submit:4/4/2012"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/category_name"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="Assignment Description"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:padding="12dp"
+            android:gravity="center"
+            android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:fontFamily="sans-serif-light"
-                android:gravity="right"
+                android:background="@drawable/rounded_rect"
                 android:textColor="@color/white"
-                android:text="download"/>
+                android:id="@+id/items_count"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
+                android:text="Download Assignment"/>
         </LinearLayout>
 
     </LinearLayout>

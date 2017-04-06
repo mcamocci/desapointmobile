@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_gravity="end"
-        android:background="#5CB85C"
+        android:background="@drawable/round_cyan_button"
         android:orientation="horizontal"
         android:padding="6dp">
         <!--android:background="#81C784"-->
@@ -17,11 +17,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1">
+            
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_arrow_right"
+                android:layout_gravity="center"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/topic_name"
+                android:layout_gravity="center"
                 android:fontFamily="sans-serif-light"
                 android:text="ECONOMICS"
                 android:textColor="@android:color/white" />
