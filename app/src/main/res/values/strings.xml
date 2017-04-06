@@ -13,7 +13,7 @@
     <string name="settings">Settings</string>
     <string name="article_message">Enjoy reading articles posted by your fellow colleague or your course instructors</string>
     <string name="book_message">Download and Books shared by different members of desapoint platform</string>
-    <string name="forgot">forgot password</string>
+    <string name="forgot"><u>Forgot password</u></string>
     <string name="password">password</string>
     <string name="username">username</string>
     <string name="login_button_name">LOGIN</string>
