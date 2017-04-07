@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_margin="12dp"
+    android:layout_margin="8dp"
     android:elevation="4dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -23,13 +23,12 @@
             android:orientation="horizontal"
             android:layout_height="wrap_content"
             android:id="@+id/circle_view_background"
-            android:gravity="center"
-            android:background="@android:color/darker_gray"
+            android:padding="4dp"
+            android:background="@android:color/black"
             >
             <TextView
                 android:layout_width="wrap_content"
                 android:textColor="@android:color/white"
-                android:layout_gravity="center"
                 android:id="@+id/description"
                 android:padding="4dp"
                 android:fontFamily="sans-serif-light"
@@ -45,6 +44,8 @@
             android:padding="4dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
@@ -63,20 +64,24 @@
             android:orientation="horizontal"
             android:layout_height="wrap_content">
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="2dp"
                 android:id="@+id/download_action"
                 android:layout_gravity="left"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_action_download"
+                android:src="@drawable/ic_action_download_white"
+                android:background="@drawable/round_cyan_button_no_stroke"
                 android:layout_marginRight="4dp"
                 />
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:padding="2dp"
                 android:id="@+id/share_action"
                 android:layout_gravity="left"
-                android:src="@drawable/ic_action_share"
+                android:src="@drawable/ic_action_share_white"
+                android:background="@drawable/round_cyan_button_no_stroke"
                 android:textSize="18sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="4dp"
@@ -85,12 +90,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/remark"
+                android:gravity="center"
+                android:fontFamily="sans-serif-light"
                 android:visibility="invisible"
                 android:textStyle="bold"
-                android:layout_gravity="left"
+                android:layout_gravity="center"
                 android:text="(Remark)"
-                android:src="@drawable/ic_action_share"
-                android:textSize="18sp"
+                android:textSize="12sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="4dp"
                 />

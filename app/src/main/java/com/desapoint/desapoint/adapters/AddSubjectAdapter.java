@@ -1,5 +1,8 @@
 package com.desapoint.desapoint.adapters;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +20,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import java.util.List;
-
 import cz.msebera.android.httpclient.Header;
 
 /**
@@ -28,6 +30,7 @@ public class AddSubjectAdapter extends RecyclerView.Adapter<AddSubjectAdapter.Su
 
     private Context context;
     private List<Subject> list;
+    private ProgressDialog progress;
 
     public AddSubjectAdapter(Context context, List<Subject> subjects){
         this.context=context;
@@ -80,7 +83,7 @@ public class AddSubjectAdapter extends RecyclerView.Adapter<AddSubjectAdapter.Su
         @Override
         public void onClick(View v) {
                 if(v.getId()==R.id.subject_code){
-                    addSubject(context, ConstantInformation.ADD_SUBJECTS_URL,subject.getId());
+                    approveRemoveDialog((Activity)v.getContext(),subject.getId(),"Approve add subject");
                 }
         }
 
@@ -97,6 +100,10 @@ public class AddSubjectAdapter extends RecyclerView.Adapter<AddSubjectAdapter.Su
         params.put("subject_id",subject_id);
         params.put("username",user.getUsername());
 
+        progress= ProgressDialog.show(context,"Please wait",
+                "the selected task in process", false);
+        progress.show();
+
 
         httpClient.post(context,url, params,new TextHttpResponseHandler() {
 
@@ -108,27 +115,56 @@ public class AddSubjectAdapter extends RecyclerView.Adapter<AddSubjectAdapter.Su
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
+                progress.dismiss();
+                Toast.makeText(context,"Please try again later",Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
-                if(responseString.length()<8){
-
-                    if(responseString.equalsIgnoreCase("none")){
-                            Toast.makeText(context,"Could not add subject",Toast.LENGTH_LONG).show();
-                    }else if(responseString.length()>10){
-                           Toast.makeText(context,"Could not add subject",Toast.LENGTH_LONG).show();
+                   progress.dismiss();
+                    if(responseString.equalsIgnoreCase("success")){
+                        Toast.makeText(context,"Selected subject was added",Toast.LENGTH_LONG).show();
+                        PreferenceStorage.addStatus(context);
                     }else{
-                           Toast.makeText(context,"Please logout for the changes to occur",Toast.LENGTH_LONG).show();
-                           PreferenceStorage.clearInformation(context);
+                        Toast.makeText(context,"Could not add subject",Toast.LENGTH_LONG).show();
                     }
-                }
-
 
             }
         });
+
+    }
+
+    //the dialog issues//
+    public  void approveRemoveDialog(final Context context,final int subject_id,String title){
+
+        final Dialog dialog = new Dialog(context);
+
+        dialog.setContentView(R.layout.dialog_add_subject);
+        dialog.setTitle(title);
+
+        TextView ok=(TextView)dialog.findViewById(R.id.ok);
+        TextView cancel= (TextView)dialog.findViewById(R.id.cancel);
+
+        ok.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                addSubject(context,ConstantInformation.ADD_SUBJECTS_URL,subject_id);
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        try{
+            dialog.show();
+        }catch (Exception ex){
+            Toast.makeText(context,ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
 
     }
 

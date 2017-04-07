@@ -18,9 +18,7 @@ import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.AddSubjectAdapter;
-import com.desapoint.desapoint.adapters.SubjectItemAdapter;
 import com.desapoint.desapoint.pojos.Subject;
-import com.desapoint.desapoint.pojos.WindowInfo;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -76,7 +74,7 @@ public class AddSubjectActivity extends AppCompatActivity {
                 if(word.length()<2){
                     Snackbar.make(searchButton,"Too short keyword",Snackbar.LENGTH_LONG).show();
                 }else{
-                    searchContent(getBaseContext(), ConstantInformation.SUBJECT_SEARCH_LIST_URL,word);
+                    searchContent(getBaseContext(), ConstantInformation.SEARCH_SUBJECTS_URL,word);
                 }
 
             }
@@ -108,6 +106,7 @@ public class AddSubjectActivity extends AppCompatActivity {
         ((TextView)v.findViewById(R.id.title)).setText(title);
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
+
     }
 
     public void searchContent(final Context context,String url,String search){
@@ -115,31 +114,28 @@ public class AddSubjectActivity extends AppCompatActivity {
         AsyncHttpClient httpClient=new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("keyword",search);
+        progress= ProgressDialog.show(AddSubjectActivity.this,"Please wait",
+                "searching in progress", false);
+        progress.show();
 
 
-        httpClient.post(context,url, params,new TextHttpResponseHandler() {
-
+        httpClient.post(context,url,params, new TextHttpResponseHandler() {
             @Override
             public void onStart() {
                 super.onStart();
             }
 
-
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
+                Toast.makeText(getBaseContext(),"Please try again later",Toast.LENGTH_LONG).show();
+                progress.dismiss();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-
-                if(responseString.length()<8){
-
-                    if(responseString.equalsIgnoreCase("none")){
-
-                    }else{
-
-                    }
+                progress.dismiss();
+                if(responseString.equalsIgnoreCase("none")){
+                    Snackbar.make(recyclerView,"No results found",Snackbar.LENGTH_LONG).show();
                 }else{
                     Type listType = new TypeToken<List<Subject>>() {}.getType();
                     subjectList=new ArrayList<Subject>();
@@ -148,7 +144,6 @@ public class AddSubjectActivity extends AppCompatActivity {
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
-
 
             }
         });
@@ -160,4 +155,6 @@ public class AddSubjectActivity extends AppCompatActivity {
         super.onPause();
         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
+
+
 }

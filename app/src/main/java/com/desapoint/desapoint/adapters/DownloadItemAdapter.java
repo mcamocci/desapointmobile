@@ -97,11 +97,11 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
                 item.setFile_url(ConstantInformation.NOTES_DOWNLOAD_URL+item.getFile_url());
                 remark.setVisibility(View.VISIBLE);
                 if(item.getStatus().contains("Official")){
-                    remark.setText("OFFICIAL NOTES");
-                    remark.setTextColor(Color.GREEN);
+                    remark.setText("(OFFICIAL NOTES)");
+                    remark.setTextColor(Color.parseColor("#00C853"));
                 }else{
-                    remark.setText("OFFICIAL NOTES");
-                    remark.setTextColor(Color.YELLOW);
+                    remark.setText("(OTHER NOTES)");
+                    remark.setTextColor(Color.RED);
                 }
             }else if(type.equals(PASTPAPER)){
                 item.setFile_url(ConstantInformation.PASTPAPER_DOWNLOAD_URL+item.getFile_url());

@@ -67,7 +67,7 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_resource_download);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.adder);
         parameter=getIntent().getStringExtra(INTENTINFO);
         title=PreferenceStorage.getWindowInfo(getBaseContext());
 
@@ -76,12 +76,14 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
             uploadItem=new UploadItem();
             uploadItem.setType(UploadItem.ARTICLE_TYPE);
             uploadItem.setCategory(parameter);
+            fab.setVisibility(View.GONE);
 
         }else if(title.equalsIgnoreCase(UploadItem.BOOK_TYPE)){
 
             uploadItem=new UploadItem();
             uploadItem.setType(UploadItem.BOOK_TYPE);
             uploadItem.setCategory(parameter);
+            fab.setVisibility(View.GONE);
 
         }else if(title.equalsIgnoreCase(UploadItem.NOTES_TYPE)){
 
@@ -93,8 +95,6 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
             fab.setVisibility(View.GONE);
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
         actionBarTitle(title.toLowerCase()+" - "+parameter);
@@ -265,7 +265,6 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                   retryObject.hideProgress();
-
 
                 if(responseString.length()<8){
                     retryObject.getMessage().setText("No content");

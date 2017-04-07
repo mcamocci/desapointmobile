@@ -207,7 +207,7 @@
                             android:textColor="@color/white"
                             android:text="Gender" />
                         <Spinner
-                            android:id="@+id/gender"
+                            android:id="@+id/genderSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:fontFamily="sans-serif-light"

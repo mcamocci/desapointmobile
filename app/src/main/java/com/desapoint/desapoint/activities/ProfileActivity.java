@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -28,28 +30,44 @@ import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import agency.tango.android.avatarview.IImageLoader;
 import agency.tango.android.avatarview.views.AvatarView;
 import agency.tango.android.avatarviewglide.GlideLoader;
 import cz.msebera.android.httpclient.Header;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     AvatarView avatarView;
     IImageLoader imageLoader;
     private ProfileItemAdapter itemAdapter;
     private TextView label;
     private ProgressDialog progress;
+    private Spinner genderSpinner;
 
     private EditText firstName;
     private EditText lastName;
     private EditText username;
     private EditText password;
 
-    private Spinner gender;
+    private String gender;
     private EditText email;
     private EditText phone;
 
+    private List<String> genderValues=new ArrayList<>();
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        gender=genderValues.get(position);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +75,22 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
+
+        genderValues.add("Male");
+        genderValues.add("Female");
+        genderSpinner=(Spinner)findViewById(R.id.genderSpinner);
+        genderSpinner.setOnItemSelectedListener(this);
+
+        ArrayAdapter<String> genderAdapter =
+                new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,genderValues);
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        genderSpinner.setAdapter(genderAdapter);
+
+        if(user.getGender().equalsIgnoreCase("Male")){
+            genderSpinner.setSelection(0);
+        }else{
+            genderSpinner.setSelection(1);
+        }
 
 
         firstName=(EditText)findViewById(R.id.firstName);
@@ -70,9 +104,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         password=(EditText)findViewById(R.id.password);
         ///
-
-        gender=(Spinner)findViewById(R.id.gender);
-       // gender.setSelected();
 
         email=(EditText)findViewById(R.id.email);
         email.setText(user.getEmail());

@@ -1,8 +1,9 @@
 package com.desapoint.desapoint.adapters;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
-import com.desapoint.desapoint.activities.LoginActivity;
+import com.desapoint.desapoint.activities.SettingActivity;
 import com.desapoint.desapoint.pojos.Subject;
 import com.desapoint.desapoint.pojos.User;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
@@ -31,6 +32,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAdapter.SubjectHolder> {
 
+    private ProgressDialog progress;
     private Context context;
     private List<Subject> list;
 
@@ -87,8 +89,7 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.subject_code){
-                Toast.makeText(context,Integer.toString(subject.getId()),Toast.LENGTH_LONG).show();
-                //removeSubject(context, ConstantInformation.REMOVE_SUBJECT_URL,subject.getId());
+                approveRemoveDialog((Activity)v.getContext(),subject.getId(),"Remove course");
             }
         }
 
@@ -104,6 +105,11 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
         params.put("user_id",user.getUser_id());
         params.put("subject_id",subject_id);
 
+        progress= ProgressDialog.show(context,"Please wait",
+                "the selected task in process", false);
+        progress.show();
+
+
 
 
         httpClient.post(context,url, params,new TextHttpResponseHandler() {
@@ -116,24 +122,27 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-
+                progress.dismiss();
+                Toast.makeText(context,"Please try again later",Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                progress.dismiss();
 
+                Toast.makeText(context,responseString,Toast.LENGTH_LONG).show();
                 if(responseString.length()<8){
 
                     if(responseString.equalsIgnoreCase("none")){
-                        Toast.makeText(context,"Could not add subject",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"try again later",Toast.LENGTH_LONG).show();
                     }else if(responseString.length()>10){
-                        Toast.makeText(context,"Could not add subject",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"try again later",Toast.LENGTH_LONG).show();
                     }else{
-                        Toast.makeText(context,"Please logout for the changes to occur",Toast.LENGTH_LONG).show();
-                        PreferenceStorage.clearInformation(context);
+                        Toast.makeText(context,"try again later",Toast.LENGTH_LONG).show();
                     }
+                }else{
+                    PreferenceStorage.addStatus(context);
                 }
-
 
             }
         });
@@ -142,11 +151,11 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
 
 
     //the dialog issues//
-    public  void approveRemoveDialog(Context context,String title){
+    public  void approveRemoveDialog(final Context context,final int subject_id,String title){
 
         final Dialog dialog = new Dialog(context);
 
-        dialog.setContentView(R.layout.dialog_logout);
+        dialog.setContentView(R.layout.dialog_delete_subject);
         dialog.setTitle(title);
 
         TextView ok=(TextView)dialog.findViewById(R.id.ok);
@@ -155,7 +164,8 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
         ok.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-
+                removeSubject(context,ConstantInformation.REMOVE_SUBJECT_URL,subject_id);
+                dialog.dismiss();
             }
         });
         cancel.setOnClickListener(new View.OnClickListener(){
@@ -168,7 +178,7 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
         try{
             dialog.show();
         }catch (Exception ex){
-
+            Toast.makeText(context,ex.getMessage(),Toast.LENGTH_LONG).show();
         }
 
 

@@ -198,8 +198,6 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
         params.put("firstName",regObject.getFirstName());
         params.put("lastName",regObject.getLastName());
         params.put("university",regObject.getUniversity());
-        Toast.makeText(context,regObject.getRegistrationNumber(),Toast.LENGTH_LONG).show();
-        Toast.makeText(context,regObject.getUniversity(),Toast.LENGTH_LONG).show();
         params.put("registration_number",regObject.getRegistrationNumber());
         params.put("college",regObject.getCollege());
         params.put("course",regObject.getCourse());
@@ -209,21 +207,7 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
         params.put("password",regObject.getPassword());
         params.put("email",regObject.getEmail());
         params.put("gender",regObject.getGender());
-        params.put("phone","SFKSDJFK");
-
-        /*params.put("firstName",regObject.getFirstName());
-        params.put("lastName",regObject.getLastName());
-        params.put("university",regObject.getUniversity());
-        params.put("registration_number",regObject.getRegistrationNumber());
-        params.put("college",regObject.getCollege());
-        params.put("course",regObject.getCourse());
-        params.put("year",regObject.getYear());
-        params.put("semester",regObject.getSemester());
-        params.put("username",regObject.getUsername());
-        params.put("password",regObject.getPassword());
-        params.put("email",regObject.getEmail());
-        params.put("gender",regObject.getGender());
-        params.put("phone",regObject.getPhone());*/
+        params.put("phone",regObject.getPhone());
 
         progress= ProgressDialog.show(RegistrationFinalActivity.this,"Please wait",
                 "Performing registration", false);

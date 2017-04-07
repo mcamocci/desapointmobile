@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
 
         int id=item.getItemId();
         if(id==android.R.id.home){
-            //finish();
+            finish();
         }else if(id==R.id.feedBackMenu){
             intent = new Intent(Intent.ACTION_SENDTO);
             intent.setData(Uri.parse("mailto:")); // only email apps should handle this
@@ -289,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         if(PreferenceStorage.getStatus(getBaseContext()).equalsIgnoreCase(PreferenceStorage.STATUS_LOGOUT)){
-            Toast.makeText(getBaseContext(),"Please re-login for the changes to occurr",Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(),"We forced you to logout for the changes you made to occur",Toast.LENGTH_LONG).show();
             PreferenceStorage.clearInformation(getBaseContext());
             Intent intent=new Intent(getBaseContext(),LoginActivity.class);
             startActivity(intent);

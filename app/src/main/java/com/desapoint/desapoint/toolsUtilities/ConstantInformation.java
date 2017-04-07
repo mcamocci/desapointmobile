@@ -19,7 +19,6 @@ public class ConstantInformation {
     public static final String NOTES_URL=COMMON+"notesList.php";
     public static final String ARTICLE_URL=COMMON+"articlesList.php";
     public static final String SUBJECT_LIST_URL= COMMON +"subjectList.php";
-    public static final String SUBJECT_SEARCH_LIST_URL= COMMON +"subjectSearchList.php";
     public static final String SUBJECT_TOPICS= COMMON +"topicsList.php";
     public static final String SUBJECT_ANNOUNCEMENTS= COMMON +"subjectAnnouncements.php";
     public static final String SUBJECT_ASSIGNMENTS= COMMON +"subjectAssignment.php";
