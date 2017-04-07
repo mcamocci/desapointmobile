@@ -108,8 +108,8 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
             }
 
             File file=new File(item.getFile_url());
-            description.setText(item.getDescription());
-            title.setText(item.getName());
+            description.setText(item.getName());
+            title.setText(item.getDescription());
             Log.e("url",FileDownloadOperation.downloadToFolder(context)+file.getName());
             if(FileDownloadOperation.isFileAvaillable(context,file)){
                 download.setImageResource(R.drawable.ic_remove_red_eye);

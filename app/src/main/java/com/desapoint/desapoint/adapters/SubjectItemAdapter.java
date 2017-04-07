@@ -124,11 +124,14 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
                 parent=(LinearLayout)view.findViewById(R.id.parent);
                 parent.setOnClickListener(this);
                 letter=(TextView)view.findViewById(R.id.title_short);
+                letter.setOnClickListener(this);
 
             }
 
             code=(TextView)view.findViewById(R.id.subject_code);
+            code.setOnClickListener(this);
             title=(TextView)view.findViewById(R.id.subject);
+            title.setOnClickListener(this);
 
 
         }
