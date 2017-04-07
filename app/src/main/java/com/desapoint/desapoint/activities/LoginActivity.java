@@ -3,8 +3,10 @@ package com.desapoint.desapoint.activities;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     private String username=null;
     private String password=null;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         //is  user loged before?
         if(PreferenceStorage.getUserJson(getBaseContext()).length()>10){
             Intent intent=new Intent(getBaseContext(),MainActivity.class);
+            overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             startActivity(intent);
             finish();
         }
@@ -107,6 +112,12 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
+
     public void login(final Context context, String username, String password, String url){
 
         AsyncHttpClient httpClient=new AsyncHttpClient();
@@ -139,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                    progressBar.setVisibility(View.INVISIBLE);
                    Intent intent=new Intent(getBaseContext(),MainActivity.class);
                    PreferenceStorage.addUserJson(getBaseContext(),responseString);
+                   overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                    startActivity(intent);
                    finish();
                }
@@ -179,6 +191,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent=new Intent(getBaseContext(),RegistrationActivityScreenOne.class);
                     intent.putExtra(University.JSON_VARIABLE,responseString);
                     startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
                 }
 
 

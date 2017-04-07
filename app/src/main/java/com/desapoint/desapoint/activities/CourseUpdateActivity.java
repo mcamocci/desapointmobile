@@ -15,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.Course;
 import com.desapoint.desapoint.pojos.RegistrationObject;
@@ -192,15 +194,23 @@ public class CourseUpdateActivity extends AppCompatActivity implements Spinner.O
 
                 progress.dismiss();
                 Log.e("response",responseString);
-                if(responseString.length()<8){
-                    Snackbar.make(registeButton,responseString+": Could not update information, try again later :)",Snackbar.LENGTH_LONG).show();
+                if(responseString.equalsIgnoreCase("success")){
+                    Toast.makeText(getBaseContext(),"Information were updated , please re-login",Toast.LENGTH_LONG).show();
+                    PreferenceStorage.addStatus(getBaseContext());
+                    finish();
                 }else{
-
+                    Toast.makeText(getBaseContext(),"We were not able to update your information",Toast.LENGTH_LONG).show();
                 }
 
 
             }
         });
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 }

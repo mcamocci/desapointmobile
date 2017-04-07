@@ -76,6 +76,7 @@ public class SettingActivity extends AppCompatActivity {
             public void onClick(View v) {
                 intent=new Intent(getBaseContext(),AddSubjectActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -145,6 +146,7 @@ public class SettingActivity extends AppCompatActivity {
                     Intent intent=new Intent(getBaseContext(),CollegeUPdate.class);
                     intent.putExtra(College.JSON_VARIABLE,responseString);
                     startActivity(intent);
+                    finish();
 
                 }
 
@@ -152,6 +154,12 @@ public class SettingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 
 }

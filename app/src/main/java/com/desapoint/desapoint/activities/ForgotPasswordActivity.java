@@ -124,18 +124,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             "Please contact desapoint team, we were unable to serve you!!"
                             ,Snackbar.LENGTH_LONG).show();
                 }else{
-                    Snackbar.make(fullName,responseString,Snackbar.LENGTH_LONG).show();
-                    try{
-                        Thread.sleep(3000);
-                        finish();
-                    }catch (Exception ex){
-
-                    }
+                   Toast.makeText(getBaseContext(),"We will communicate with you in few hours",Toast.LENGTH_LONG).show();
+                    finish();
                 }
 
 
             }
         });
 
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 }

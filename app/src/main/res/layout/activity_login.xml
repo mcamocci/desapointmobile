@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
             android:textStyle="bold"
-            android:textSize="32sp"
+            android:textSize="30sp"
             android:fontFamily="sans-serif-light"
             android:layout_marginBottom="0dp"
             android:text="Desapoint"
@@ -44,7 +44,6 @@
 
     <!-- fields container-->
     <LinearLayout
-        android:layout_margin="12dp"
         android:layout_weight="1"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"

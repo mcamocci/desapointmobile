@@ -68,4 +68,10 @@ public class SubjectAnnouncementActivity extends AppCompatActivity {
         //assign the view to the actionbar
         this.getSupportActionBar().setCustomView(v);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
 }

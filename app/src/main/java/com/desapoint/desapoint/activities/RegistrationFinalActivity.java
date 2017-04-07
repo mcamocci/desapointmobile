@@ -245,16 +245,24 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
                 progress.dismiss();
                 Log.e("response",responseString);
                 Toast.makeText(getBaseContext(),responseString,Toast.LENGTH_LONG).show();
-                if(responseString.length()<8){
-                    Snackbar.make(userNameEdit,"We were not able to register you , please try different username and password",Snackbar.LENGTH_LONG).show();
-                }else{
-                    Intent intent=new Intent(getBaseContext(),RegistrationActivityScreenOne.class);
-                    intent.putExtra(University.JSON_VARIABLE,responseString);
+
+                if(responseString.equalsIgnoreCase("success")){
+                    Toast.makeText(getBaseContext(),"Your have been registered for with the entered information",
+                            Toast.LENGTH_LONG).show();
+                    Intent intent=new Intent(getBaseContext(),LoginActivity.class);
                     startActivity(intent);
+                }else{
+                    Toast.makeText(getBaseContext(),"Please try again later with " +
+                                    "different strong password, Your were not registered",
+                            Toast.LENGTH_LONG).show();
                 }
-
-
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
 }

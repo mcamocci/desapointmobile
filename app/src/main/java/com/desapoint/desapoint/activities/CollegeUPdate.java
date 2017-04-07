@@ -162,6 +162,12 @@ public class CollegeUPdate extends AppCompatActivity implements AdapterView.OnIt
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
+
     public void actionBarTitle(String title){
 
         LayoutInflater inflator = LayoutInflater.from(this);

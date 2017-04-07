@@ -44,4 +44,10 @@ public class FlexibleActivity extends AppCompatActivity {
         this.getSupportActionBar().setCustomView(v);
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
 }

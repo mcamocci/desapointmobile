@@ -312,4 +312,10 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
             Log.e("AndroidUploadService", exc.getMessage(), exc);
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
 }

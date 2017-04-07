@@ -24,4 +24,10 @@ public class ConnectionProblem extends AppCompatActivity {
         }
         return true;
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
 }

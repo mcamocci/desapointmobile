@@ -1,6 +1,8 @@
 package com.desapoint.desapoint.adapters;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
+import com.desapoint.desapoint.activities.LoginActivity;
 import com.desapoint.desapoint.pojos.Subject;
 import com.desapoint.desapoint.pojos.User;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
@@ -65,9 +68,10 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
             super(view);
             view.setOnClickListener(this);
 
-
             code=(TextView)view.findViewById(R.id.subject_code);
             title=(TextView)view.findViewById(R.id.subject);
+            code.setOnClickListener(this);
+            title.setOnClickListener(this);
 
 
         }
@@ -83,7 +87,8 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.subject_code){
-                removeSubject(context, ConstantInformation.REMOVE_SUBJECT_URL,subject.getId());
+                Toast.makeText(context,Integer.toString(subject.getId()),Toast.LENGTH_LONG).show();
+                //removeSubject(context, ConstantInformation.REMOVE_SUBJECT_URL,subject.getId());
             }
         }
 
@@ -132,6 +137,40 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
 
             }
         });
+
+    }
+
+
+    //the dialog issues//
+    public  void approveRemoveDialog(Context context,String title){
+
+        final Dialog dialog = new Dialog(context);
+
+        dialog.setContentView(R.layout.dialog_logout);
+        dialog.setTitle(title);
+
+        TextView ok=(TextView)dialog.findViewById(R.id.ok);
+        TextView cancel= (TextView)dialog.findViewById(R.id.cancel);
+
+        ok.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        try{
+            dialog.show();
+        }catch (Exception ex){
+
+        }
+
 
     }
 

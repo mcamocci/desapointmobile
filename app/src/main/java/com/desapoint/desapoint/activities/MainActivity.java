@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.fragments.*;
 import com.desapoint.desapoint.fragments.Articles;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.SUBJECT);
 
         if (!(ConnectionChecker.isInternetConnected(getBaseContext()))) {
@@ -251,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 PreferenceStorage.clearInformation(getBaseContext());
                 Intent intent=new Intent(getBaseContext(),LoginActivity.class);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 startActivity(intent);
                 finish();
 
@@ -273,11 +276,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if (!(ConnectionChecker.isInternetConnected(getBaseContext()))) {
             Intent intent=new Intent(getBaseContext(),ConnectionProblem.class);
             startActivity(intent);
+        }
+        if(PreferenceStorage.getStatus(getBaseContext()).equalsIgnoreCase(PreferenceStorage.STATUS_LOGOUT)){
+            Toast.makeText(getBaseContext(),"Please re-login for the changes to occurr",Toast.LENGTH_LONG).show();
+            PreferenceStorage.clearInformation(getBaseContext());
+            Intent intent=new Intent(getBaseContext(),LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
