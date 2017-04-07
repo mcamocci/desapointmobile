@@ -8,9 +8,10 @@ public class ConstantInformation {
 
     public static final String INTENTINFO="INTENTINFO";
 
-    //public static final String COMMON ="http://192.168.43.126/desapoint_mobile/";
-    public static final String COMMON ="http://desapoint.com/desapoint_mobile/";
-    public static final String FILE_COMMON ="http://desapoint.com/";
+
+    public static final String COMMON ="http://192.168.43.126/desapoint_mobile/";
+    //public static final String COMMON ="https://desapoint.com/desapoint_mobile/";
+    public static final String FILE_COMMON ="https://desapoint.com/";
     public static final String LOGIN_URL= COMMON +"login.php";
     public static final String CATEGORY_URL=COMMON+"booksCats.php";
     public static final String BOOKS_URL=COMMON+"booksList.php";
@@ -27,7 +28,10 @@ public class ConstantInformation {
     public static final String COLLEGE_COURSE_LIST=COMMON +"courseList.php";
     public static final String RESET_URL=COMMON +"send_password.php";
     public static final String USER_UNIVERSITY=COMMON +"user_university.php";
-    public static final String UNIVERSITY_SETTINGS_URL=COMMON +"university_settings.php";
+    public static final String UNIVERSITY_SETTINGS_URL=COMMON +"updateCourseInfo.php";
+    public static final String SEARCH_SUBJECTS_URL=COMMON +"searchSubject.php";
+    public static final String ADD_SUBJECTS_URL=COMMON +"addUserSubject.php";
+    public static final String REMOVE_SUBJECT_URL=COMMON +"removeSubject.php";
 
     public static  String JSONLIST="LIST_STRING";
 
@@ -48,7 +52,6 @@ public class ConstantInformation {
 
     ////////////////////////////////////////////////////////////////////////
 
-    public static final String COURSE_URL= COMMON +"mob/courseList/";
-    public static final String REGISTRATION_URL= COMMON +"mob/register/";
+    public static final String REGISTRATION_URL= COMMON +"registerUser.php";
 
 }

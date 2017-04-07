@@ -38,6 +38,7 @@ public class CourseUpdateActivity extends AppCompatActivity implements Spinner.O
     private List<Course> courseList=new ArrayList<>();
     private List<String> courseStringList=new ArrayList<>();
     private LinearLayout registeButton;
+    private String university=null;
     private String course=null;
     private RegistrationObject object;
     private ProgressDialog progress;
@@ -127,6 +128,7 @@ public class CourseUpdateActivity extends AppCompatActivity implements Spinner.O
             course=null;
         }else{
             course=courseStringList.get(position);
+            university=courseList.get(position).getUniversity();
         }
     }
 
@@ -137,10 +139,11 @@ public class CourseUpdateActivity extends AppCompatActivity implements Spinner.O
 
     public void register(Context context){
 
-            if(course!=null){
+            if(course!=null && university!=null){
 
                 object=new Gson().fromJson(PreferenceStorage.getRegInfo(getBaseContext()),RegistrationObject.class);
                 object.setCourse(course);
+                object.setUniversity(university);
                 updateCourse(context, ConstantInformation.UNIVERSITY_SETTINGS_URL,object);
 
             }else{
@@ -153,11 +156,18 @@ public class CourseUpdateActivity extends AppCompatActivity implements Spinner.O
         AsyncHttpClient httpClient=new AsyncHttpClient();
         RequestParams params = new RequestParams();
         Log.e("user_id",Integer.toString(user.getUser_id()));
+        Log.e("username",user.getUsername());
+        Log.e("fullname",user.getFullname());
+        Log.e("university",object.getUniversity());
         Log.e("college",object.getCollege());
         Log.e("course",object.getCourse());
         Log.e("year",object.getYear());
         Log.e("semester",object.getSemester());
+
         params.put("user_id",user.getUser_id());
+        params.put("username",user.getUsername());
+        params.put("fullname",user.getFullname());
+        params.put("university",object.getUniversity());
         params.put("college",object.getCollege());
         params.put("course",object.getCourse());
         params.put("year",object.getYear());

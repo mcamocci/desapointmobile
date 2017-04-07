@@ -272,6 +272,7 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
                     retryObject.showMessage();
                     retryObject.showName();
                 }else{
+                    Log.e("the response",responseString);
                     retryObject.hideMessage();
                     retryObject.hideName();
                     Type listType = new TypeToken<List<DownloadableItem>>() {}.getType();

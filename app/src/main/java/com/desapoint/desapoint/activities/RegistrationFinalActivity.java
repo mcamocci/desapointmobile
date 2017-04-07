@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.Course;
 import com.desapoint.desapoint.pojos.RegistrationObject;
@@ -176,11 +178,6 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
                             ConstantInformation.REGISTRATION_URL,object);
                     ///------------------------------------------------//
 
-                    Snackbar.make(passwordOneEdit,
-                            object.getFirstName()+
-                                    " "+object.getLastName()+" "+object.getEmail()+" "+object.getPassword()+" "+object.getPhone()
-                    +" "+object.getUniversity()+" "+object.getCollege()+" "+object.getCourse()+" "+object.getYear()+" "+
-                    object.getSemester(),Snackbar.LENGTH_LONG).show();
 
                 }else{
                     Snackbar.make(courseSpinner,"Password did not match",Snackbar.LENGTH_LONG).show();
@@ -199,8 +196,11 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
         AsyncHttpClient httpClient=new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("firstName",regObject.getFirstName());
-        params.put("LastName",regObject.getLastName());
+        params.put("lastName",regObject.getLastName());
         params.put("university",regObject.getUniversity());
+        Toast.makeText(context,regObject.getRegistrationNumber(),Toast.LENGTH_LONG).show();
+        Toast.makeText(context,regObject.getUniversity(),Toast.LENGTH_LONG).show();
+        params.put("registration_number",regObject.getRegistrationNumber());
         params.put("college",regObject.getCollege());
         params.put("course",regObject.getCourse());
         params.put("year",regObject.getYear());
@@ -209,7 +209,21 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
         params.put("password",regObject.getPassword());
         params.put("email",regObject.getEmail());
         params.put("gender",regObject.getGender());
-        params.put("phone",regObject.getPassword());
+        params.put("phone","SFKSDJFK");
+
+        /*params.put("firstName",regObject.getFirstName());
+        params.put("lastName",regObject.getLastName());
+        params.put("university",regObject.getUniversity());
+        params.put("registration_number",regObject.getRegistrationNumber());
+        params.put("college",regObject.getCollege());
+        params.put("course",regObject.getCourse());
+        params.put("year",regObject.getYear());
+        params.put("semester",regObject.getSemester());
+        params.put("username",regObject.getUsername());
+        params.put("password",regObject.getPassword());
+        params.put("email",regObject.getEmail());
+        params.put("gender",regObject.getGender());
+        params.put("phone",regObject.getPhone());*/
 
         progress= ProgressDialog.show(RegistrationFinalActivity.this,"Please wait",
                 "Performing registration", false);
@@ -230,6 +244,7 @@ public class RegistrationFinalActivity extends AppCompatActivity implements Spin
 
                 progress.dismiss();
                 Log.e("response",responseString);
+                Toast.makeText(getBaseContext(),responseString,Toast.LENGTH_LONG).show();
                 if(responseString.length()<8){
                     Snackbar.make(userNameEdit,"We were not able to register you , please try different username and password",Snackbar.LENGTH_LONG).show();
                 }else{

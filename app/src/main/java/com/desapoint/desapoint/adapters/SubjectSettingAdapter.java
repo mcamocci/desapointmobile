@@ -6,11 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.Subject;
+import com.desapoint.desapoint.pojos.User;
+import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
+import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by root on 3/12/17.
@@ -72,11 +82,59 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
 
         @Override
         public void onClick(View v) {
-
+            if(v.getId()==R.id.subject_code){
+                removeSubject(context, ConstantInformation.REMOVE_SUBJECT_URL,subject.getId());
+            }
         }
 
 
     }
+
+
+    public void removeSubject(final Context context,String url,int subject_id){
+
+        AsyncHttpClient httpClient=new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        User user=new Gson().fromJson(PreferenceStorage.getUserJson(context),User.class);
+        params.put("user_id",user.getUser_id());
+        params.put("subject_id",subject_id);
+
+
+
+        httpClient.post(context,url, params,new TextHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+
+                if(responseString.length()<8){
+
+                    if(responseString.equalsIgnoreCase("none")){
+                        Toast.makeText(context,"Could not add subject",Toast.LENGTH_LONG).show();
+                    }else if(responseString.length()>10){
+                        Toast.makeText(context,"Could not add subject",Toast.LENGTH_LONG).show();
+                    }else{
+                        Toast.makeText(context,"Please logout for the changes to occur",Toast.LENGTH_LONG).show();
+                        PreferenceStorage.clearInformation(context);
+                    }
+                }
+
+
+            }
+        });
+
+    }
+
 
 
 }

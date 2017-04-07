@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.College;
 import com.desapoint.desapoint.pojos.RegistrationObject;
@@ -38,6 +40,7 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
 
     // Spinner element
     private Spinner spinner;
+    private Spinner genderSpinner;
     private LinearLayout nextButton;
     private List<University> universityList=new ArrayList<>();
     private String UNIVERSITY_SELECTOR="SELECT UNIVERSITY";
@@ -53,8 +56,15 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
     private String email=null;
     private String phone=null;
     private String universityName;
+    private String genderValue;
     // Spinner Drop down elements
     List<String> categories = new ArrayList<String>();
+
+    // Spinner Drop down elements
+    List<String> gender = new ArrayList<String>();
+
+    private int genderPosition=0;
+
     private int universityPosition=0;
 
     @Override
@@ -63,10 +73,15 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
         setContentView(R.layout.activity_registration_screen_one);
 
 
+        gender.add("SELECT GENDER");
+        gender.add("Male");
+        gender.add("Female");
+
         firstNameEditText=(EditText)findViewById(R.id.firstName);
         lastNameEditText=(EditText)findViewById(R.id.lastName);
         emailEditText=(EditText)findViewById(R.id.email);
         phoneEditText=(EditText)findViewById(R.id.phone);
+
 
         String listContent=getIntent().getStringExtra(University.JSON_VARIABLE);
         final String university=getIntent().getStringExtra(University.NAME);
@@ -76,6 +91,11 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
         }catch (Exception ex){
 
         }
+
+
+        genderSpinner = (Spinner) findViewById(R.id.gender);
+        genderSpinner.setOnItemSelectedListener(this);
+
 
         spinner = (Spinner) findViewById(R.id.university);
 
@@ -89,6 +109,16 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
         }
 
         nextButton=(LinearLayout)findViewById(R.id.nextButton);
+
+
+        // Creating adapter for spinner gender
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item,gender);
+        // Drop down layout style - list view with radio button
+        genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // attaching data adapter to spinner
+        genderSpinner.setAdapter(genderAdapter);
+
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -116,10 +146,10 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
                         email.length()<5 || phone.length()<10){
                     Snackbar.make(spinner,"Please enter valid information",Snackbar.LENGTH_LONG).show();
                 }else{
-                    if(universityPosition==0){
-                        Snackbar.make(spinner,"Please select university",Snackbar.LENGTH_LONG).show();
+                    if(universityPosition==0 || genderPosition==0){
+                        Snackbar.make(spinner,"university and gender should be specified",Snackbar.LENGTH_LONG).show();
                     }else{
-                        getColleges(getBaseContext(), ConstantInformation.UNIVERSITY_COLLEGE_URL,universityName);
+                        getColleges(getBaseContext(), ConstantInformation.UNIVERSITY_COLLEGE_URL,universityName,genderValue);
                     }
                 }
 
@@ -158,8 +188,15 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        universityPosition=position;
-        universityName=categories.get(position);
+
+        if(parent.getId()==R.id.gender){
+            genderPosition=position;
+            genderValue=gender.get(position);
+        }else if(parent.getId()==R.id.university){
+            universityPosition=position;
+            universityName=categories.get(position);
+        }
+
     }
 
     @Override
@@ -167,7 +204,7 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
 
     }
 
-    public void getColleges(final Context context, String url,String param){
+    public void getColleges(final Context context, String url,String param,final String gender){
 
         AsyncHttpClient httpClient=new AsyncHttpClient();
         RequestParams params = new RequestParams();
@@ -197,8 +234,10 @@ public class RegistrationActivityScreenOne extends AppCompatActivity implements 
                     RegistrationObject registrationObject=new RegistrationObject();
                     registrationObject.setFirstName(firstName);
                     registrationObject.setLastName(lastName);
+                    registrationObject.setGender(gender);
                     registrationObject.setEmail(email);
                     registrationObject.setPhone(phone);
+                    registrationObject.setUniversity(universityName);
                     String content=new Gson().toJson(registrationObject);
                     PreferenceStorage.addRegInfo(context,content);
                     Intent intent=new Intent(getBaseContext(),RegistrationActivityscreenTwo.class);

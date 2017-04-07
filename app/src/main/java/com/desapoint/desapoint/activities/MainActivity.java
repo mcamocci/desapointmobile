@@ -3,6 +3,7 @@ package com.desapoint.desapoint.activities;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -23,11 +25,16 @@ import com.desapoint.desapoint.fragments.*;
 import com.desapoint.desapoint.fragments.Articles;
 import com.desapoint.desapoint.fragments.Books;
 import com.desapoint.desapoint.fragments.Notes;
+import com.desapoint.desapoint.pojos.Subject;
 import com.desapoint.desapoint.pojos.User;
 import com.desapoint.desapoint.pojos.WindowInfo;
 import com.desapoint.desapoint.toolsUtilities.ConnectionChecker;
+import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.google.gson.Gson;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabClickListener;
 
@@ -35,6 +42,7 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.msebera.android.httpclient.Header;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 
@@ -46,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private PastPaperFragment pastPaperFragment=new PastPaperFragment();
     private Articles articleFragment=new Articles();
     private Books bookFragment=new Books();
+    private ProgressDialog progress;
     private List<String> docPaths = new ArrayList<>();
 
 
@@ -181,12 +190,17 @@ public class MainActivity extends AppCompatActivity {
         }else if(id==R.id.profile){
             intent=new Intent(getBaseContext(),ProfileActivity.class);
             startActivity(intent);
-        }/*else if(id==R.id.upload){
-            FilePickerBuilder.getInstance().setMaxCount(10)
-                    .setActivityTheme(R.style.filePicker)
-                    .pickDocument(this);
-        }*/
+        }else if(id==R.id.settings){
 
+            User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
+            if(PreferenceStorage.getSubjectJson(getBaseContext()).equalsIgnoreCase("none")){
+                loadSubjects(getBaseContext(),user.getUser_id(), ConstantInformation.SUBJECT_LIST_URL);
+            }else{
+                intent=new Intent(MainActivity.this,SettingActivity.class);
+                intent.putExtra(Subject.NAME,PreferenceStorage.getSubjectJson(getBaseContext()));
+                startActivity(intent);
+            }
+        }
         return true;
     }
 
@@ -281,6 +295,55 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+    public void loadSubjects(final Context context, int user_id, String url){
+
+        AsyncHttpClient httpClient=new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("user_id",user_id);
+
+        progress= ProgressDialog.show(MainActivity.this,"Please wait",
+                "loading colleges", false);
+
+        progress.show();
+
+        httpClient.post(context,url, params,new TextHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+
+            }
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                progress.dismiss();
+                Snackbar.make(bottomBar,"Please try again later",Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                progress.dismiss();
+                if(responseString.length()<8){
+                    if(responseString.equalsIgnoreCase("none")){
+                        Snackbar.make(bottomBar,"Your first registration through our website was not complete please login using website to complete",Snackbar.LENGTH_LONG).show();
+                    }else{
+                        Snackbar.make(bottomBar,"Something is wrong , please use about information to inform us quickly",Snackbar.LENGTH_LONG).show();
+                    }
+                }else{
+                    Intent intent=new Intent(MainActivity.this,SettingActivity.class);
+                    intent.putExtra(Subject.NAME,responseString);
+                    startActivity(intent);
+                }
+
+
+            }
+        });
+
+    }
+
 
 
 }

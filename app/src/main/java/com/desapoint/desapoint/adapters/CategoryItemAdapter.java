@@ -66,7 +66,11 @@ public class CategoryItemAdapter extends RecyclerView.Adapter<CategoryItemAdapte
 
         public void setData(Category cat){
             this.category=cat;
-            this.counts.setText(Integer.toString(cat.getNumber_books()));
+            if(PreferenceStorage.getWindowInfo(context).equalsIgnoreCase(WindowInfo.ARTICLE)){
+                counts.setVisibility(View.GONE);
+            }else{
+                this.counts.setText(Integer.toString(cat.getNumber_books()));
+            }
             this.titleLabel.setText(cat.getCategory());
         }
 

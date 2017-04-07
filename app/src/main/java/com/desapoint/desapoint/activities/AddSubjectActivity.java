@@ -18,7 +18,11 @@ import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.AddSubjectAdapter;
+import com.desapoint.desapoint.adapters.SubjectItemAdapter;
 import com.desapoint.desapoint.pojos.Subject;
+import com.desapoint.desapoint.pojos.WindowInfo;
+import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
@@ -72,8 +76,7 @@ public class AddSubjectActivity extends AppCompatActivity {
                 if(word.length()<2){
                     Snackbar.make(searchButton,"Too short keyword",Snackbar.LENGTH_LONG).show();
                 }else{
-                    Toast.makeText(getBaseContext(),"searched",Toast.LENGTH_LONG).show();
-                    //searchContent(getBaseContext(), ConstantInformation.SUBJECT_SEARCH_LIST_URL,word);
+                    searchContent(getBaseContext(), ConstantInformation.SUBJECT_SEARCH_LIST_URL,word);
                 }
 
             }
@@ -139,10 +142,11 @@ public class AddSubjectActivity extends AppCompatActivity {
                     }
                 }else{
                     Type listType = new TypeToken<List<Subject>>() {}.getType();
-                    /*subjects=new Gson().fromJson(responseString,listType);
-                    adapter=new SubjectItemAdapter(getContext(),subjects, WindowInfo.NOTES);
+                    subjectList=new ArrayList<Subject>();
+                    subjectList=new Gson().fromJson(responseString,listType);
+                    adapter=new AddSubjectAdapter(getBaseContext(),subjectList);
                     recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();*/
+                    adapter.notifyDataSetChanged();
                 }
 
 

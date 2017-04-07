@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    <item
+        android:title="@string/settings"
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_settings"
+        app:showAsAction="always"
+        />
     <item android:id="@+id/profile"
         android:icon="@drawable/ic_action_name"
         android:title="@string/profileMenuTitle"
@@ -32,6 +37,6 @@
         android:id="@+id/logOut"
         android:title="LogOut"
         android:icon="@drawable/ic_exit_to_app"
-        app:showAsAction="ifRoom"
+        app:showAsAction="never"
         />
 </menu>

@@ -9,6 +9,9 @@ public class DownloadableItem {
     public DownloadableItem(){}
 
     private String name;
+    private String description;
+    private String file_url;
+    private String status;
 
     public String getName() {
         return name;
@@ -34,6 +37,11 @@ public class DownloadableItem {
         this.file_url = file_url;
     }
 
-    private String description;
-    private String file_url;
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

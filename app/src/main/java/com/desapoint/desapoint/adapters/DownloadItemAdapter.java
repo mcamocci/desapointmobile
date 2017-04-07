@@ -3,6 +3,7 @@ import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -69,6 +70,7 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
         private long enqueue;
         private DownloadManager dm;
         private DownloadableItem downloadableItem;
+        private TextView remark;
         private String type;
 
         public NoteViewHolder(View view){
@@ -76,6 +78,7 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
             download=(ImageView)view.findViewById(R.id.download_action);
             download.setOnClickListener(this);
             share=(ImageView)view.findViewById(R.id.share_action);
+            remark=(TextView)view.findViewById(R.id.remark);
             share.setOnClickListener(this);
             description=(TextView) view.findViewById(R.id.description);
             title=(TextView) view.findViewById(R.id.subject);
@@ -92,9 +95,18 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
                 item.setFile_url(ConstantInformation.BOOK_DOWNLOAD_URL+item.getFile_url());
             }else if(type.equals(NOTES)){
                 item.setFile_url(ConstantInformation.NOTES_DOWNLOAD_URL+item.getFile_url());
+                remark.setVisibility(View.VISIBLE);
+                if(item.getStatus().contains("Official")){
+                    remark.setText("OFFICIAL NOTES");
+                    remark.setTextColor(Color.GREEN);
+                }else{
+                    remark.setText("OFFICIAL NOTES");
+                    remark.setTextColor(Color.YELLOW);
+                }
             }else if(type.equals(PASTPAPER)){
                 item.setFile_url(ConstantInformation.PASTPAPER_DOWNLOAD_URL+item.getFile_url());
             }
+
             File file=new File(item.getFile_url());
             description.setText(item.getDescription());
             title.setText(item.getName());
