@@ -37,7 +37,7 @@ public class AddSubjectActivity extends AppCompatActivity {
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     private AddSubjectAdapter adapter;
-    private List<Subject> subjectList;
+    private List<Subject> subjectList=new ArrayList<>();
     private ProgressDialog progress;
     private LinearLayout searchButton;
     private EditText searchedWord;
@@ -53,10 +53,6 @@ public class AddSubjectActivity extends AppCompatActivity {
         layoutManager=new LinearLayoutManager(getBaseContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
-        subjectList=new ArrayList<>();
-        adapter=new AddSubjectAdapter(getBaseContext(),subjectList);
-        recyclerView.setAdapter(adapter);
 
 
         searchButton.setOnClickListener(new View.OnClickListener(){
@@ -139,7 +135,7 @@ public class AddSubjectActivity extends AppCompatActivity {
                 }else{
 
                     Type listType = new TypeToken<List<Subject>>() {}.getType();
-                    subjectList=new ArrayList<Subject>();
+                    subjectList=new ArrayList<>();
                     subjectList=new Gson().fromJson(responseString,listType);
                     adapter=new AddSubjectAdapter(getBaseContext(),subjectList);
                     recyclerView.setAdapter(adapter);

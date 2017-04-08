@@ -30,7 +30,7 @@ public class Assignment {
     }
 
     public String getUrl() {
-        return url;
+        return url.replace(" ","%20");
     }
 
     public void setUrl(String url) {

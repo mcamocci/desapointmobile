@@ -21,6 +21,11 @@ import com.desapoint.desapoint.toolsUtilities.FileDownloadOperation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.List;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -90,10 +95,13 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
             this.downloadableItem=item;
 
             if(type.equals(ARTICLE)){
+
                 item.setFile_url(ConstantInformation.ARTICLE_DOWNLOAD_URL+item.getFile_url());
             }else if(type.equals(BOOK)){
+
                 item.setFile_url(ConstantInformation.BOOK_DOWNLOAD_URL+item.getFile_url());
             }else if(type.equals(NOTES)){
+
                 item.setFile_url(ConstantInformation.NOTES_DOWNLOAD_URL+item.getFile_url());
                 remark.setVisibility(View.VISIBLE);
                 if(item.getStatus().contains("Official")){
@@ -104,7 +112,9 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
                     remark.setTextColor(Color.RED);
                 }
             }else if(type.equals(PASTPAPER)){
+
                 item.setFile_url(ConstantInformation.PASTPAPER_DOWNLOAD_URL+item.getFile_url());
+
             }
 
             File file=new File(item.getFile_url());
@@ -121,7 +131,9 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.download_action){
+
                 File file=new File(downloadableItem.getFile_url());
+                Toast.makeText(context,downloadableItem.getFile_url(),Toast.LENGTH_LONG).show();
                 if(FileDownloadOperation.isFileAvaillable(context,file)){
                     MimeTypeMap myMime = MimeTypeMap.getSingleton();
                     Intent newIntent = new Intent(Intent.ACTION_VIEW);
@@ -136,6 +148,7 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
                         Toast.makeText(context, "No handler for this type of file.", Toast.LENGTH_LONG).show();
                     }
                 }else{
+
                     Toast.makeText(context,"Download started",Toast.LENGTH_LONG).show();
                     dm = (DownloadManager)context.getSystemService(DOWNLOAD_SERVICE);
 

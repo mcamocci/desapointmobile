@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.desapoint.desapoint.R;
@@ -58,6 +59,7 @@ public class AddSubjectAdapter extends RecyclerView.Adapter<AddSubjectAdapter.Su
 
     public class SubjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private Subject subject;
+        private LinearLayout bar;
         private TextView code;
         private TextView title;
         private Context context;
@@ -67,6 +69,9 @@ public class AddSubjectAdapter extends RecyclerView.Adapter<AddSubjectAdapter.Su
             view.setOnClickListener(this);
             code=(TextView)view.findViewById(R.id.subject_code);
             title=(TextView)view.findViewById(R.id.subject);
+            bar=(LinearLayout)view.findViewById(R.id.subject_setting);
+            bar.setOnClickListener(this);
+            title.setOnClickListener(this);
             code.setOnClickListener(this);
 
 
@@ -82,9 +87,9 @@ public class AddSubjectAdapter extends RecyclerView.Adapter<AddSubjectAdapter.Su
 
         @Override
         public void onClick(View v) {
-                if(v.getId()==R.id.subject_code){
-                    approveRemoveDialog((Activity)v.getContext(),subject.getId(),"Approve add subject");
-                }
+
+            approveRemoveDialog((Activity)v.getContext(),subject.getId(),"Approve add subject");
+
         }
 
 

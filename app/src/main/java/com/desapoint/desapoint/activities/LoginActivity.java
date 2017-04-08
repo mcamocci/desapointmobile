@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progressBar.setVisibility(View.INVISIBLE);
-                Snackbar.make(usernameEditText,"Error code:"+Integer.toString(statusCode)+" Failed, try again later",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(usernameEditText,"Failed, try again later",Snackbar.LENGTH_LONG).show();
             }
 
             @Override

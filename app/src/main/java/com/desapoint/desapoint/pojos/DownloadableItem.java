@@ -30,7 +30,7 @@ public class DownloadableItem {
     }
 
     public String getFile_url() {
-        return file_url;
+        return file_url.replace(" ","%20");
     }
 
     public void setFile_url(String file_url) {

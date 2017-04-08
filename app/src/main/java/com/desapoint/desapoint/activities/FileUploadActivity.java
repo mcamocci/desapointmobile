@@ -156,7 +156,6 @@ public class FileUploadActivity extends AppCompatActivity {
 
     public void uploadBooks(){
 
-                Toast.makeText(getBaseContext(),filePath,Toast.LENGTH_LONG).show();
             //Uploading code
             try {
                 String uploadId = UUID.randomUUID().toString();

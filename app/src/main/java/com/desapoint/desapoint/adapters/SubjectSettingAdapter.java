@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,14 +65,17 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
         private Subject subject;
         private TextView code;
         private TextView title;
+        private LinearLayout bar;
         private Context context;
 
         public SubjectHolder(View view){
             super(view);
             view.setOnClickListener(this);
 
+            bar=(LinearLayout)view.findViewById(R.id.subject_setting);
             code=(TextView)view.findViewById(R.id.subject_code);
             title=(TextView)view.findViewById(R.id.subject);
+            bar.setOnClickListener(this);
             code.setOnClickListener(this);
             title.setOnClickListener(this);
 
@@ -83,14 +87,13 @@ public class SubjectSettingAdapter extends RecyclerView.Adapter<SubjectSettingAd
 
             code.setText(subject.getSubject_code());
             title.setText(subject.getSubject());
+            title.setOnClickListener(this);
 
         }
 
         @Override
         public void onClick(View v) {
-            if(v.getId()==R.id.subject_code){
-                approveRemoveDialog((Activity)v.getContext(),subject.getId(),"Remove course");
-            }
+            approveRemoveDialog((Activity)v.getContext(),subject.getId(),"Remove course");
         }
 
 

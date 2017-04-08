@@ -19,6 +19,8 @@ import com.desapoint.desapoint.pojos.Assignment;
 import com.desapoint.desapoint.toolsUtilities.FileDownloadOperation;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
@@ -111,8 +113,15 @@ public class AssignmentItemAdapter extends RecyclerView.Adapter<AssignmentItemAd
                 Toast.makeText(context,"Download started",Toast.LENGTH_LONG).show();
                 dm = (DownloadManager)context.getSystemService(DOWNLOAD_SERVICE);
 
+                String url=null;
+                try {
+                    url= URLEncoder.encode(assignment.getUrl(),"UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
                 DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(ASSIGNMENT_DOWNLOAD_URL+assignment.getUrl()));
+                        Uri.parse(ASSIGNMENT_DOWNLOAD_URL+url));
 
                 String folder=null;
 

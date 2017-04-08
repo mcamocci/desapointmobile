@@ -10,8 +10,8 @@ public class ConstantInformation {
 
 
     //public static final String COMMON ="http://192.168.43.126/desapoint_mobile/";
-    public static final String COMMON ="https://desapoint.com/desapoint_mobile/";
-    public static final String FILE_COMMON ="https://desapoint.com/";
+    public static final String COMMON ="http://desapoint.com/desapoint_mobile/";
+    public static final String FILE_COMMON ="http://desapoint.com/";
     //public static final String FILE_COMMON ="http://192.168.43.126/desapoint/";
     public static final String LOGIN_URL= COMMON +"login.php";
     public static final String CATEGORY_URL=COMMON+"booksCats.php";
