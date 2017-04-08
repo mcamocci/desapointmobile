@@ -137,7 +137,7 @@ public class AddSubjectActivity extends AppCompatActivity {
                 if(responseString.equalsIgnoreCase("none")){
                     Snackbar.make(recyclerView,"No results found",Snackbar.LENGTH_LONG).show();
                 }else{
-                    Toast.makeText(context,responseString,Toast.LENGTH_LONG).show();
+
                     Type listType = new TypeToken<List<Subject>>() {}.getType();
                     subjectList=new ArrayList<Subject>();
                     subjectList=new Gson().fromJson(responseString,listType);

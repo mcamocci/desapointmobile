@@ -156,6 +156,7 @@ public class FileUploadActivity extends AppCompatActivity {
 
     public void uploadBooks(){
 
+                Toast.makeText(getBaseContext(),filePath,Toast.LENGTH_LONG).show();
             //Uploading code
             try {
                 String uploadId = UUID.randomUUID().toString();
@@ -166,18 +167,22 @@ public class FileUploadActivity extends AppCompatActivity {
                 uploadNotificationConfig.setCompletedMessage("The selected book was uploaded successfully");
                 //Creating a multi part request
                 new MultipartUploadRequest(this, uploadId,ConstantInformation.UPLOAD_BOOK_URL)
-
-                        .addParameter("USER_ID",Integer.toString(user.getUser_id())) //Adding text parameter to the request
+                        .addParameter("user_name",user.getUsername())
+                        .addParameter("description",description.getText().toString().trim())
+                        .addFileToUpload(filePath,"uploaded_book")
                         .addParameter("category",uploadItem.getCategory())
                         .addParameter("name",name.getText().toString().trim())
-                        .addParameter("description",description.getText().toString().trim())
-                        .addFileToUpload("file",filePath)
+                        .addParameter("university",name.getText().toString().trim())
                         .setNotificationConfig(uploadNotificationConfig)
                         .setMaxRetries(2)
                         .startUpload(); //Starting the upload
 
             } catch (Exception exc) {
-                Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"Upload process failed , try again later",Toast.LENGTH_LONG).show();
+                finish();
+            }finally {
+                Toast.makeText(getBaseContext(),"Your upload notification is shown on notifications",Toast.LENGTH_LONG).show();
+                finish();
             }
     }
 
@@ -192,17 +197,22 @@ public class FileUploadActivity extends AppCompatActivity {
 
             new MultipartUploadRequest(this, uploadId, ConstantInformation.UPLOAD_NOTES_URL)
 
-                    .addParameter("USER_ID",Integer.toString(user.getUser_id()))
-                    .addParameter("subject",uploadItem.getSubject())
+                    .addParameter("user_id",Integer.toString(user.getUser_id()))
+                    .addParameter("username",user.getUsername())
+                    .addFileToUpload(filePath,"notes_upload")
                     .addParameter("name",name.getText().toString().trim())
                     .addParameter("description",description.getText().toString().trim())
-                    .addFileToUpload("file",filePath)
+                    .addParameter("subject",uploadItem.getSubject())
                     .setNotificationConfig(uploadNotificationConfig)
                     .setMaxRetries(5)
                     .startUpload(); //Starting the upload
 
         } catch (Exception exc) {
-            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(),"Upload process failed , try again later",Toast.LENGTH_LONG).show();
+            finish();
+        }finally {
+            Toast.makeText(getBaseContext(),"Your upload notification is shown on notifications",Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 
@@ -219,18 +229,23 @@ public class FileUploadActivity extends AppCompatActivity {
             //Creating a multi part request
             new MultipartUploadRequest(this, uploadId,ConstantInformation.UPLOAD_ARTICLE_URL)
 
-                    .addParameter("USER_ID",Integer.toString(user.getUser_id()))
                     .addParameter("subject",uploadItem.getCategory())
-                    .addParameter("writer",writter.getText().toString().trim())
-                    .addParameter("name",name.getText().toString().trim())
-                    .addParameter("description",description.getText().toString().trim())
-                    .addFileToUpload("file",filePath)
+                    .addParameter("user_name",user.getUsername())
+                    .addFileToUpload(filePath,"article_file")
+                    .addParameter("writter",writter.getText().toString().trim())
+                    .addParameter("article_name",name.getText().toString().trim())
+                    .addParameter("article_notes",description.getText().toString().trim())
+                    .addParameter("user_id",Integer.toString(user.getUser_id()))
                     .setNotificationConfig(uploadNotificationConfig)
                     .setMaxRetries(5)
                     .startUpload(); //Starting the upload
 
         } catch (Exception exc) {
-            Toast.makeText(this, exc.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(),"Upload process failed , try again later",Toast.LENGTH_LONG).show();
+            finish();
+        }finally {
+            Toast.makeText(getBaseContext(),"Your upload notification is shown on notifications",Toast.LENGTH_LONG).show();
+            finish();
         }
     }
 

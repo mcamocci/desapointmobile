@@ -1,5 +1,6 @@
 package com.desapoint.desapoint.activities;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -13,14 +14,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.ProfileItemAdapter;
-import com.desapoint.desapoint.adapters.SubjectItemAdapter;
 import com.desapoint.desapoint.pojos.Subject;
 import com.desapoint.desapoint.pojos.User;
-import com.desapoint.desapoint.pojos.WindowInfo;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.desapoint.desapoint.toolsUtilities.StringUpperHelper;
@@ -56,6 +58,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     private EditText email;
     private EditText phone;
 
+    private LinearLayout updateProfile;
+
     private List<String> genderValues=new ArrayList<>();
 
 
@@ -73,6 +77,9 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+
+        updateProfile=(LinearLayout)findViewById(R.id.updateProfile);
 
         User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
 
@@ -100,7 +107,8 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         username.setText(user.getUsername());
 
         lastName=(EditText)findViewById(R.id.lastName);
-        lastName.setText(user.getFullname());
+        String name[]=user.getFullname().split(" ");
+        lastName.setText(name[1]);
 
         password=(EditText)findViewById(R.id.password);
         ///
@@ -118,14 +126,25 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         label=(TextView)findViewById(R.id.label);
         label.setText(StringUpperHelper.doUpperlization(user.getFullname()));
 
-       /* updateCourse=(LinearLayout)findViewById(R.id.updateButton);
-        updateCourse.setOnClickListener(new View.OnClickListener(){
+        updateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateProcess(getBaseContext(), ConstantInformation.USER_UNIVERSITY);
+
+                String firstNameValue=firstName.getText().toString().trim();
+                String lastNameValue=lastName.getText().toString().trim();
+                String emailValue=email.getText().toString().trim();
+                String phoneValue=phone.getText().toString().trim();
+                if(firstNameValue.length()<2 || lastNameValue.length()<2|| phoneValue.length()<10||
+                        emailValue.length()<6){
+                    Toast.makeText(getBaseContext(),"We suspect invalid information",Toast.LENGTH_LONG).show();
+                }else{
+                    approveUpdate(ProfileActivity.this,firstNameValue,lastNameValue,gender,emailValue,phoneValue);
+                }
+
+
             }
         });
-        */
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         actionBarTitle("Profile settings");
 
@@ -223,6 +242,97 @@ public class ProfileActivity extends AppCompatActivity implements AdapterView.On
         super.onPause();
         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
+
+
+    public void updateProfile(final Context context,
+        String firstName,String lastName,String gender,String email,String phone){
+
+        User user=new Gson().fromJson(PreferenceStorage.getUserJson(getBaseContext()),User.class);
+
+        AsyncHttpClient httpClient=new AsyncHttpClient();
+        RequestParams params = new RequestParams();
+        params.put("user_id",user.getUser_id());
+        params.put("firstName",firstName);
+        params.put("lastName",lastName);
+        params.put("gender",gender);
+        params.put("email",email);
+        params.put("phone",phone);
+
+        httpClient.setEnableRedirects(true);
+
+        progress= ProgressDialog.show(ProfileActivity.this,"Please wait",
+                "Updating profile..", false);
+        progress.show();
+
+        httpClient.post(context,ConstantInformation.UPDATE_PROFILE_URL, params,new TextHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                super.onStart();
+
+            }
+
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                progress.dismiss();
+                Snackbar.make(avatarView,"Please try again later",Snackbar.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                progress.dismiss();
+                if(responseString.length()<8){
+                    if(responseString.equalsIgnoreCase("none")){
+                        Snackbar.make(avatarView,"We were not able to complete update",Snackbar.LENGTH_LONG).show();
+                    }else{
+                        Snackbar.make(avatarView,"Information update ,You will be taken out for a while for the changes to occur",Snackbar.LENGTH_LONG).show();
+                        PreferenceStorage.addStatus(getBaseContext());
+                    }
+                }
+
+
+            }
+        });
+
+    }
+
+    //the dialog issues//
+    public  void approveUpdate(final Context context,final String firstName,final String lastName
+            ,final String gender,final String email,final String phone)
+    {
+
+        final Dialog dialog = new Dialog(context);
+
+        dialog.setContentView(R.layout.dialog_update_profile);
+        dialog.setTitle("Update Information");
+
+        TextView ok=(TextView)dialog.findViewById(R.id.ok);
+        TextView cancel= (TextView)dialog.findViewById(R.id.cancel);
+
+        ok.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                updateProfile(getBaseContext(),firstName,lastName,gender,email,phone);
+                dialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        try{
+            dialog.show();
+        }catch (Exception ex){
+            Toast.makeText(context,ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
 
 
 }

@@ -281,7 +281,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/nextButton"
+                        android:id="@+id/updateProfile"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -296,7 +296,7 @@
                             android:fontFamily="sans-serif-light"
                             android:padding="2dp"
                             android:gravity="center"
-                            android:text="UPDATE PROFILE"
+                            android:text="UPDATE INFORMATION"
                             android:textColor="@color/white" />
                     </LinearLayout>
 

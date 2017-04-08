@@ -156,8 +156,9 @@ public class SubjectItemAdapter extends RecyclerView.Adapter<SubjectItemAdapter.
 
                 if(v.getId()==R.id.announce){
                     dialogTracker=0;
-                    getListOfContent(context,subject.getSubject(),
-                            "subject Announcements", ConstantInformation.SUBJECT_ANNOUNCEMENTS);
+                   /* getListOfContent(context,subject.getSubject(),
+                            "subject Announcements", ConstantInformation.SUBJECT_ANNOUNCEMENTS);*/
+                   Toast.makeText(context,"No contents",Toast.LENGTH_LONG).show();
 
                 }else if(v.getId()==R.id.assignment){
                     dialogTracker=1;

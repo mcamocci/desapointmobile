@@ -9,9 +9,10 @@ public class ConstantInformation {
     public static final String INTENTINFO="INTENTINFO";
 
 
-    public static final String COMMON ="http://192.168.43.126/desapoint_mobile/";
-    //public static final String COMMON ="https://desapoint.com/desapoint_mobile/";
+    //public static final String COMMON ="http://192.168.43.126/desapoint_mobile/";
+    public static final String COMMON ="https://desapoint.com/desapoint_mobile/";
     public static final String FILE_COMMON ="https://desapoint.com/";
+    //public static final String FILE_COMMON ="http://192.168.43.126/desapoint/";
     public static final String LOGIN_URL= COMMON +"login.php";
     public static final String CATEGORY_URL=COMMON+"booksCats.php";
     public static final String BOOKS_URL=COMMON+"booksList.php";
@@ -31,6 +32,7 @@ public class ConstantInformation {
     public static final String SEARCH_SUBJECTS_URL=COMMON +"searchSubject.php";
     public static final String ADD_SUBJECTS_URL=COMMON +"addUserSubject.php";
     public static final String REMOVE_SUBJECT_URL=COMMON +"removeSubject.php";
+    public static final String UPDATE_PROFILE_URL=COMMON +"profileUpdate.php";
 
     public static  String JSONLIST="LIST_STRING";
 
@@ -38,8 +40,8 @@ public class ConstantInformation {
     ///-- FILES UPLOAD URLS --//
 
     public static final String UPLOAD_NOTES_URL=COMMON +"uploadNotes.php";
-    public static final String UPLOAD_ARTICLE_URL=COMMON +"uploadArticles.php";
-    public static final String UPLOAD_BOOK_URL=COMMON +"uploadBooks.php";
+    public static final String UPLOAD_ARTICLE_URL=COMMON +"uploadArticle.php";
+    public static final String UPLOAD_BOOK_URL=COMMON +"uploadBook.php";
 
 
     //these urls are for file downloads and location of profile picture//
@@ -48,6 +50,7 @@ public class ConstantInformation {
     public static final String ARTICLE_DOWNLOAD_URL=FILE_COMMON +"articles/";
     public static final String BOOK_DOWNLOAD_URL= FILE_COMMON +"books/";
     public static final String PROFILE_IMAGE_URL= FILE_COMMON +"profile/";
+    public static final String ASSIGNMENT_DOWNLOAD_URL= FILE_COMMON +"assignments/";
 
     ////////////////////////////////////////////////////////////////////////
 

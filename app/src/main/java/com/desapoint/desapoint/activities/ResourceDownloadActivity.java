@@ -1,16 +1,16 @@
 package com.desapoint.desapoint.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -32,16 +32,14 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
-import net.gotev.uploadservice.MultipartUploadRequest;
-import net.gotev.uploadservice.UploadNotificationConfig;
 
-import java.io.File;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.impl.cookie.IgnoreSpec;
+import droidninja.filepicker.FilePickerBuilder;
+import droidninja.filepicker.FilePickerConst;
 
 import static com.desapoint.desapoint.pojos.WindowInfo.ARTICLE;
 import static com.desapoint.desapoint.pojos.WindowInfo.BOOK;
@@ -60,12 +58,14 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
     private UploadItem uploadItem;
     private FloatingActionButton fab;
     private String uploadItemJson;
-
+    private Activity activity;
+    private List<String> docPaths=new ArrayList<>();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        activity=this;
         setContentView(R.layout.activity_resource_download);
         fab = (FloatingActionButton) findViewById(R.id.adder);
         parameter=getIntent().getStringExtra(INTENTINFO);
@@ -76,14 +76,14 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
             uploadItem=new UploadItem();
             uploadItem.setType(UploadItem.ARTICLE_TYPE);
             uploadItem.setCategory(parameter);
-            fab.setVisibility(View.GONE);
+            //fab.setVisibility(View.GONE);
 
         }else if(title.equalsIgnoreCase(UploadItem.BOOK_TYPE)){
 
             uploadItem=new UploadItem();
             uploadItem.setType(UploadItem.BOOK_TYPE);
             uploadItem.setCategory(parameter);
-            fab.setVisibility(View.GONE);
+           // fab.setVisibility(View.GONE);
 
         }else if(title.equalsIgnoreCase(UploadItem.NOTES_TYPE)){
 
@@ -100,36 +100,15 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
         actionBarTitle(title.toLowerCase()+" - "+parameter);
         retryObject=RetryObject.getInstance(this);
         retryObject.setListener(this);
+        final Activity context=this;
 
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
 
-                DialogProperties properties = new DialogProperties();
-                properties.selection_mode = DialogConfigs.SINGLE_MODE;
-                properties.selection_type = DialogConfigs.FILE_SELECT;
-                properties.root = new File(DialogConfigs.DEFAULT_DIR);
-                properties.error_dir = new File(DialogConfigs.DEFAULT_DIR);
-                properties.offset = new File(DialogConfigs.DEFAULT_DIR);
-                properties.extensions = null;
-
-                FilePickerDialog dialog = new FilePickerDialog(ResourceDownloadActivity.this,properties);
-                dialog.setTitle("Select a File");
-
-                dialog.setDialogSelectionListener(new DialogSelectionListener() {
-                    @Override
-                    public void onSelectedFilePaths(String[] files) {
-                        //files is the array of the paths of files selected by the Application User.
-                        String filePath=files[0];
-                        Intent intent=new Intent(getBaseContext(),FileUploadActivity.class);
-                        intent.putExtra("FILE",filePath);
-                        intent.putExtra(UploadItem.HOLDING_NAME,new Gson().toJson(uploadItem,UploadItem.class));
-                        startActivity(intent);
-                    }
-                });
-
-                dialog.show();
-
+                FilePickerBuilder.getInstance().setMaxCount(2)
+                        .setActivityTheme(R.style.filePicker)
+                        .pickDocument(activity);
             }
         });
 
@@ -160,22 +139,11 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
         if(id==android.R.id.home){
-            finish();
+           finish();
         }
         return true;
     }
 
-   public List<DownloadableItem> testDataGenerator(){
-        List<DownloadableItem> list=new ArrayList<>();
-        for(int i=0;i<12;i++){
-            DownloadableItem note=new DownloadableItem();
-            note.setName("Database manage.ppt");
-            note.setDescription("Notes for lecture 2");
-            note.setFile_url("https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=0ahUKEwjKh9uswdPSAhVkK8AKHW2NDosQFgglMAI&url=http%3A%2F%2Fcodex.cs.yale.edu%2Favi%2Fdb-book%2Fdb6%2Fslide-dir%2FPPT-dir%2Fch1.ppt&usg=AFQjCNFdBYesZZnqpEEaaQ7_-s7kVF93DQ&sig2=xqcJiOcOWUMlkXOmVRplrQ&bvm=bv.149397726,d.d24");
-            list.add(note);
-        }
-        return list;
-    }
 
 
     public void actionBarTitle(String title){
@@ -287,34 +255,36 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
 
     }
 
-    public void uploadMultipart(final Context context,String url,String path,String[] params) {
-
-        UploadNotificationConfig notificationConfig = new UploadNotificationConfig()
-                .setTitle("File upload")
-                .setInProgressMessage("Uploading at [[UPLOAD_RATE]] ([[PROGRESS]])")
-                .setErrorMessage("Failed to upload the File")
-                .setCompletedMessage("Upload completed successfully in [[ELAPSED_TIME]]");
-
-        //new UploadNotificationConfig()
-
-        try {
-            String uploadId =
-                    new MultipartUploadRequest(context, "http://upload.server.com/path")
-                            // starting from 3.1+, you can also use content:// URI string instead of absolute file
-                            .addFileToUpload("/absolute/path/to/your/file", "your-param-name")
-                            .addParameter("sfjsf","")
-                            .addParameter("","")
-                            .setNotificationConfig(notificationConfig)
-                            .setMaxRetries(2)
-                            .startUpload();
-        } catch (Exception exc) {
-            Log.e("AndroidUploadService", exc.getMessage(), exc);
-        }
-    }
 
     @Override
     protected void onPause() {
         super.onPause();
         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode)
+        {
+            case FilePickerConst.REQUEST_CODE_DOC:
+                if(resultCode== Activity.RESULT_OK && data!=null)
+                {
+                    docPaths.addAll(data.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_DOCS));
+                    if(docPaths.size()>1){
+                        docPaths.clear();
+                        Toast.makeText(getBaseContext(),"This version only support single file upload",Toast.LENGTH_LONG).show();
+                    }else{
+                        String filePath=docPaths.get(0);
+                        Intent intent=new Intent(getBaseContext(),FileUploadActivity.class);
+                        intent.putExtra("FILE",filePath);
+                        intent.putExtra(UploadItem.HOLDING_NAME,new Gson().toJson(uploadItem,UploadItem.class));
+                        startActivity(intent);
+                    }
+
+                }
+                break;
+        }
+
+    }
+
 }

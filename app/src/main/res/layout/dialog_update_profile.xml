@@ -13,7 +13,7 @@
         android:layout_marginRight="6dp"
         android:layout_marginLeft="6dp"
         android:layout_gravity="center"
-        android:text="The completion of this process will remove the selected course from your course list, do you wish to proceed?"
+        android:text="The completion of this process will force update of the changed information, make sure the information were all correct, You may not be able to recover your account is phone number is wrong, Wish to proceed?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
