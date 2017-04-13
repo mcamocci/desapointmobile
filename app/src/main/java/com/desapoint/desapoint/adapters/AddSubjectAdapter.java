@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+
+import java.util.ArrayList;
 import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
@@ -30,7 +32,7 @@ import cz.msebera.android.httpclient.Header;
 public class AddSubjectAdapter extends RecyclerView.Adapter<AddSubjectAdapter.SubjectHolder> {
 
     private Context context;
-    private List<Subject> list;
+    private List<Subject> list=new ArrayList<>();
     private ProgressDialog progress;
 
     public AddSubjectAdapter(Context context, List<Subject> subjects){

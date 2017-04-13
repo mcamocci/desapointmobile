@@ -98,12 +98,12 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
                 item.setFile_url(ConstantInformation.ARTICLE_DOWNLOAD_URL+item.getFile_url());
                 remark.setVisibility(View.VISIBLE);
                 remark.setTextColor(Color.parseColor("#00C853"));
-                remark.setText("UPloaded by "+item.getStatus());
+                remark.setText("Uploaded by "+item.getStatus());
             }else if(type.equals(BOOK)){
                 item.setFile_url(ConstantInformation.BOOK_DOWNLOAD_URL+item.getFile_url());
                 remark.setVisibility(View.VISIBLE);
                 remark.setTextColor(Color.parseColor("#00C853"));
-                remark.setText("UPloaded by "+item.getStatus());
+                remark.setText("Uploaded by "+item.getStatus());
             }else if(type.equals(NOTES)){
 
                 item.setFile_url(ConstantInformation.NOTES_DOWNLOAD_URL+item.getFile_url());
@@ -137,7 +137,7 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
             if(v.getId()==R.id.download_action){
 
                 File file=new File(downloadableItem.getFile_url());
-                Toast.makeText(context,downloadableItem.getFile_url(),Toast.LENGTH_LONG).show();
+
                 if(FileDownloadOperation.isFileAvaillable(context,file)){
                     MimeTypeMap myMime = MimeTypeMap.getSingleton();
                     Intent newIntent = new Intent(Intent.ACTION_VIEW);

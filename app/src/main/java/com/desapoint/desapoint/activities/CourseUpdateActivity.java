@@ -75,6 +75,7 @@ public class CourseUpdateActivity extends AppCompatActivity implements Spinner.O
 
         courseStringList.add("SELECT COURSE");
 
+
         for(int i=0;i<courseList.size();i++){
             courseStringList.add(courseList.get(i).getCourse());
         }
@@ -130,7 +131,7 @@ public class CourseUpdateActivity extends AppCompatActivity implements Spinner.O
             course=null;
         }else{
             course=courseStringList.get(position);
-            university=courseList.get(position).getUniversity();
+            university=courseList.get(1).getUniversity();
         }
     }
 

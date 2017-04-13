@@ -118,6 +118,7 @@ public class Subjects extends Fragment implements RetryObjectFragment.ReloadList
     public void onAttach(Context context) {
         super.onAttach(context);
 
+
     }
 
     @Override
@@ -155,14 +156,13 @@ public class Subjects extends Fragment implements RetryObjectFragment.ReloadList
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 retryObject.hideProgress();
 
-
                 if(responseString.length()<8){
 
                     if(responseString.equalsIgnoreCase("none")){
                         retryObject.getMessage().setText(
                                 user.getFirstName()
-                                        +" Please make sure you have completed registration through your computer" +
-                                        " or try again later");
+                                        +" Please make sure your first registration was complete or, " +
+                                        " Make sure your year of study is valid depending on your course, These changes are required to be performed through website desapoint.com");
                     }else{
                         retryObject.getMessage().setText("No content");
                     }
@@ -182,5 +182,6 @@ public class Subjects extends Fragment implements RetryObjectFragment.ReloadList
         });
 
     }
+
 
 }
