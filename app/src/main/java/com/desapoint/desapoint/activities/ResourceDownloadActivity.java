@@ -97,7 +97,8 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
-        actionBarTitle(title.toLowerCase()+" - "+parameter);
+        String mytitle=title.toLowerCase();
+        actionBarTitle(mytitle.substring(0,1).toUpperCase()+mytitle.substring(1)+" - "+parameter);
         retryObject=RetryObject.getInstance(this);
         retryObject.setListener(this);
         final Activity context=this;

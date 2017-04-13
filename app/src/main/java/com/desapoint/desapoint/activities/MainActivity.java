@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,notesFragment).commit();
                     PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.NOTES);
                 }else if(id==R.id.pastpapers){
-                    actionBarTitle("pastpapers");
+                    actionBarTitle("Pastpapers");
                     getSupportFragmentManager().beginTransaction().replace(R.id.container,pastPaperFragment).commit();
                     PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.PASTPAPER);
                 }else if(id==R.id.articles){

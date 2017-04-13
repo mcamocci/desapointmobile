@@ -105,10 +105,10 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
                 item.setFile_url(ConstantInformation.NOTES_DOWNLOAD_URL+item.getFile_url());
                 remark.setVisibility(View.VISIBLE);
                 if(item.getStatus().contains("Official")){
-                    remark.setText("(OFFICIAL NOTES)");
+                    remark.setText(item.getStatus());
                     remark.setTextColor(Color.parseColor("#00C853"));
                 }else{
-                    remark.setText("(OTHER NOTES)");
+                    remark.setText(item.getStatus());
                     remark.setTextColor(Color.RED);
                 }
             }else if(type.equals(PASTPAPER)){
@@ -170,7 +170,7 @@ public class DownloadItemAdapter extends RecyclerView.Adapter<DownloadItemAdapte
                 }
 
             }else if(v.getId()==R.id.share_action){
-                String shared_content=downloadableItem.getDescription()+" documents are now availlable on desapoint" +
+                String shared_content=downloadableItem.getName()+". "+downloadableItem.getDescription()+" documents are now availlable on desapoint" +
                         " Get it on google play today." +
                         " https://play.google.com/store/apps/details?id=com.desapoint.desapoint to access this file";
                 Intent intent=new Intent();
