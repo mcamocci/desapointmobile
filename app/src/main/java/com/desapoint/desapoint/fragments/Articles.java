@@ -138,7 +138,6 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
         AsyncHttpClient httpClient=new AsyncHttpClient();
         RequestParams params = new RequestParams();
 
-
         httpClient.post(context,url, params,new TextHttpResponseHandler() {
 
             @Override
@@ -153,6 +152,7 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 retryObject.hideProgress();
                 retryObject.showName();
+                Log.e("message",responseString);
                 retryObject.getMessage().setText("Could not connect!!");
                 retryObject.showMessage();
             }
