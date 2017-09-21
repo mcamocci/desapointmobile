@@ -106,7 +106,12 @@
         <activity
             android:name=".activities.SubjectAssignmentActivity"
             android:theme="@style/AppThemeBackBlack" />
-        <activity android:name=".activities.DevelopmentActivity"></activity>
+        <activity android:name=".activities.DevelopmentActivity" />
+        <activity android:name=".activities.LandingActivity" />
+        <activity
+            android:name=".activities.WelcomeActivity"
+            android:label="@string/title_activity_welcome"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

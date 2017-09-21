@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.desapoint.desapoint.activities.WelcomeActivity">
+
+    <include layout="@layout/fragment_opportunities"
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:orientation="vertical"
+        app:srcCompat="@android:drawable/ic_dialog_email" >
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#F2F2F2"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Opportunities"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_weight="1"
+                android:padding="16dp" />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="6dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/ic_launcher"
+                android:background="@drawable/circular_shape"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Resources"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="right"
+                android:textSize="16sp"
+                android:padding="16dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
