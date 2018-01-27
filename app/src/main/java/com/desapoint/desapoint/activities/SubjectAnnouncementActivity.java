@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.AnnouncementItemAdapter;
+import com.desapoint.desapoint.kotlindata.AnnouncementDataObject;
 import com.desapoint.desapoint.pojos.Announcement;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +25,7 @@ import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.JSONLIS
 
 public class SubjectAnnouncementActivity extends AppCompatActivity {
 
-    private List<Announcement> announcementContents=new ArrayList<>();
+    private List<AnnouncementDataObject> announcementContents=new ArrayList<>();
     private AnnouncementItemAdapter announcementItemAdapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager layoutManager;
@@ -45,7 +46,7 @@ public class SubjectAnnouncementActivity extends AppCompatActivity {
         String listContent=getIntent().getStringExtra(JSONLIST);
 
         try{
-            Type listType = new TypeToken<List<Announcement>>() {}.getType();
+            Type listType = new TypeToken<List<AnnouncementDataObject>>() {}.getType();
             announcementContents=new Gson().fromJson(listContent,listType);
             announcementItemAdapter=new AnnouncementItemAdapter(getBaseContext(),announcementContents);
             recyclerView.setAdapter(announcementItemAdapter);

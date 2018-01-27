@@ -22,10 +22,6 @@ import com.desapoint.desapoint.pojos.RetryObject;
 import com.desapoint.desapoint.pojos.UploadItem;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
-import com.github.angads25.filepicker.controller.DialogSelectionListener;
-import com.github.angads25.filepicker.model.DialogConfigs;
-import com.github.angads25.filepicker.model.DialogProperties;
-import com.github.angads25.filepicker.view.FilePickerDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.AsyncHttpClient;
@@ -97,11 +93,11 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.getSupportActionBar().setDisplayShowCustomEnabled(true);
-        String mytitle=title.toLowerCase();
+        String mytitle = title.toLowerCase();
         actionBarTitle(mytitle.substring(0,1).toUpperCase()+mytitle.substring(1)+" - "+parameter);
-        retryObject=RetryObject.getInstance(this);
+        retryObject = RetryObject.getInstance(this);
         retryObject.setListener(this);
-        final Activity context=this;
+        final Activity context = this;
 
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -170,17 +166,7 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
     @Override
     protected void onResume() {
         super.onResume();
-        String title=PreferenceStorage.getWindowInfo(getBaseContext());
 
-        if(title.equals(ARTICLE)){
-
-        }else if(title.equals(BOOK)){
-
-        }else if(title.equals(NOTES)){
-
-        }else if(title.equals(PASTPAPER)){
-
-        }
     }
 
     public void loadContents(final Context context){
@@ -188,7 +174,9 @@ public class ResourceDownloadActivity extends AppCompatActivity implements Retry
         AsyncHttpClient httpClient=new AsyncHttpClient();
         RequestParams params = new RequestParams();
 
-        String url=null;
+        String title = PreferenceStorage.getWindowInfo(getBaseContext());
+
+        String url = null;
 
         if(title.equals(ARTICLE)){
 

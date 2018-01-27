@@ -12,9 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
-import com.desapoint.desapoint.adapters.CategoryItemAdapter;
-import com.desapoint.desapoint.pojos.Category;
+import com.desapoint.desapoint.adapters.AnnouncementItemAdapter;
+import com.desapoint.desapoint.kotlindata.AnnouncementDataObject;
 import com.desapoint.desapoint.pojos.RetryObjectFragment;
+import com.desapoint.desapoint.pojos.User;
 import com.desapoint.desapoint.toolsUtilities.ConstantInformation;
 import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 import com.google.gson.Gson;
@@ -29,14 +30,15 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class Articles extends Fragment implements RetryObjectFragment.ReloadListener {
+public class Announcements extends Fragment implements RetryObjectFragment.ReloadListener {
 
     private RecyclerView recyclerView;
-    private CategoryItemAdapter adapter;
-    private List<Category> items =new ArrayList<>();
+    private AnnouncementItemAdapter adapter;
+    private List<AnnouncementDataObject> items = new ArrayList<>();
     private RetryObjectFragment retryObject;
+    private User user;
 
-    public Articles() {
+    public Announcements() {
         // Required empty public constructor
     }
 
@@ -44,13 +46,13 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        user = new Gson().fromJson(PreferenceStorage.getUserJson(getContext()), User.class);
     }
 
     @Override
     public void onReloaded(String message) {
-        Toast.makeText(getContext(),message,Toast.LENGTH_LONG).show();
-        loadContents(getContext(), ConstantInformation.CATEGORY_URL);
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        loadContents(getContext(), ConstantInformation.ANNOUNCEMENT_URL);
     }
 
     @Override
@@ -58,40 +60,23 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_articles, container, false);
-        retryObject=RetryObjectFragment.getInstance(view);
+        View view = inflater.inflate(R.layout.fragment_articles, container, false);
+        retryObject = RetryObjectFragment.getInstance(view);
         retryObject.setListener(this);
 
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        adapter = new CategoryItemAdapter(getContext(), items);
+        adapter = new AnnouncementItemAdapter(getContext(), items);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
-        if(items.size() < 1){
+        if (items.size() < 1) {
 
-            if(PreferenceStorage.getCategoriesJson(getContext()).equalsIgnoreCase("none")){
-                loadContents(getContext(), ConstantInformation.CATEGORY_URL);
-            }else{
-                retryObject.hideProgress();
-                retryObject.hideMessage();
-                retryObject.hideName();
-                try{
-                    Type listType = new TypeToken<List<Category>>() {}.getType();
-                    items=new Gson().fromJson(PreferenceStorage.getCategoriesJson(getContext()),listType);
+            loadContents(getContext(), ConstantInformation.ANNOUNCEMENT_URL);
 
-                }catch (Exception ex){
-
-                }
-
-                adapter = new CategoryItemAdapter(getContext(), items);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-
-        }else{
+        } else {
             retryObject.hideProgress();
             retryObject.hideMessage();
             retryObject.hideName();
@@ -113,12 +98,14 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
         super.onDetach();
     }
 
-    public void loadContents(final Context context,String url){
+    public void loadContents(final Context context, String url) {
 
-        AsyncHttpClient httpClient=new AsyncHttpClient();
+        AsyncHttpClient httpClient = new AsyncHttpClient();
         RequestParams params = new RequestParams();
+        params.put("university", user.getUniversity());
+        params.put("college", user.getCollege());
 
-        httpClient.post(context,url, params,new TextHttpResponseHandler() {
+        httpClient.post(context, url, params, new TextHttpResponseHandler() {
 
             @Override
             public void onStart() {
@@ -132,7 +119,7 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 retryObject.hideProgress();
                 retryObject.showName();
-                Log.e("message",responseString);
+                Log.e("message", responseString);
                 retryObject.getMessage().setText("Could not connect!!");
                 retryObject.showMessage();
             }
@@ -141,22 +128,24 @@ public class Articles extends Fragment implements RetryObjectFragment.ReloadList
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
                 retryObject.hideProgress();
 
-                if(responseString.length()<8){
+
+                if (responseString.length() < 8) {
                     retryObject.getMessage().setText("No content");
                     retryObject.showMessage();
                     retryObject.showName();
-                }else{
+                } else {
 
-                    try{
-                        Type listType = new TypeToken<List<Category>>() {}.getType();
-                        items=new Gson().fromJson(responseString,listType);
-                        PreferenceStorage.addCategoriesJson(getContext(),responseString);
+                    try {
+                        Type listType = new TypeToken<List<AnnouncementDataObject>>() {
+                        }.getType();
+                        items = new Gson().fromJson(responseString, listType);
+                        //PreferenceStorage.addCategoriesJson(getContext(),responseString);
 
-                    }catch (Exception ex){
-
+                    } catch (Exception ex) {
+                        Log.e("error message", "caught");
                     }
 
-                    adapter=new CategoryItemAdapter(getContext(), items);
+                    adapter = new AnnouncementItemAdapter(getContext(), items);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }

@@ -18,6 +18,7 @@ import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.adapters.AnnouncementItemAdapter;
 import com.desapoint.desapoint.adapters.AssignmentItemAdapter;
 import com.desapoint.desapoint.adapters.TopicItemAdapter;
+import com.desapoint.desapoint.kotlindata.AnnouncementDataObject;
 import com.desapoint.desapoint.pojos.Announcement;
 import com.desapoint.desapoint.pojos.Assignment;
 import com.desapoint.desapoint.pojos.Category;
@@ -38,7 +39,7 @@ import static com.desapoint.desapoint.toolsUtilities.ConstantInformation.JSONLIS
 public class AssignmentDialog extends DialogFragment {
 
     private Context context;
-    private List<Announcement> announcementContents=new ArrayList<>();
+    private List<AnnouncementDataObject> announcementContents=new ArrayList<>();
     private AnnouncementItemAdapter announcementItemAdapter;
     private List<Assignment> assignmentContents=new ArrayList<>();
     private AssignmentItemAdapter assignmentItemAdapter;

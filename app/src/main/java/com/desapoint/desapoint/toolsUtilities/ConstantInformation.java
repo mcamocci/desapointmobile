@@ -33,6 +33,7 @@ public class ConstantInformation {
     public static final String ADD_SUBJECTS_URL=COMMON +"addUserSubject.php";
     public static final String REMOVE_SUBJECT_URL=COMMON +"removeSubject.php";
     public static final String UPDATE_PROFILE_URL=COMMON +"profileUpdate.php";
+    public static final String ANNOUNCEMENT_URL = COMMON +"announcements.php";
 
     public static  String JSONLIST="LIST_STRING";
 

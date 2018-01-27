@@ -7,10 +7,21 @@ package com.desapoint.desapoint.pojos;
 
 public class User {
 
+    private String FirstName;
+    private String username;
+    private String fullname;
+    private String phone;
+    private String email;
+    private String gender;
+    private int User_id;
+    private String image;
+    private String college;
+    private String university;
 
-  public User(){
 
-  }
+    public User(){
+
+    }
 
     public String getUsername() {
         return username;
@@ -76,13 +87,19 @@ public class User {
         this.FirstName = FirstName;
     }
 
-    private String FirstName;
-   private String username;
-   private String fullname;
-   private String phone;
-   private String email;
-   private String gender;
-   private int User_id;
-   private String image;
+    public String getCollege() {
+        return college;
+    }
 
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(String university) {
+        this.university = university;
+    }
 }

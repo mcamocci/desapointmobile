@@ -11,10 +11,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,10 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
-import com.desapoint.desapoint.fragments.*;
-import com.desapoint.desapoint.fragments.Articles;
-import com.desapoint.desapoint.fragments.Books;
-import com.desapoint.desapoint.fragments.Notes;
+import com.desapoint.desapoint.adapters.MyFragmentPagerAdapter;
 import com.desapoint.desapoint.pojos.Subject;
 import com.desapoint.desapoint.pojos.User;
 import com.desapoint.desapoint.pojos.WindowInfo;
@@ -37,43 +36,42 @@ import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnMenuTabClickListener;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
-import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomBar bottomBar;
-    private Subjects subjectFragment=new Subjects();
-    private Notes notesFragment=new Notes();
-    private PastPaperFragment pastPaperFragment=new PastPaperFragment();
-    private Articles articleFragment=new Articles();
-    private Books bookFragment=new Books();
     private ProgressDialog progress;
     private List<String> docPaths = new ArrayList<>();
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private Toolbar toolbar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
         overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
         PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.SUBJECT);
 
         if (!(ConnectionChecker.isInternetConnected(getBaseContext()))) {
-            Intent intent=new Intent(getBaseContext(),ConnectionProblem.class);
+            Intent intent = new Intent(getBaseContext(),ConnectionProblem.class);
             startActivity(intent);
         }
 
-
-        actionBarTitle("Desapoint");
 
         // The request code used in ActivityCompat.requestPermissions()
         // and returned in the Activity's onRequestPermissionsResult()
@@ -85,52 +83,11 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
         }
 
-        this.getSupportActionBar().setDisplayShowCustomEnabled(true);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        bottomBar=BottomBar.attach(this,savedInstanceState);
-        bottomBar.setItemsFromMenu(R.menu.bottom_menu, new OnMenuTabClickListener(){
-            @Override
-            public void onMenuTabSelected(@IdRes int menuItemId) {
-                int id=menuItemId;
-                if(id==R.id.subjects){
-                    actionBarTitle("Subjects");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container,subjectFragment).commit();
-                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.SUBJECT);
-                }else if(id==R.id.notes){
-                    actionBarTitle("Notes");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container,notesFragment).commit();
-                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.NOTES);
-                }else if(id==R.id.pastpapers){
-                    actionBarTitle("Pastpapers");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container,pastPaperFragment).commit();
-                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.PASTPAPER);
-                }else if(id==R.id.articles){
-                    actionBarTitle("Articles");
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container,articleFragment).commit();
-                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.ARTICLE);
-                }else if(id==R.id.books){
-                    actionBarTitle("Books");
-                    PreferenceStorage.addWindowInfo(getBaseContext(),WindowInfo.BOOK);
-                    getSupportFragmentManager().beginTransaction().replace(R.id.container,bookFragment).commit();
-                }
-
-            }
-
-            @Override
-            public void onMenuTabReSelected(@IdRes int menuItemId) {
-
-            }
-        });
-            bottomBar.mapColorForTab(0,"#292B2C");
-            bottomBar.mapColorForTab(1,"#292B2C");
-            bottomBar.mapColorForTab(2,"#292B2C");
-            bottomBar.mapColorForTab(3,"#292B2C");
-            bottomBar.mapColorForTab(4,"#292B2C");
-
-            /*BottomBarBadge articles=bottomBar.makeBadgeForTabAt(0,"#ff0000",12);
-            articles.show();*/
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setAdapter(new MyFragmentPagerAdapter(getBaseContext(),getSupportFragmentManager()));
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
@@ -206,25 +163,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void actionBarTitle(String title){
-
-        LayoutInflater inflator = LayoutInflater.from(this);
-        View v = inflator.inflate(R.layout.custom_title, null);
-
-        //if you need to customize anything else about the text, do it here.
-        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.main_title)).setText(this.getTitle());
-        //assign the view to the actionbar
-        this.getSupportActionBar().setDisplayShowTitleEnabled(false);
-        this.getSupportActionBar().setCustomView(v);
-
-        //if you need to customize anything else about the text, do it here.
-        //I'm using a custom TextView with a custom font in my layout xml so all I need to do is set title
-        ((TextView)v.findViewById(R.id.sub_title)).setText(title);
-        //assign the view to the actionbar
-        this.getSupportActionBar().setCustomView(v);
-    }
-
     public static boolean hasPermissions(Context context, String... permissions) {
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && context != null && permissions != null) {
             for (String permission : permissions) {
@@ -245,8 +183,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_logout);
         dialog.setTitle(title);
 
-        TextView ok=(TextView)dialog.findViewById(R.id.ok);
-        TextView cancel= (TextView)dialog.findViewById(R.id.cancel);
+        TextView ok = dialog.findViewById(R.id.ok);
+        TextView cancel = dialog.findViewById(R.id.cancel);
 
         ok.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -336,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 progress.dismiss();
-                Snackbar.make(bottomBar,"Please try again later",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(viewPager,"Please try again later",Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -344,9 +282,9 @@ public class MainActivity extends AppCompatActivity {
                 progress.dismiss();
                 if(responseString.length()<8){
                     if(responseString.equalsIgnoreCase("none")){
-                        Snackbar.make(bottomBar,"Your first registration through our website was not complete please login using website to complete",Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(viewPager,"Your first registration through our website was not complete please login using website to complete",Snackbar.LENGTH_LONG).show();
                     }else{
-                        Snackbar.make(bottomBar,"Something is wrong , please use about information to inform us quickly",Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(viewPager,"Something is wrong , please use about information to inform us quickly",Snackbar.LENGTH_LONG).show();
                     }
                 }else{
                     Intent intent=new Intent(MainActivity.this,SettingActivity.class);

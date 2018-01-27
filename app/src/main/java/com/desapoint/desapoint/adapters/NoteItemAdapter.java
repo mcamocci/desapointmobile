@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import com.desapoint.desapoint.R;
 import com.desapoint.desapoint.pojos.Note;
+import com.desapoint.desapoint.pojos.WindowInfo;
 import com.desapoint.desapoint.toolsUtilities.FileDownloadOperation;
+import com.desapoint.desapoint.toolsUtilities.PreferenceStorage;
 
 import java.io.File;
 import java.util.List;
